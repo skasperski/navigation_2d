@@ -1,0 +1,16 @@
+<package>
+  <description brief="operator">
+
+     A node that issues simple motion commands to a mobile base given a local costmap and a desired direction.
+
+  </description>
+  <author>Sebastian Kasperski</author>
+  <license>GPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>https://github.com/skasperski/navigation_2d</url>
+  <depend package="roscpp"/>
+  <depend package="tf"/>
+  <depend package="costmap_2d"/>
+</package>
+
+

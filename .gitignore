@@ -1,0 +1,14 @@
+_*
+*~
+.codelite/
+*.pyc
+build/
+bin/
+lib/
+msg_gen/
+srv_gen/
+idl_gen/
+MoveToPosition2D*.msg
+Explore*.msg
+GetFirstMap*.msg
+Localize*.msg
