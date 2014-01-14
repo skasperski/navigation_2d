@@ -1,0 +1,7 @@
+
+---
+geometry_msgs/Pose2D final_pose
+---
+geometry_msgs/Pose2D robot_pose
+geometry_msgs/Pose2D target_pose
+float32 distance

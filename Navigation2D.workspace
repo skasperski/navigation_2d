@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="Navigation2D" Database="">
   <Project Name="RobotOperator" Path="robot_operator/RobotOperator.project" Active="Yes"/>
+  <Project Name="RobotNavigator" Path="robot_navigator/RobotNavigator.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="RobotOperator" ConfigName="Debug"/>
+      <Project Name="RobotNavigator" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="RobotOperator" ConfigName="Release"/>
+      <Project Name="RobotNavigator" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
