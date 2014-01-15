@@ -1,0 +1,18 @@
+<package>
+  <description brief="remote_controller">
+
+     remote_controller
+
+  </description>
+  <author>Sebastian Kasperski</author>
+  <license>GPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>https://github.com/skasperski/navigation_2d</url>
+  <depend package="roscpp"/>
+  <depend package="joy"/>
+  <depend package="robot_operator"/>
+  <depend package="robot_navigator"/>
+
+</package>
+
+

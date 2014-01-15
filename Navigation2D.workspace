@@ -2,14 +2,17 @@
 <CodeLite_Workspace Name="Navigation2D" Database="">
   <Project Name="RobotOperator" Path="robot_operator/RobotOperator.project" Active="Yes"/>
   <Project Name="RobotNavigator" Path="robot_navigator/RobotNavigator.project" Active="No"/>
+  <Project Name="RemoteController" Path="remote_controller/RemoteController.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="RobotOperator" ConfigName="Debug"/>
       <Project Name="RobotNavigator" ConfigName="Debug"/>
+      <Project Name="RemoteController" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="RobotOperator" ConfigName="Release"/>
       <Project Name="RobotNavigator" ConfigName="Release"/>
+      <Project Name="RemoteController" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
