@@ -1,0 +1,26 @@
+include "p3at.inc"
+include "floorplan.inc"
+
+name                    "Navigation-2D Tutorial"
+interval_sim            100
+quit_time                 0
+resolution                0.025
+show_clock                0
+show_clock_interval     100
+threads                 2
+
+# Load an environment bitmap
+floorplan
+( 
+  name "autolab"
+  bitmap "autolab.png"
+  size [25.5 22.5 1.0]
+  pose [0 0 0 0]
+)
+
+# Put a single robot into the world
+pioneer3at
+(
+  name "robot"
+  pose [-11 9 0 0]
+)

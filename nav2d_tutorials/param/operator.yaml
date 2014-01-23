@@ -1,0 +1,16 @@
+# Maximum velocity command the operator will send to the robot (in m/s)
+max_velocity: 1.0
+
+# If set to true, the selected best direction is published as a GridCells-Message
+publish_route: true
+
+# The way is assumed to be free when there is no obstacle within this range (in meter)
+max_free_space: 2.0
+safety_decay: 0.97
+
+# The importance weights of the 3 action values
+distance_weight: 1
+safety_weight: 1
+conformance_weight: 1
+continue_weight: 0
+
