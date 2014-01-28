@@ -21,7 +21,7 @@ RobotNavigator::RobotNavigator()
 	NodeHandle robotNode;
 
 	std::string serviceName;
-	robotNode.param("getmap_service", serviceName, std::string("get_map"));
+	robotNode.param("map_service", serviceName, std::string("get_map"));
 	mGetMapClient = robotNode.serviceClient<nav_msgs::GetMap>(serviceName);
 
 	mCommandPublisher = robotNode.advertise<robot_operator::cmd>("cmd", 1);
