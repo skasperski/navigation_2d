@@ -1,0 +1,19 @@
+# Inflation params used for path planning
+map_inflation_radius: 1.0
+robot_radius: 0.5
+
+# Tolerance in target position for MoveToPosition2D (meter)
+navigation_goal_distance: 2.0
+
+# Toleranvce in target heading for MoveToPosition2D (radians)
+navigation_goal_angle: 1.0
+
+# Distance at which to turn off obstacle avoidance (meter)
+navigation_homing_distance: 4.0
+
+# Find new exploartion target when in range of current one (meter)
+exploration_goal_distance: 3.0
+
+# Strategy MinPos
+min_target_area_size: 1.0
+visualize_frontiers: true
