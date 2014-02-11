@@ -273,70 +273,20 @@ void MultiMapper::receiveLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan)
 			ROS_ERROR("Could not add new Laser to Mapper: %s", e.GetErrorMessage().ToCString());
 			return;
 		}
-/*		if(mState == ST_LOCALIZING)
-		{
-			// Get the position of the laser on the robot
-			try
-			{
-				tf::StampedTransform laserPose;
-				mTransformListener.lookupTransform(mRobotFrame, mLaserFrame, ros::Time(0), laserPose);
-				mSelfLocalizer->setLaserPose(laserPose.getOrigin().getX(), laserPose.getOrigin().getY(), tf::getYaw(laserPose.getRotation()));
-			}
-			catch(tf::TransformException e)
-			{
-				ROS_ERROR("Failed to get laser position on robot %d! (%s)", mRobotID, e.what());
-			}	
-		}
-*/	}
+	}
 	
 	if(mState == ST_LOCALIZING)
 	{
 		mSelfLocalizer->process(scan);
-/*
-		// Get the odometry pose from TF. (We use RobotFrame here instead of LaserFrame, 
-		// so the motion model of the particle filter can work correctly.)
-		tf::StampedTransform tfPose;
-		try
+		if(mSelfLocalizer->getCovariance() < mMaxCovariance)
 		{
-			mTransformListener.lookupTransform(mOdometryFrame, mRobotFrame, scan->header.stamp, tfPose);
+			// Localization finished, kill the localizer and start mapping
+			ROS_INFO("Localization finished on robot %d, now starting to map.", mRobotID);
+			tf::Transform p = mSelfLocalizer->getBestPose();
+			setRobotPose(p.getOrigin().getX(), p.getOrigin().getY(), tf::getYaw(p.getRotation()));
+			mState = ST_MAPPING;
 		}
-		catch(tf::TransformException e)
-		{
-			try
-			{
-				mTransformListener.lookupTransform(mOdometryFrame, mRobotFrame, ros::Time(0), tfPose);
-			}
-			catch(tf::TransformException e)
-			{
-				ROS_WARN("Failed to compute odometry pose, skipping scan (%s)", e.what());
-				return;
-			}
-		}
-		
-		if(mSelfLocalizer->process(scan, tfPose))
-		{
-			mSelfLocalizer->publishParticleCloud(&mParticlePublisher);
-			if(mSelfLocalizer->getCovariance() < mMaxCovariance)
-			{
-				// Localization finished, kill the localizer and start mapping
-				ROS_INFO("Localization finished on robot %d, now starting to map.", mRobotID);
-				pf_vector_t p = mSelfLocalizer->getBestPose();
-				setRobotPose(p.v[0], p.v[1], p.v[2]);
-				mState = ST_MAPPING;
-				
-				// Publish best Pose	
-				geometry_msgs::PoseArray cloud_msg;
-				cloud_msg.header.stamp = ros::Time::now();
-				cloud_msg.header.frame_id = mMapFrame.c_str();
-				cloud_msg.poses.resize(1);
-				
-				tf::Pose pose(tf::createQuaternionFromYaw(p.v[2]), tf::Vector3(p.v[0], p.v[1], 0));
-				tf::poseTFToMsg(pose, cloud_msg.poses[0]);
-
-				mParticlePublisher.publish(cloud_msg);
-			}
-		}
-*/	}else 
+	}else 
 	if(mState == ST_MAPPING)
 	{
 		// get the odometry pose from tf
