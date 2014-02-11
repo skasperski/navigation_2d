@@ -23,3 +23,4 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 rosbuild_add_executable(remote_joy src/remote_joy.cpp)
 rosbuild_add_executable(remote_key src/remote_key.cpp)
+rosbuild_add_executable(sim_joy src/sim_joy.cpp)

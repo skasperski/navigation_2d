@@ -92,6 +92,7 @@
   <VirtualDirectory Name="src">
     <File Name="src/remote_joy.cpp"/>
     <File Name="src/remote_key.cpp"/>
+    <File Name="src/sim_joy.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="ros">
     <File Name="CMakeLists.txt"/>
