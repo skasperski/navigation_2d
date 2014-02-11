@@ -6,6 +6,12 @@ map_update_rate: 5
 publish_pose_graph: true
 max_covariance: 0.01
 transform_publish_period: 0.1
+min_map_size: 20
+
+### Localizer #############################################
+
+min_particles: 2500
+max_particles: 10000
 
 ### Karto #################################################
 
