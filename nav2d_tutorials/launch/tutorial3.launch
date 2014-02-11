@@ -16,14 +16,10 @@
 		<rosparam file="$(find nav2d_tutorials)/param/costmap.yaml" ns="local_map" />
 	</node>
 
-	<!-- Load the environment map in the map_server -->
-	<node name="MapServer" pkg="map_server" type="map_server" args="$(find nav2d_tutorials)/world/tutorial.yaml" />
-
-	<!-- Start particle filter to track the robot's position -->
-	<node name="SelfLocalizer" pkg="self_localizer" type="Localizer">
+	<!-- Start Mapper to genreate map from laser scans -->
+	<node name="Mapper" pkg="graph_slam" type="MultiMapper">
 		<remap from="scan" to="base_scan"/>
-		<param name="min_particles" type="int" value="5000"/>
-		<param name="max_particles" type="int" value="20000"/>
+		<rosparam file="$(find nav2d_tutorials)/param/mapper.yaml"/>
 	</node>
 
 	<!-- Start the Navigator to move the robot autonomously -->
@@ -31,6 +27,8 @@
 		<rosparam file="$(find nav2d_tutorials)/param/navigator.yaml"/>
 	</node>
 
+	<node name="GetMap" pkg="robot_navigator" type="get_map_client" />
+	<node name="Explore" pkg="robot_navigator" type="explore_client" />
 	<node name="SetGoal" pkg="robot_navigator" type="set_goal_client" />
 
 	<!-- Start the joystick-driver and remote-controller for operation-->
@@ -50,6 +48,6 @@
 	<node name="PioneerTransforms" pkg="p2os_urdf" type="publisher"/>
 
 	<!-- RVIZ to view the visulaization -->
-	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial2.vcg" />
+	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial3.vcg" />
 
 </launch>

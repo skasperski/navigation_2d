@@ -1,0 +1,19 @@
+### Mapper ################################################
+
+grid_resolution: 0.1
+range_threshold: 10.0
+map_update_rate: 5
+publish_pose_graph: true
+max_covariance: 0.01
+transform_publish_period: 0.1
+
+### Karto #################################################
+
+# For a full list of available parameters and their
+# corresponding default values, see OpenKarto/OpenMapper.h
+
+MinimumTravelDistance: 1.0
+MinimumTravelHeading: 0.52
+LoopSearchMaximumDistance: 10.0
+
+###########################################################

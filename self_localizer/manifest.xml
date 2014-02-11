@@ -1,0 +1,19 @@
+<package>
+  <description brief="self_localizer">
+
+     Module to localize a robot within a 2D map.
+
+  </description>
+  <author>Sebastian Kasperski</author>
+  <license>GPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>https://github.com/skasperski/slam_2d</url>
+  <depend package="roscpp"/>
+  <depend package="tf"/>
+  
+  <export>
+    <cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -lSelfLocalizer" />
+  </export>
+</package>
+
+
