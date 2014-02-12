@@ -16,7 +16,6 @@
 
 #include "OpenKarto/OpenKarto.h"
 #include "SelfLocalizer.h"
-#include "graph_slam/SpaSolver.h"
 
 #define ST_WAITING_FOR_MAP  10
 #define ST_LOCALIZING       20
@@ -38,6 +37,7 @@ public:
 	bool getMap(nav_msgs::GetMap::Request  &req, nav_msgs::GetMap::Response &res);
 	void publishLoop();
 	void publishTransform();
+	void setScanSolver(karto::ScanSolver* scanSolver);
 	
 private:
 	// Private methods
@@ -47,9 +47,6 @@ private:
 	
 	// Particle filter to localize within received map
 	SelfLocalizer* mSelfLocalizer;
-	
-	// Scan-Solver
-	SpaSolver* mSpaSolver;
 	
 	// Everything related to ROS
 	tf::TransformListener mTransformListener;

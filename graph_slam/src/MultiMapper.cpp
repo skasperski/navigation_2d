@@ -1,4 +1,5 @@
 #include "graph_slam/MultiMapper.h"
+#include "SpaSolver.h"
 
 #include "visualization_msgs/Marker.h"
 #include "nav2d_msgs/RobotPose.h"
@@ -143,8 +144,6 @@ MultiMapper::MultiMapper()
 		mMapper->SetParameters("LoopMatchMinimumResponseFine", param_d);
 	
 	mMapper->Message += karto::delegate(this, &MultiMapper::onMessage);
-	mSpaSolver = new SpaSolver();
-	mMapper->SetScanSolver(mSpaSolver);
 	
 	mLaser = NULL;
 	
@@ -184,6 +183,11 @@ MultiMapper::MultiMapper()
 MultiMapper::~MultiMapper()
 {
 
+}
+
+void MultiMapper::setScanSolver(karto::ScanSolver* scanSolver)
+{
+	mMapper->SetScanSolver(scanSolver);
 }
 
 void MultiMapper::publishLoop()

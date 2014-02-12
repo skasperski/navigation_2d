@@ -95,12 +95,12 @@
     <File Name="src/csparse.cpp"/>
     <File Name="src/spa2d.cpp"/>
     <File Name="src/MapperNode.cpp"/>
+    <File Name="src/SpaSolver.h"/>
+    <File Name="src/csparse.h"/>
+    <File Name="src/spa2d.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/graph_slam/MultiMapper.h"/>
-    <File Name="include/graph_slam/SpaSolver.h"/>
-    <File Name="include/graph_slam/csparse.h"/>
-    <File Name="include/graph_slam/spa2d.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="ros">
     <File Name="mainpage.dox"/>

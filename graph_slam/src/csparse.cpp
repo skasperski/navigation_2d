@@ -35,9 +35,9 @@
 //
 // Interface to CSparse
 //
+#include "csparse.h"
 
 #include <stdio.h>
-#include <graph_slam/csparse.h>
 
 using namespace Eigen;
 

@@ -27,8 +27,9 @@
 #define EIGEN_DEFAULT_IO_FORMAT Eigen::IOFormat(10)
 
 #include <Eigen/Eigen>
-#include "graph_slam/spa2d.h"
-#include "ros/time.h"
+#include <ros/time.h>
+
+#include "spa2d.h"
 
 typedef std::vector<karto::Matrix3> CovarianceVector;
 

@@ -15,8 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "graph_slam/SpaSolver.h"
-#include "ros/console.h"
+#include "SpaSolver.h"
+
+#include <ros/console.h>
 
 SpaSolver::SpaSolver()
 {

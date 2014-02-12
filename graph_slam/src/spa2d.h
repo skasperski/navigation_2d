@@ -54,7 +54,7 @@
 #include <vector>
 
 // sparse Cholesky
-#include <graph_slam/csparse.h>
+#include "csparse.h"
 // block jacobian pcg
 // #include <bpcg/bpcg.h>
 
