@@ -86,9 +86,8 @@
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
-    <File Name="src/Keyboard.cpp"/>
-    <File Name="src/operator.cpp"/>
     <File Name="src/RobotOperator.cpp"/>
+    <File Name="src/node.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/RobotOperator.h"/>
