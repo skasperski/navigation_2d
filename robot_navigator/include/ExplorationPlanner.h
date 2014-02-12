@@ -7,9 +7,10 @@
 #define EXPL_FAILED     4
 
 #include <string>
-#include "tf/transform_listener.h"
+#include <tf/transform_listener.h>
+#include <nav2d_msgs/RobotPose.h>
+
 #include "GridMap.h"
-#include "robot_navigator/RobotPose.h"
 
 // A list of all other robots, that will subscribe to the other robots topic and update itself
 typedef std::map<unsigned int, geometry_msgs::Pose2D> PoseList;
@@ -23,7 +24,7 @@ public:
 		mOtherRobotsSubscriber = robotNode.subscribe("others", 10, &RobotList::receiveOtherPose, this);
 	}
 	
-	void receiveOtherPose(const robot_navigator::RobotPose::ConstPtr& msg)
+	void receiveOtherPose(const nav2d_msgs::RobotPose::ConstPtr& msg)
 	{
 		mOtherRobots[msg->robot_id] = msg->pose;
 	}

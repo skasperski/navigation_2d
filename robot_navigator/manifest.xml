@@ -11,7 +11,7 @@
   <depend package="roscpp"/>
   <depend package="tf"/>
   <depend package="actionlib"/>
-  <depend package="nav_msgs"/>
+  <depend package="nav2d_msgs"/>
   <depend package="robot_operator"/>
   <export>
   	<cpp cflags="-I${prefix}/include" />

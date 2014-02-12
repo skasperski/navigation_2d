@@ -10,7 +10,6 @@
 #include "MapInflationTool.h"
 #include "ExplorationPlanner.h"
 #include "robot_navigator/SendCommand.h"
-#include "robot_navigator/Status.h"
 #include "robot_navigator/MoveToPosition2DAction.h"
 #include "robot_navigator/ExploreAction.h"
 #include "robot_navigator/GetFirstMapAction.h"
@@ -42,7 +41,6 @@ private:
 	bool preparePlan();
 	bool createPlan();
 	void publishPlan();
-	void publishStatus();
 
 	// Everything related to ROS
 	tf::TransformListener mTfListener;
@@ -50,7 +48,6 @@ private:
 	ros::Subscriber mGoalSubscriber;
 	ros::Publisher mPlanPublisher;
 	ros::Publisher mCommandPublisher;
-	ros::Publisher mStatusPublisher;
 	ros::Publisher mMarkerPublisher;
 	ros::ServiceServer mCommandServer;
 

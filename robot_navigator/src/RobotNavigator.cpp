@@ -26,9 +26,8 @@ RobotNavigator::RobotNavigator()
 
 	mCommandPublisher = robotNode.advertise<robot_operator::cmd>("cmd", 1);
 	mCommandServer = robotNode.advertiseService(NAV_COMMAND_SERVICE, &RobotNavigator::receiveCommand, this);
-	mStatusPublisher = robotNode.advertise<robot_navigator::Status>(NAV_STATUS_TOPIC,10);
 	mCurrentPlan = NULL;
-	
+
 	NodeHandle navigatorNode("~/");
 	mPlanPublisher = navigatorNode.advertise<nav_msgs::GridCells>("plan", 1);
 	mMarkerPublisher = navigatorNode.advertise<visualization_msgs::Marker>("markers", 1, true);
@@ -45,7 +44,7 @@ RobotNavigator::RobotNavigator()
 	navigatorNode.param("max_replanning_period", mMaxReplanningPeriod, 1.0);
 	mCostObstacle = 100;
 	mCostLethal = (1.0 - (mRobotRadius / mInflationRadius)) * (double)mCostObstacle;
-	
+
 	robotNode.param("map_frame", mMapFrame, std::string("map"));
 	robotNode.param("robot_frame", mRobotFrame, std::string("robot"));
 	robotNode.param("robot_id", mRobotID, 1);
@@ -53,12 +52,12 @@ RobotNavigator::RobotNavigator()
 	robotNode.param("explore_action_topic", mExploreActionTopic, std::string(NAV_EXPLORE_ACTION));
 	robotNode.param("getmap_action_topic", mGetMapActionTopic, std::string(NAV_GETMAP_ACTION));
 	robotNode.param("localize_action_topic", mLocalizeActionTopic, std::string(NAV_LOCALIZE_ACTION));
-	
+
 	// Apply tf_prefix to all used frame-id's
 	std::string tfPrefix = mTfListener.getTFPrefix();
 	mRobotFrame = resolve(tfPrefix, mRobotFrame);
 	mMapFrame = resolve(tfPrefix, mMapFrame);
-	
+
 	// Create an ExplorationPlanner
 	switch(mExplorationStrategy)
 	{
@@ -100,7 +99,6 @@ RobotNavigator::RobotNavigator()
 	mIsPaused = false;
 	mStatus = NAV_ST_IDLE;
 	mCellInflationRadius = 0;
-	publishStatus();
 }
 
 RobotNavigator::~RobotNavigator()
@@ -420,10 +418,7 @@ void RobotNavigator::stop()
 	stopMsg.Turn = 0;
 	stopMsg.Velocity = 0;
 	mCommandPublisher.publish(stopMsg);
-	
 	mStatus = NAV_ST_IDLE;
-	publishStatus();
-	
 	mIsPaused = false;
 	mIsStopped = false;
 }
@@ -677,7 +672,6 @@ void RobotNavigator::receiveMoveGoal(const robot_navigator::MoveToPosition2DGoal
 		{
 			WallTime startTime = WallTime::now();
 			mStatus = NAV_ST_NAVIGATING;
-			publishStatus();
 			
 			// Create the plan for navigation
 			mHasNewMap = false;
@@ -808,7 +802,6 @@ void RobotNavigator::receiveExploreGoal(const robot_navigator::ExploreGoal::Cons
 	}
 	
 	mStatus = NAV_ST_EXPLORING;
-	publishStatus();
 	unsigned int cycle = 0;
 	unsigned int lastCheck = 0;
 	int recheckCycles = mMinReplanningPeriod * FREQUENCY;
@@ -961,11 +954,3 @@ bool RobotNavigator::setCurrentPosition()
 	mCurrentPositionY = world_y;
 	return true;
 }
-
-void RobotNavigator::publishStatus()
-{
-	robot_navigator::Status statusMsg;
-	statusMsg.status = mStatus;
-	mStatusPublisher.publish(statusMsg);
-}
- 
