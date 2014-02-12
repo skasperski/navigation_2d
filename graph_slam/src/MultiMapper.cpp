@@ -31,7 +31,6 @@ MultiMapper::MultiMapper()
 	mapperNode.param("publish_pose_graph", mPublishPoseGraph, true);
 	mapperNode.param("max_covariance", mMaxCovariance, 0.05);
 	mapperNode.param("min_map_size", mMinMapSize, 50);
-	mapperNode.param("transform_publish_period", mTransformPublishPeriod, 0.05);
 
 	// Apply tf_prefix to all used frame-id's
 	std::string tfPrefix = mTransformListener.getTFPrefix();
@@ -52,8 +51,6 @@ MultiMapper::MultiMapper()
 	mVerticesPublisher = mapperNode.advertise<visualization_msgs::Marker>("vertices", 1, true);
 	mEdgesPublisher = mapperNode.advertise<visualization_msgs::Marker>("edges", 1, true);
 	mPosePublisher = robotNode.advertise<geometry_msgs::PoseStamped>("localization_result", 1, true);
-	
-	mTransformThread = new boost::thread(boost::bind(&MultiMapper::publishLoop, this));
 
 	// Initialize KARTO-Mapper
 	mMapper = new karto::OpenMapper(true);
@@ -148,10 +145,8 @@ MultiMapper::MultiMapper()
 	mLaser = NULL;
 	
 	// Initialize Variables
-	mTransformMutex.lock();
 	mMapToOdometry.setIdentity();
 	mOdometryOffset.setIdentity();
-	mTransformMutex.unlock();
 	mNodesAdded = 0;
 	mMapChanged = true;
 	mLastMapUpdate = ros::WallTime(0);
@@ -188,26 +183,6 @@ MultiMapper::~MultiMapper()
 void MultiMapper::setScanSolver(karto::ScanSolver* scanSolver)
 {
 	mMapper->SetScanSolver(scanSolver);
-}
-
-void MultiMapper::publishLoop()
-{
-	if(mTransformPublishPeriod == 0)
-	{
-		ROS_WARN("TransformPublishPeriod is 0, will not publish any transforms.");
-		return;
-	}
-	
-	ROS_INFO("Starting to publish TF from %s to %s every %.3f seconds.",
-		mMapFrame.c_str(), mOdometryFrame.c_str(), mTransformPublishPeriod);
-
-	ros::Rate r(1.0 / mTransformPublishPeriod);
-	while(ros::ok())
-	{
-		if(mState == ST_MAPPING)
-			publishTransform();
-		r.sleep();
-	}
 }
 
 void MultiMapper::setRobotPose(double x, double y, double yaw)
@@ -360,12 +335,10 @@ void MultiMapper::receiveLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan)
 			}
 			if(ok) 
 			{
-				mTransformMutex.lock();
 				mMapToOdometry = tf::Transform(tf::Quaternion( map_in_odom.getRotation() ), tf::Point(map_in_odom.getOrigin() ) ).inverse();
 				tf::Vector3 v = mMapToOdometry.getOrigin();
 				v.setZ(0);
 				mMapToOdometry.setOrigin(v);
-				mTransformMutex.unlock();
 			}
 			mNodesAdded++;
 			mMapChanged = true;
@@ -704,8 +677,9 @@ void MultiMapper::onMessage(const void* sender, karto::MapperEventArguments& arg
 
 void MultiMapper::publishTransform()
 {
-	mTransformMutex.lock();
-	mTransformBroadcaster.sendTransform(tf::StampedTransform (mOdometryOffset, ros::Time::now() , mOffsetFrame, mOdometryFrame));
-	mTransformBroadcaster.sendTransform(tf::StampedTransform (mMapToOdometry, ros::Time::now() , mMapFrame, mOffsetFrame));
-	mTransformMutex.unlock(); 
+	if(mState == ST_MAPPING)
+	{
+		mTransformBroadcaster.sendTransform(tf::StampedTransform (mOdometryOffset, ros::Time::now() , mOffsetFrame, mOdometryFrame));
+		mTransformBroadcaster.sendTransform(tf::StampedTransform (mMapToOdometry, ros::Time::now() , mMapFrame, mOffsetFrame));
+	}
 }

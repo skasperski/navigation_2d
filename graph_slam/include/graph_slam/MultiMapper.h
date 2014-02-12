@@ -10,7 +10,6 @@
 #include "geometry_msgs/PoseWithCovarianceStamped.h"
 #include "nav2d_msgs/LocalizedScan.h"
 
-#include <boost/thread.hpp>
 #include <string>
 #include <map>
 
@@ -27,7 +26,7 @@ public:
 	// Constructor & Destructor
 	MultiMapper();
 	~MultiMapper();
-	
+
 	// Public methods
 	void receiveLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan);
 	void receiveLocalizedScan(const nav2d_msgs::LocalizedScan::ConstPtr& scan);
@@ -38,13 +37,13 @@ public:
 	void publishLoop();
 	void publishTransform();
 	void setScanSolver(karto::ScanSolver* scanSolver);
-	
+
 private:
 	// Private methods
 	bool updateMap();
 	bool sendMap();
 	void setRobotPose(double x, double y, double yaw);
-	
+
 	// Particle filter to localize within received map
 	SelfLocalizer* mSelfLocalizer;
 	
@@ -53,9 +52,9 @@ private:
 	tf::TransformBroadcaster mTransformBroadcaster;
 	tf::Transform mMapToOdometry;
 	tf::Transform mOdometryOffset;
-	
+
 	nav_msgs::OccupancyGrid mGridMap;
-	
+
 	ros::ServiceServer mMapServer;
 	ros::Publisher mMapPublisher;
 	ros::Publisher mScanPublisher;
@@ -66,13 +65,13 @@ private:
 	ros::Subscriber mLaserSubscriber;
 	ros::Subscriber mScanSubscriber;
 	ros::Subscriber mInitialPoseSubscriber;
-	
+
 	// Everything related to KARTO
 	karto::LaserRangeFinderPtr mLaser;
 	karto::SmartPointer<karto::OpenMapper> mMapper;
 	std::map<int, karto::LaserRangeFinderPtr> mOtherLasers;
 	bool mMapChanged;
-	
+
 	// Parameters and Variables
 	int mRobotID;               // Who am I?
 	double mMapResolution;      // Resolution of published grid map.
@@ -84,11 +83,7 @@ private:
 	int mNodesAdded;            // Number of nodes added to the pose graph.
 	int mMinMapSize;            // Minimum map size (# of nodes) needed for localization.
 	ros::WallTime mLastMapUpdate;
-	
-	double mTransformPublishPeriod;    // Update rate for the transform map to odometry
-	boost::thread* mTransformThread;
-	boost::mutex mTransformMutex;
-	
+
 	// Frames and Topics
 	std::string mLaserFrame;
 	std::string mRobotFrame;
