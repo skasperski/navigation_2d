@@ -191,11 +191,11 @@ bool RobotNavigator::preparePlan()
 	if(!setCurrentPosition()) return false;
 	
 	// Clear robot footprint in map
-	unsigned int x, y;
-	mCurrentMap.getCoordinates(x, y, mStartPoint);
-	for(int i = -mCellRobotRadius; i < (int)mCellRobotRadius; i++)
-		for(int j = -mCellRobotRadius; j < (int)mCellRobotRadius; j++)
-			mCurrentMap.setData(x+i, y+j, 0);
+	unsigned int x = 0, y = 0;
+	if(mCurrentMap.getCoordinates(x, y, mStartPoint))
+		for(int i = -mCellRobotRadius; i < (int)mCellRobotRadius; i++)
+			for(int j = -mCellRobotRadius; j < (int)mCellRobotRadius; j++)
+				mCurrentMap.setData(x+i, y+j, 0);
 	
 	mInflationTool.inflateMap(&mCurrentMap);
 	return true;
@@ -205,7 +205,7 @@ bool RobotNavigator::createPlan()
 {	
 	ROS_DEBUG("Map-Value of goal point is %d, lethal threshold is %d.", mCurrentMap.getData(mGoalPoint), mCostLethal);
 	
-	unsigned int goal_x,goal_y;
+	unsigned int goal_x = 0, goal_y = 0;
 	if(mCurrentMap.getCoordinates(goal_x,goal_y,mGoalPoint))
 	{
 		visualization_msgs::Marker marker;
@@ -329,13 +329,13 @@ void RobotNavigator::publishPlan()
 	std::vector<std::pair<double, double> > points;
 	while(true)
 	{
-		unsigned int x,y;
-		mCurrentMap.getCoordinates(x,y,index);
-		points.push_back(std::pair<double, double>(
-			((x+0.5) * mCurrentMap.getResolution()) + mCurrentMap.getOriginX(), 
-			((y+0.5) * mCurrentMap.getResolution()) + mCurrentMap.getOriginY()
-		));
-		
+		unsigned int x = 0, y = 0;
+		if(mCurrentMap.getCoordinates(x,y,index))
+			points.push_back(std::pair<double, double>(
+				((x+0.5) * mCurrentMap.getResolution()) + mCurrentMap.getOriginX(), 
+				((y+0.5) * mCurrentMap.getResolution()) + mCurrentMap.getOriginY()
+			));
+
 		if(mCurrentPlan[index] == 0) break;
 		
 		unsigned int next_index = index;
@@ -461,8 +461,12 @@ bool RobotNavigator::generateCommand()
 	}
 	
 	// Head towards (x,y)
-	unsigned int x, y;
-	mCurrentMap.getCoordinates(x, y, target);
+	unsigned int x = 0, y = 0;
+	if(!mCurrentMap.getCoordinates(x, y, target))
+	{
+		ROS_ERROR("Plan execution failed, target pose not in map!");
+		return false;
+	}
 	double map_angle = atan2((double)y - current_y, (double)x - current_x);
 	
 	double angle = map_angle - mCurrentDirection;
@@ -804,8 +808,8 @@ void RobotNavigator::receiveExploreGoal(const robot_navigator::ExploreGoal::Cons
 	mStatus = NAV_ST_EXPLORING;
 	unsigned int cycle = 0;
 	unsigned int lastCheck = 0;
-	int recheckCycles = mMinReplanningPeriod * FREQUENCY;
-	int recheckThrottle = mMaxReplanningPeriod * FREQUENCY;
+	unsigned int recheckCycles = mMinReplanningPeriod * FREQUENCY;
+	unsigned int recheckThrottle = mMaxReplanningPeriod * FREQUENCY;
 	
 	// Move to exploration target
 	Rate loopRate(FREQUENCY);
