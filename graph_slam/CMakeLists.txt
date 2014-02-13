@@ -17,10 +17,42 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
+SET(KARTO_SOURCE_FILES
+  src/OpenKarto/Any.cpp
+  src/OpenKarto/Event.cpp
+  src/OpenKarto/Exception.cpp
+  src/OpenKarto/Geometry.cpp
+  src/OpenKarto/Grid.cpp
+  src/OpenKarto/GridIndexLookup.cpp
+  src/OpenKarto/Identifier.cpp
+  src/OpenKarto/Logger.cpp
+  src/OpenKarto/Meta.cpp
+  src/OpenKarto/MetaAttribute.cpp
+  src/OpenKarto/MetaClass.cpp
+  src/OpenKarto/MetaClassManager.cpp
+  src/OpenKarto/MetaEnum.cpp
+  src/OpenKarto/MetaEnumHelper.cpp
+  src/OpenKarto/MetaEnumManager.cpp
+  src/OpenKarto/Module.cpp
+  src/OpenKarto/Mutex.cpp
+  src/OpenKarto/Object.cpp
+  src/OpenKarto/Objects.cpp
+  src/OpenKarto/OccupancyGrid.cpp
+  src/OpenKarto/OpenKarto.cpp
+  src/OpenKarto/OpenMapper.cpp
+  src/OpenKarto/Parameter.cpp
+  src/OpenKarto/PoseTransform.cpp
+  src/OpenKarto/RangeTransform.cpp
+  src/OpenKarto/Referenced.cpp
+  src/OpenKarto/RigidBodyTransform.cpp
+  src/OpenKarto/Sensor.cpp
+  src/OpenKarto/SensorData.cpp
+  src/OpenKarto/SensorRegistry.cpp
+  src/OpenKarto/String.cpp
+  src/OpenKarto/StringHelper.cpp
+)
+
+rosbuild_add_library(OpenKarto ${KARTO_SOURCE_FILES})
 
 find_package(Eigen REQUIRED)
 include_directories(${Eigen_INCLUDE_DIRS})
