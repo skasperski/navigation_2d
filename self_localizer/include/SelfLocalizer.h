@@ -1,18 +1,17 @@
 #ifndef SELF_LOCALIZER_H
 #define SELF_LOCALIZER_H
 
-#include "string"
+#include <string>
 
-#include "ros/ros.h"
-#include "tf/transform_listener.h"
+#include <ros/ros.h>
+#include <tf/transform_listener.h>
+#include <nav_msgs/OccupancyGrid.h>
+#include <geometry_msgs/PoseArray.h>
+#include <sensor_msgs/LaserScan.h>
 
-#include "ParticleFilter/map.h"
-#include "ParticleFilter/pf.h"
-#include "ParticleFilter/pf_pdf.h"
-
-#include "nav_msgs/OccupancyGrid.h"
-#include "geometry_msgs/PoseArray.h"
-#include "sensor_msgs/LaserScan.h"
+#include "map.h"
+#include "pf.h"
+#include "pf_pdf.h"
 
 class OdometryData
 {

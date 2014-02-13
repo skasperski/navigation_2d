@@ -16,14 +16,29 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
+SET(PF_SOURCE_FILES
+  src/pf/pf.c 
+  src/pf/pf_kdtree.c 
+  src/pf/pf_pdf.c 
+  src/pf/pf_vector.c
+  src/pf/eig3.c
+  src/pf/pf_draw.c
+ )
+
+SET(MAP_SOURCE_FILES
+  src/map/map.c
+  src/map/map_range.c
+  src/map/map_store.c
+  src/map/map_draw.c
+  src/map/map_cspace.cpp
+)
+
+rosbuild_add_library(pf ${PF_SOURCE_FILES})
+rosbuild_add_library(map ${MAP_SOURCE_FILES})
 
 #common commands for building c++ executables and libraries
 rosbuild_add_library(SelfLocalizer src/SelfLocalizer.cpp)
-target_link_libraries(SelfLocalizer ParticleFilter)
+target_link_libraries(SelfLocalizer pf map)
 
 rosbuild_add_executable(Localizer src/LocalizerNode.cpp)
 target_link_libraries(Localizer SelfLocalizer)
