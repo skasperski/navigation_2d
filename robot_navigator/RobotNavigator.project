@@ -14,9 +14,6 @@
     <File Name="src/RobotNavigator.cpp"/>
     <File Name="src/explore_client.cpp"/>
     <File Name="src/get_map_client.cpp"/>
-    <File Name="src/MinPosPlanner.cpp"/>
-    <File Name="src/MultiWavefrontPlanner.cpp"/>
-    <File Name="src/NearestFrontierPlanner.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/NavigatorCommands.h"/>
@@ -24,9 +21,6 @@
     <File Name="include/MapInflationTool.h"/>
     <File Name="include/ExplorationPlanner.h"/>
     <File Name="include/GridMap.h"/>
-    <File Name="include/MinPosPlanner.h"/>
-    <File Name="include/MultiWavefrontPlanner.h"/>
-    <File Name="include/NearestFrontierPlanner.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

@@ -5,6 +5,7 @@
   <Project Name="RemoteController" Path="remote_controller/RemoteController.project" Active="No"/>
   <Project Name="GraphSlam" Path="graph_slam/GraphSlam.project"/>
   <Project Name="SelfLocalizer" Path="self_localizer/SelfLocalizer.project" Active="No"/>
+  <Project Name="Exploration" Path="exploration/Exploration.project"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="RobotOperator" ConfigName="Debug"/>
@@ -12,6 +13,7 @@
       <Project Name="RemoteController" ConfigName="Debug"/>
       <Project Name="GraphSlam" ConfigName="Debug"/>
       <Project Name="SelfLocalizer" ConfigName="Debug"/>
+      <Project Name="Exploration" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="RobotOperator" ConfigName="Release"/>
@@ -19,6 +21,7 @@
       <Project Name="RemoteController" ConfigName="Release"/>
       <Project Name="GraphSlam" ConfigName="Release"/>
       <Project Name="SelfLocalizer" ConfigName="Release"/>
+      <Project Name="Exploration" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
