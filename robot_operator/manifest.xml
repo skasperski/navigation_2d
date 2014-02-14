@@ -1,7 +1,11 @@
 <package>
-  <description brief="operator">
+  <description brief="Obstacle Avoidance Module">
 
-     A node that issues simple motion commands to a mobile base given a local costmap and a desired direction.
+This package provides a lightweight, purely reactive obstacle-avoidance
+module for mobile robots moving in a planar environment. The operator node
+works by evaluating a set of predefined motion primitives based on a local
+costmap and a desired direction. The best evaluated motion command will be
+send to the mobile base.
 
   </description>
   <author>Sebastian Kasperski</author>
