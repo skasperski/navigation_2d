@@ -218,6 +218,7 @@ void MultiMapper::setRobotPose(double x, double y, double yaw)
 	mPosePublisher.publish(locResult);
 	
 	// Publish via tf
+	mState = ST_MAPPING;
 	publishTransform();
 }
 
@@ -263,7 +264,6 @@ void MultiMapper::receiveLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan)
 			ROS_INFO("Localization finished on robot %d, now starting to map.", mRobotID);
 			tf::Transform p = mSelfLocalizer->getBestPose();
 			setRobotPose(p.getOrigin().getX(), p.getOrigin().getY(), tf::getYaw(p.getRotation()));
-			mState = ST_MAPPING;
 		}
 	}else 
 	if(mState == ST_MAPPING)
@@ -666,8 +666,7 @@ void MultiMapper::receiveInitialPose(const geometry_msgs::PoseWithCovarianceStam
 	{
 		ROS_ERROR("Failed to set pose on robot %d! (%s)", mRobotID, e.what());
 		return;
-	}	
-	mState = ST_MAPPING;
+	}
 }
 
 void MultiMapper::onMessage(const void* sender, karto::MapperEventArguments& args)
