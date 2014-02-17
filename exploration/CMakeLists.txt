@@ -22,6 +22,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_gensrv()
 
 set(PLANNER_FILES
+	src/exploration_plugins.cpp
 	src/NearestFrontierPlanner.cpp
 	src/MultiWavefrontPlanner.cpp
 	src/MinPosPlanner.cpp)

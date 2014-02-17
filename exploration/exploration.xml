@@ -1,19 +1,19 @@
 <library path="lib/libexploration">
 
-  <class name="NearestFrontier" type="NearestFrontierPlanner" base_class_type="ExplorationPlanner">
+  <class name="exploration/NearestFrontier" type="NearestFrontierPlanner" base_class_type="ExplorationPlanner">
     <description>
       Performs simple, uncoordinated nearest-frontier exploration.
     </description>
   </class>
 
-  <class name="MultiWavfront" type="MultiWavefrontPlanner" base_class_type="ExplorationPlanner">
+  <class name="exploration/MultiWavfront" type="MultiWavefrontPlanner" base_class_type="ExplorationPlanner">
     <description>
       Extends nearest-frontier to the multi-robot case by starting
       synchronized wavefronts at each robots position.
     </description>
   </class>
 
-  <class name="MinPos" type="MinPosPlanner" base_class_type="ExplorationPlanner">
+  <class name="exploration/MinPos" type="MinPosPlanner" base_class_type="ExplorationPlanner">
     <description>
       Implements the MinPos exploration algorithm presented in:
       [A. Bautin and O. Simonin, “MinPos : A Novel Frontier Allocation
