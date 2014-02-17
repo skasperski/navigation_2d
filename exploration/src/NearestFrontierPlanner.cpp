@@ -1,4 +1,4 @@
-#include "NearestFrontierPlanner.h"
+#include "exploration/NearestFrontierPlanner.h"
 
 typedef std::multimap<double,unsigned int> Queue;
 typedef std::pair<double,unsigned int> Entry;

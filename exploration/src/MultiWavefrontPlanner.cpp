@@ -1,4 +1,4 @@
-#include "MultiWavefrontPlanner.h"
+#include "exploration/MultiWavefrontPlanner.h"
 #include "geometry_msgs/Pose2D.h"
 #include "nav_msgs/GridCells.h"
 
@@ -7,7 +7,7 @@ typedef std::pair<double,unsigned int> Entry;
 
 using namespace ros;
 
-MultiWavefrontPlanner::MultiWavefrontPlanner(bool wait)
+MultiWavefrontPlanner::MultiWavefrontPlanner()
 {
 	NodeHandle robotNode;
 	robotNode.param("robot_id", mRobotID, 1);
@@ -18,7 +18,7 @@ MultiWavefrontPlanner::MultiWavefrontPlanner(bool wait)
 	mMapFrame = tf::resolve(tfPrefix, mMapFrame);
 	
 	NodeHandle navigatorNode("~/");
-	mWaitForOthers = wait;
+	mWaitForOthers = false;
 	
 	// Initialize Publisher/Subscriber
 	mWavefrontPublisher = navigatorNode.advertise<nav_msgs::GridCells>("wave", 1);

@@ -77,7 +77,8 @@ private:
 
 	// Everything related to the global map and plan
 	MapInflationTool mInflationTool;
-	ExplorationPlanner* mExplorationPlanner;
+	std::string mExplorationStrategy;
+	boost::shared_ptr<ExplorationPlanner> mExplorationPlanner;
 	GridMap mCurrentMap;
 	double* mCurrentPlan;
 
@@ -89,7 +90,6 @@ private:
 	char mCostObstacle;
 	char mCostLethal;
 
-	int mExplorationStrategy;
 	double mNavigationGoalDistance;
 	double mNavigationGoalAngle;
 	double mNavigationHomingDistance;

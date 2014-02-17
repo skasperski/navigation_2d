@@ -6,7 +6,7 @@
 class MultiWavefrontPlanner : public ExplorationPlanner
 {
 public:
-        MultiWavefrontPlanner(bool wait = false);
+        MultiWavefrontPlanner();
         ~MultiWavefrontPlanner();
         
         int findExplorationTarget(GridMap* map, unsigned int start, unsigned int &goal);

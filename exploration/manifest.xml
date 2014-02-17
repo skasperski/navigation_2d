@@ -16,6 +16,10 @@ set way points until the environment has been completely explored.
   <depend package="tf"/>
   <depend package="robot_navigator"/>
 
+  <export>
+    <robot_navigator plugin="${prefix}/exploration.xml" />
+  </export>
+
 </package>
 
 

@@ -27,7 +27,7 @@ rosbuild_genmsg()
 rosbuild_gensrv()
 
 rosbuild_add_library(MapInflationTool src/MapInflationTool.cpp)
-rosbuild_add_executable(navigator src/navigator.cpp src/RobotNavigator.cpp src/MinPosPlanner.cpp src/NearestFrontierPlanner.cpp src/MultiWavefrontPlanner.cpp)
+rosbuild_add_executable(navigator src/navigator.cpp src/RobotNavigator.cpp)
 rosbuild_add_executable(set_goal_client src/set_goal_client.cpp)
 rosbuild_add_executable(explore_client src/explore_client.cpp)
 rosbuild_add_executable(get_map_client src/get_map_client.cpp)

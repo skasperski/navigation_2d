@@ -1,14 +1,12 @@
 #include "RobotNavigator.h"
+
+#include <robot_operator/cmd.h>
+#include <nav_msgs/GridCells.h>
+#include <visualization_msgs/Marker.h>
+#include <pluginlib/class_loader.h>
+
 #include <set>
 #include <map>
-
-#include "robot_operator/cmd.h"
-#include "nav_msgs/GridCells.h"
-#include "visualization_msgs/Marker.h"
-
-#include "NearestFrontierPlanner.h"
-#include "MultiWavefrontPlanner.h"
-#include "MinPosPlanner.h"
 
 #define PI 3.14159265
 #define FREQUENCY 5.0
@@ -35,7 +33,7 @@ RobotNavigator::RobotNavigator()
 	// Get parameters
 	navigatorNode.param("map_inflation_radius", mInflationRadius, 1.0);
 	navigatorNode.param("robot_radius", mRobotRadius, 0.3);
-	navigatorNode.param("exploration_strategy", mExplorationStrategy, 1);
+	navigatorNode.param("exploration_strategy", mExplorationStrategy, std::string("NearestFrontier"));
 	navigatorNode.param("navigation_goal_distance", mNavigationGoalDistance, 1.0);
 	navigatorNode.param("navigation_goal_angle", mNavigationGoalAngle, 1.0);
 	navigatorNode.param("exploration_goal_distance", mExplorationGoalDistance, 3.0);
@@ -58,32 +56,26 @@ RobotNavigator::RobotNavigator()
 	mRobotFrame = resolve(tfPrefix, mRobotFrame);
 	mMapFrame = resolve(tfPrefix, mMapFrame);
 
-	// Create an ExplorationPlanner
-	switch(mExplorationStrategy)
+	// Load an ExplorationPlanner plugin
+	pluginlib::ClassLoader<ExplorationPlanner> planLoader("robot_navigator", "ExplorationPlanner");
+
+	try
 	{
-	case 10:
-		mExplorationPlanner = new NearestFrontierPlanner();
-		break;
-	case 20:
-		mExplorationPlanner = new MultiWavefrontPlanner(false);
-		break;
-	case 21:
-		mExplorationPlanner = new MultiWavefrontPlanner(true);
-		break;
-	case 30:
-		mExplorationPlanner = new MinPosPlanner();
-		break;
-	default:
-		ROS_WARN("Invalid exploration strategy (%d) given, using default!", mExplorationStrategy);
-		mExplorationPlanner = new NearestFrontierPlanner();
+		mExplorationPlanner = planLoader.createInstance(mExplorationStrategy);
+		ROS_INFO("Successfully loaded exploration strategy %s.", mExplorationStrategy.c_str());
+		
+		mExploreActionServer = new ExploreActionServer(mExploreActionTopic, boost::bind(&RobotNavigator::receiveExploreGoal, this, _1), false);
+		mExploreActionServer->start();
 	}
-	
+	catch(pluginlib::PluginlibException& ex)
+	{
+		ROS_ERROR("Failed to load exploration plugin! Error: %s", ex.what());
+		mExploreActionServer = NULL;
+	}
+
 	// Create action servers
 	mMoveActionServer = new MoveActionServer(mMoveActionTopic, boost::bind(&RobotNavigator::receiveMoveGoal, this, _1), false);
 	mMoveActionServer->start();
-	
-	mExploreActionServer = new ExploreActionServer(mExploreActionTopic, boost::bind(&RobotNavigator::receiveExploreGoal, this, _1), false);
-	mExploreActionServer->start();
 	
 	mLocalizeActionServer = new LocalizeActionServer(mLocalizeActionTopic, boost::bind(&RobotNavigator::receiveLocalizeGoal, this, _1), false);
 	mLocalizeActionServer->start();
@@ -104,9 +96,9 @@ RobotNavigator::RobotNavigator()
 RobotNavigator::~RobotNavigator()
 {
 	delete[] mCurrentPlan;
-	delete mExplorationPlanner;
 	delete mMoveActionServer;
 	delete mExploreActionServer;
+	delete mMoveActionServer;
 }
 
 bool RobotNavigator::getMap()

@@ -100,4 +100,10 @@
     <File Name="include/exploration/MultiWavefrontPlanner.h"/>
     <File Name="include/exploration/NearestFrontierPlanner.h"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="ros">
+    <File Name="CMakeLists.txt"/>
+    <File Name="mainpage.dox"/>
+    <File Name="manifest.xml"/>
+    <File Name="exploration.xml"/>
+  </VirtualDirectory>
 </CodeLite_Project>
