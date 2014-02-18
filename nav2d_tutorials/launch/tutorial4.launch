@@ -4,7 +4,7 @@
 	<param name="use_sim_time" value="true" />
 
 	<!-- Start Stage simulator with a given environment -->
-	<node name="Stage" pkg="stage" type="stageros" args="$(find nav2d_tutorials)/world/tutorial4.world">
+	<node name="Stage" pkg="stage_ros" type="stageros" args="$(find nav2d_tutorials)/world/tutorial4.world">
 		<param name="base_watchdog_timeout" value="0" />
 	</node>
 
@@ -67,6 +67,6 @@
 	</group>
 
 	<!-- RVIZ to view the visulization -->
-	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial4.vcg" />
+	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial4.rviz" />
 
 </launch>

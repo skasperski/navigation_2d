@@ -5,7 +5,7 @@
 	<rosparam file="$(find nav2d_tutorials)/param/ros.yaml"/>
 
 	<!-- Start Stage simulator with a given environment -->
-	<node name="Stage" pkg="stage" type="stageros" args="$(find nav2d_tutorials)/world/tutorial.world">
+	<node name="Stage" pkg="stage_ros" type="stageros" args="$(find nav2d_tutorials)/world/tutorial.world">
 		<param name="base_watchdog_timeout" value="0" />
 	</node>
 
@@ -33,6 +33,6 @@
 	<node name="PioneerTransforms" pkg="p2os_urdf" type="publisher"/>
 
 	<!-- RVIZ to view the visulaization -->
-	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial1.vcg" />
+	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial1.rviz" />
 
 </launch>
