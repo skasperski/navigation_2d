@@ -1,6 +1,0 @@
-image: autolab.png
-resolution: 0.04
-origin: [-17, -15, 0.0]
-occupied_thresh: 0.65
-free_thresh: 0.01
-negate: 0
