@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+
+  <name>robot_operator</name>
+  <version>0.0.0</version>
+  <description>The Robot-Operator package</description>
+  <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
+  <license>GPLv3</license>
+  <url type="website">http://wiki.ros.org/robot_operator</url>
+  <author email="sebastian.kasperski@dfki.de">Sebastian Kasperski</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>costmap_2d</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>costmap_2d</run_depend>
+
+</package>

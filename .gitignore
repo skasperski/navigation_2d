@@ -1,10 +1,2 @@
-_*
 *~
 .codelite/
-*.pyc
-build/
-bin/
-lib/
-msg_gen/
-srv_gen/
-idl_gen/
