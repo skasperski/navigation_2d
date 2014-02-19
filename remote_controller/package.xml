@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+
+  <name>remote_controller</name>
+  <version>0.0.0</version>
+  <description>
+    This package is used to manually control a robot that uses the operator and
+    navigator node from navigation_2d. Currently there is one node to control one
+    robot with a joystick and one to control multiple robots in simulation.
+    It can send commands directly to the operator or start and stop navigator actions.
+  </description>
+  <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
+  <license>GPLv3</license>
+  <url type="website">http://wiki.ros.org/remote_controller</url>
+  <author email="sebastian.kasperski@dfki.de">Sebastian Kasperski</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>robot_navigator</build_depend>
+  <build_depend>robot_operator</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+
+  <run_depend>robot_navigator</run_depend>
+  <run_depend>robot_operator</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+
+</package>
