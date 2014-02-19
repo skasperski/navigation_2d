@@ -2,6 +2,7 @@
 #include <nav_msgs/GetMap.h>
 #include <tf/transform_listener.h>
 #include <actionlib/server/simple_action_server.h>
+#include <pluginlib/class_loader.h>
 #include <robot_navigator/SendCommand.h>
 #include <robot_navigator/MoveToPosition2DAction.h>
 #include <robot_navigator/ExploreAction.h>
@@ -19,6 +20,7 @@ typedef actionlib::SimpleActionServer<robot_navigator::MoveToPosition2DAction> M
 typedef actionlib::SimpleActionServer<robot_navigator::ExploreAction> ExploreActionServer;
 typedef actionlib::SimpleActionServer<robot_navigator::GetFirstMapAction> GetMapActionServer;
 typedef actionlib::SimpleActionServer<robot_navigator::LocalizeAction> LocalizeActionServer;
+typedef pluginlib::ClassLoader<ExplorationPlanner> PlanLoader;
 
 class RobotNavigator
 {
@@ -62,6 +64,8 @@ private:
 	ExploreActionServer* mExploreActionServer;
 	GetMapActionServer* mGetMapActionServer;
 	LocalizeActionServer* mLocalizeActionServer;
+
+	PlanLoader* mPlanLoader;
 
 	// Current status and goals
 	bool mHasNewMap;

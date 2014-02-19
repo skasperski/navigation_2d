@@ -1,8 +1,8 @@
 #include <robot_navigator/RobotNavigator.h>
+#include <robot_navigator/ExplorationPlanner.h>
 #include <robot_operator/cmd.h>
 #include <nav_msgs/GridCells.h>
 #include <visualization_msgs/Marker.h>
-#include <pluginlib/class_loader.h>
 
 #include <set>
 #include <map>
@@ -55,14 +55,12 @@ RobotNavigator::RobotNavigator()
 	mRobotFrame = resolve(tfPrefix, mRobotFrame);
 	mMapFrame = resolve(tfPrefix, mMapFrame);
 
-	// Load an ExplorationPlanner plugin
-	pluginlib::ClassLoader<ExplorationPlanner> planLoader("robot_navigator", "ExplorationPlanner");
-
 	try
 	{
-		mExplorationPlanner = planLoader.createInstance(mExplorationStrategy);
+		mPlanLoader = new PlanLoader("robot_navigator", "ExplorationLoader");
+		mExplorationPlanner = mPlanLoader->createInstance(mExplorationStrategy);
 		ROS_INFO("Successfully loaded exploration strategy [%s].", mExplorationStrategy.c_str());
-		
+
 		mExploreActionServer = new ExploreActionServer(mExploreActionTopic, boost::bind(&RobotNavigator::receiveExploreGoal, this, _1), false);
 		mExploreActionServer->start();
 	}
@@ -70,6 +68,7 @@ RobotNavigator::RobotNavigator()
 	{
 		ROS_ERROR("Failed to load exploration plugin! Error: %s", ex.what());
 		mExploreActionServer = NULL;
+		mPlanLoader = NULL;
 	}
 
 	// Create action servers
@@ -98,6 +97,7 @@ RobotNavigator::~RobotNavigator()
 	delete mMoveActionServer;
 	delete mExploreActionServer;
 	delete mMoveActionServer;
+	delete mPlanLoader;
 }
 
 bool RobotNavigator::getMap()

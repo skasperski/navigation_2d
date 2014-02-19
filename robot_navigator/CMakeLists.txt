@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   message_generation
   tf
+  pluginlib
   actionlib
   actionlib_msgs
   geometry_msgs
