@@ -20,7 +20,7 @@
 	<node name="MapServer" pkg="map_server" type="map_server" args="$(find nav2d_tutorials)/world/tutorial.yaml" />
 
 	<!-- Start particle filter to track the robot's position -->
-	<node name="SelfLocalizer" pkg="self_localizer" type="Localizer">
+	<node name="SelfLocalizer" pkg="self_localizer" type="localizer">
 		<remap from="scan" to="base_scan"/>
 		<param name="min_particles" type="int" value="5000"/>
 		<param name="max_particles" type="int" value="20000"/>
