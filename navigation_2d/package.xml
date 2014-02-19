@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+
+  <name>navigation_2d</name>
+  <version>0.0.0</version>
+  <description>Meta-Package containing modules for 2D-Navigation</description>
+  <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
+  <license>GPLv3</license>
+  <url type="website">http://wiki.ros.org/navigation_2d</url>
+  <author email="sebastian.kasperski@dfki.de">Sebastian Kasperski</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>robot_operator</run_depend>
+
+  <export>
+     <metapackage/>
+  </export>
+
+</package>
