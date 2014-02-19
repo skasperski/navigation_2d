@@ -3,7 +3,13 @@
 
   <name>robot_operator</name>
   <version>0.0.0</version>
-  <description>The Robot-Operator package</description>
+  <description>
+    This package provides a lightweight, purely reactive obstacle-avoidance
+    module for mobile robots moving in a planar environment. The operator node
+    works by evaluating a set of predefined motion primitives based on a local
+    costmap and a desired direction. The best evaluated motion command will be
+    send to the mobile base.
+  </description>
   <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
   <license>GPLv3</license>
   <url type="website">http://wiki.ros.org/robot_operator</url>
