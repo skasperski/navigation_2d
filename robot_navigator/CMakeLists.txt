@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib_msgs
   geometry_msgs
   robot_operator
+  nav2d_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -57,7 +58,7 @@ generate_messages(
 catkin_package(
  INCLUDE_DIRS include
  LIBRARIES RobotNavigator MapInflationTool
- CATKIN_DEPENDS robot_operator roscpp tf message_runtime actionlib_msgs geometry_msgs
+ CATKIN_DEPENDS robot_operator roscpp tf message_runtime actionlib_msgs geometry_msgs nav2d_msgs
 )
 
 ###########
