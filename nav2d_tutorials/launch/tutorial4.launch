@@ -1,0 +1,72 @@
+<launch>
+
+	<!-- Some general parameters -->
+	<param name="use_sim_time" value="true" />
+
+	<!-- Start Stage simulator with a given environment -->
+	<node name="Stage" pkg="stage_ros" type="stageros" args="$(find nav2d_tutorials)/world/tutorial4.world">
+		<param name="base_watchdog_timeout" value="0" />
+	</node>
+
+	<!-- Start the joystick-driver and remote-controller for operation-->
+	<node name="Joystick" pkg="joy" type="joy_node" />
+	<node name="SimController" pkg="remote_controller" type="sim_joy" args="2"/>
+
+	<node name="R0_MapAlign" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /map /robot_0/map 100"/>
+	<node name="R1_MapAlign" pkg="tf" type="static_transform_publisher" args="40 0 0 0 0 0 /map /robot_1/map 100"/>
+
+	<group ns="robot_0">
+		<!-- Pioneer model for fancy visualization -->
+		<!-- Comment this out if you do not have the package 'p2os' available! -->
+		<param name="robot_description" command="$(find xacro)/xacro.py $(find p2os_urdf)/defs/pioneer3at.xacro" />
+		<param name="robot_id" value="1" />
+		<param name="tf_prefix" type="string" value="/robot_0"/>
+
+		<rosparam file="$(find nav2d_tutorials)/param/ros.yaml"/>
+
+		<node name="PioneerState" pkg="robot_state_publisher" type="state_publisher">
+			<remap from="joint_state" to="joint_state"/>
+			<param name="publish_frequency" type="double" value="15.0"/>
+			<param name="tf_prefix" type="string" value="/robot_0"/>
+		</node>
+
+		<node name="PioneerTransforms" pkg="p2os_urdf" type="publisher"/>
+
+		<node name="Mapper" pkg="graph_slam" type="MultiMapper">
+			<remap from="scan" to="base_scan"/>
+			<remap from="karto_in" to="/shared_scans_r2"/>
+			<remap from="karto_out" to="/shared_scans_r1"/>
+			<rosparam file="$(find nav2d_tutorials)/param/mapper.yaml"/>
+		</node>
+
+	</group>
+
+	<group ns="robot_1">
+		<!-- Pioneer model for fancy visualization -->
+		<!-- Comment this out if you do not have the package 'p2os' available! -->
+		<param name="robot_description" command="$(find xacro)/xacro.py $(find p2os_urdf)/defs/pioneer3at.xacro" />
+		<param name="robot_id" value="2" />
+		<param name="tf_prefix" type="string" value="/robot_1"/>
+
+		<rosparam file="$(find nav2d_tutorials)/param/ros.yaml"/>
+
+		<node name="PioneerState" pkg="robot_state_publisher" type="state_publisher">
+			<remap from="joint_state" to="joint_state"/>
+			<param name="publish_frequency" type="double" value="15.0"/>
+			<param name="tf_prefix" type="string" value="/robot_1"/>
+		</node>
+
+		<node name="PioneerTransforms" pkg="p2os_urdf" type="publisher"/>
+
+		<node name="Mapper" pkg="graph_slam" type="MultiMapper">
+			<remap from="scan" to="base_scan"/>
+			<remap from="karto_in" to="/shared_scans_r1"/>
+			<remap from="karto_out" to="/shared_scans_r2"/>
+			<rosparam file="$(find nav2d_tutorials)/param/mapper.yaml"/>
+		</node>
+	</group>
+
+	<!-- RVIZ to view the visulization -->
+	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial4.rviz" />
+
+</launch>

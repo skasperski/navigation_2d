@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+
+  <name>nav2d_tutorials</name>
+  <version>0.0.0</version>
+  <description>
+    Contains a set of tutorials that run 2D-Navigation within Stage-Simulator.
+  </description>
+  <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
+  <license>GPLv3</license>
+  <url type="website">http://wiki.ros.org/nav2d_tutorials</url>
+  <author email="sebastian.kasperski@dfki.de">Sebastian Kasperski</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>robot_navigator</run_depend>
+  <run_depend>stage_ros</run_depend>
+  <run_depend>joy</run_depend>
+  <run_depend>p2os</run_depend>
+
+</package>

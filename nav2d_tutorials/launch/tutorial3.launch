@@ -1,0 +1,53 @@
+<launch>
+
+	<!-- Some general parameters -->
+	<param name="use_sim_time" value="true" />
+	<rosparam file="$(find nav2d_tutorials)/param/ros.yaml"/>
+
+	<!-- Start Stage simulator with a given environment -->
+	<node name="Stage" pkg="stage_ros" type="stageros" args="$(find nav2d_tutorials)/world/tutorial.world">
+		<param name="base_watchdog_timeout" value="0" />
+	</node>
+
+	<!-- Start the Operator to control the simulated robot -->
+	<node name="Operator" pkg="robot_operator" type="operator" >
+		<remap from="scan" to="base_scan"/>
+		<rosparam file="$(find nav2d_tutorials)/param/operator.yaml"/>
+		<rosparam file="$(find nav2d_tutorials)/param/costmap.yaml" ns="local_map" />
+	</node>
+
+	<!-- Start Mapper to genreate map from laser scans -->
+	<node name="Mapper" pkg="graph_slam" type="MultiMapper">
+		<remap from="scan" to="base_scan"/>
+		<rosparam file="$(find nav2d_tutorials)/param/mapper.yaml"/>
+	</node>
+
+	<!-- Start the Navigator to move the robot autonomously -->
+	<node name="Navigator" pkg="robot_navigator" type="navigator">
+		<rosparam file="$(find nav2d_tutorials)/param/navigator.yaml"/>
+	</node>
+
+	<node name="GetMap" pkg="robot_navigator" type="get_map_client" />
+	<node name="Explore" pkg="robot_navigator" type="explore_client" />
+	<node name="SetGoal" pkg="robot_navigator" type="set_goal_client" />
+
+	<!-- Start the joystick-driver and remote-controller for operation-->
+	<node name="Joystick" pkg="joy" type="joy_node" />
+	<node name="Remote" pkg="remote_controller" type="remote_joy" />
+
+	<!-- Pioneer model for fancy visualization -->
+	<!-- Comment this out if you do not have the package 'p2os' available! -->
+	<param name="robot_description" command="$(find xacro)/xacro.py $(find p2os_urdf)/defs/pioneer3at.xacro" />
+
+	<node name="PioneerState" pkg="robot_state_publisher" type="state_publisher">
+		<remap from="joint_state" to="joint_state"/>
+		<param name="publish_frequency" type="double" value="15.0"/>
+		<param name="tf_prefix" type="string" value=""/>
+	</node>
+
+	<node name="PioneerTransforms" pkg="p2os_urdf" type="publisher"/>
+
+	<!-- RVIZ to view the visulaization -->
+	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial3.rviz" />
+
+</launch>
