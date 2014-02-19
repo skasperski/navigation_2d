@@ -13,7 +13,9 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <run_depend>nav2d_msgs</run_depend>
   <run_depend>robot_operator</run_depend>
+  <run_depend>robot_navigator</run_depend>
 
   <export>
      <metapackage/>
