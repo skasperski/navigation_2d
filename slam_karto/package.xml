@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package>
+
+  <name>slam_karto</name>
+  <version>0.0.0</version>
+  <description>The slam_karto package</description>
+
+  <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
+  <license>GPLv3</license>
+  <url type="website">http://wiki.ros.org/robot_operator</url>
+  <author email="sebastian.kasperski@dfki.de">Sebastian Kasperski</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>nav2d_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>self_localizer</build_depend>
+  <build_depend>tf</build_depend>
+
+  <run_depend>nav2d_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>self_localizer</run_depend>
+  <run_depend>tf</run_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- You can specify that this package is a metapackage here: -->
+    <!-- <metapackage/> -->
+
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
