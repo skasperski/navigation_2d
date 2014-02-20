@@ -11,20 +11,16 @@ find_package(catkin REQUIRED COMPONENTS
   tf
 )
 
+find_package(Eigen REQUIRED)
+
 ###################################
 ## catkin specific configuration ##
 ###################################
-## The catkin_package macro generates cmake config files for your package
-## Declare things to be passed to dependent projects
-## INCLUDE_DIRS: uncomment this if you package contains header files
-## LIBRARIES: libraries you create in this project that dependent projects also need
-## CATKIN_DEPENDS: catkin_packages dependent projects also need
-## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES slam_karto
-#  CATKIN_DEPENDS nav2d_msgs roscpp self_localizer tf
-#  DEPENDS system_lib
+ INCLUDE_DIRS include
+ LIBRARIES OpenKarto MultiMapper
+ CATKIN_DEPENDS nav2d_msgs roscpp self_localizer tf
+ DEPENDS Eigen
 )
 
 ###########
@@ -33,9 +29,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-#include_directories(
-#  ${catkin_INCLUDE_DIRS}
-#)
+include_directories(OpenKarto/source)
 
 ## Build OpenKarto library
 SET(KARTO_SOURCE_FILES
@@ -73,35 +67,31 @@ SET(KARTO_SOURCE_FILES
   OpenKarto/source/StringHelper.cpp
 )
 
-include_directories(OpenKarto/source)
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-DSBA_CHOLMOD")
 add_library(OpenKarto ${KARTO_SOURCE_FILES})
 
-## Declare a cpp library
-# add_library(slam_karto
-#   src/${PROJECT_NAME}/slam_karto.cpp
-# )
+## Build MultiMapper library
+include_directories(include/${PROJECT_NAME} OpenKarto/source ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
+add_library(MultiMapper src/MultiMapper.cpp src/SpaSolver.cpp src/spa2d.cpp src/csparse.cpp)
 
-## Declare a cpp executable
-# add_executable(slam_karto_node src/slam_karto_node.cpp)
+## Build the mapper-node
+add_executable(mapper src/MapperNode.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(slam_karto_node slam_karto_generate_messages_cpp)
+add_dependencies(MultiMapper OpenKarto SelfLocalizer)
+add_dependencies(mapper MultiMapper)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(slam_karto_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(MultiMapper OpenKarto cxsparse ${catkin_LIBRARIES})
+target_link_libraries(mapper MultiMapper tbb cholmod ${catkin_LIBRARIES})
 
 #############
 ## Install ##
 #############
 
-# all install targets should use catkin DESTINATION variables
-# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
-
 ## Mark executables and/or libraries for installation
-install(TARGETS OpenKarto
+install(TARGETS OpenKarto MultiMapper mapper
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -114,11 +104,10 @@ install(DIRECTORY OpenKarto/source/OpenKarto
 )
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
