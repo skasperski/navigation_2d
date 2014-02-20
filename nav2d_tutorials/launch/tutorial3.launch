@@ -17,7 +17,7 @@
 	</node>
 
 	<!-- Start Mapper to genreate map from laser scans -->
-	<node name="Mapper" pkg="graph_slam" type="MultiMapper">
+	<node name="Mapper" pkg="slam_karto" type="mapper">
 		<remap from="scan" to="base_scan"/>
 		<rosparam file="$(find nav2d_tutorials)/param/mapper.yaml"/>
 	</node>
