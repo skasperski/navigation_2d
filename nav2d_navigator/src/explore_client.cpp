@@ -1,19 +1,20 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
-#include <robot_navigator/ExploreAction.h>
-#include <robot_navigator/SendCommand.h>
 #include <tf/transform_datatypes.h>
-#include <robot_navigator/commands.h>
+#include <nav2d_navigator/ExploreAction.h>
+#include <nav2d_navigator/SendCommand.h>
 
-typedef actionlib::SimpleActionClient<robot_navigator::ExploreAction> ExploreClient;
+#include "commands.h"
+
+typedef actionlib::SimpleActionClient<nav2d_navigator::ExploreAction> ExploreClient;
 
 ExploreClient* gExploreClient;
 
-bool receiveCommand(robot_navigator::SendCommand::Request &req, robot_navigator::SendCommand::Response &res)
+bool receiveCommand(nav2d_navigator::SendCommand::Request &req, nav2d_navigator::SendCommand::Response &res)
 {
 	if(req.command == NAV_COM_EXPLORE)
 	{
-		robot_navigator::ExploreGoal goal;
+		nav2d_navigator::ExploreGoal goal;
 		gExploreClient->sendGoal(goal);
 		return true;
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
 
-  <name>remote_controller</name>
+  <name>nav2d_remote</name>
   <version>0.0.0</version>
   <description>
     This package is used to manually control a robot that uses the operator and
@@ -16,13 +16,13 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>robot_navigator</build_depend>
-  <build_depend>robot_operator</build_depend>
+  <build_depend>nav2d_navigator</build_depend>
+  <build_depend>nav2d_operator</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>sensor_msgs</build_depend>
 
-  <run_depend>robot_navigator</run_depend>
-  <run_depend>robot_operator</run_depend>
+  <run_depend>nav2d_navigator</run_depend>
+  <run_depend>nav2d_operator</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>sensor_msgs</run_depend>
 

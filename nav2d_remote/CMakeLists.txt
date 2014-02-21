@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(remote_controller)
+project(nav2d_remote)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  robot_navigator
-  robot_operator
+  nav2d_navigator
+  nav2d_operator
   roscpp
   sensor_msgs
 )

@@ -1,8 +1,8 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
-#include <robot_operator/cmd.h>
-#include <robot_navigator/SendCommand.h>
-#include <robot_navigator/commands.h>
+#include <nav2d_operator/cmd.h>
+#include <nav2d_navigator/SendCommand.h>
+#include <nav2d_navigator/commands.h>
 
 /******************************************************
 Buttons:
@@ -58,11 +58,11 @@ Teleoperator::Teleoperator()
 	mButtonGetMap = 3;
 	mButtonStop = 1;
 	
-	mCommandPublisher = mNode.advertise<robot_operator::cmd>("cmd", 1);
+	mCommandPublisher = mNode.advertise<nav2d_operator::cmd>("cmd", 1);
 	mJoySubscriber = mNode.subscribe<sensor_msgs::Joy>("joy", 10, &Teleoperator::joyCB, this);
-	mNavigatorClient = mNode.serviceClient<robot_navigator::SendCommand>(NAV_COMMAND_SERVICE);
-	mExploreClient = mNode.serviceClient<robot_navigator::SendCommand>(NAV_EXPLORE_SERVICE);
-	mGetMapClient = mNode.serviceClient<robot_navigator::SendCommand>(NAV_GETMAP_SERVICE);
+	mNavigatorClient = mNode.serviceClient<nav2d_navigator::SendCommand>(NAV_COMMAND_SERVICE);
+	mExploreClient = mNode.serviceClient<nav2d_navigator::SendCommand>(NAV_EXPLORE_SERVICE);
+	mGetMapClient = mNode.serviceClient<nav2d_navigator::SendCommand>(NAV_GETMAP_SERVICE);
 	
 	mButtonPressed = false;
 }
@@ -75,7 +75,7 @@ void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)
 		mButtonPressed = false;
 	}else
 	{	
-		robot_operator::cmd cmd;
+		nav2d_operator::cmd cmd;
 		cmd.Turn = msg->axes[mAxisDirection] * -1.0;
 		cmd.Velocity = msg->axes[mAxisVelocity];
 		cmd.Mode = 0;
@@ -85,7 +85,7 @@ void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)
 
 	if(msg->buttons[mButtonStop])
 	{
-		robot_navigator::SendCommand srv;
+		nav2d_navigator::SendCommand srv;
 		srv.request.command = NAV_COM_STOP;
 		if(!mNavigatorClient.call(srv))
 		{
@@ -96,7 +96,7 @@ void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)
 
 	if(msg->buttons[mButtonPauseNavigator])
 	{
-		robot_navigator::SendCommand srv;
+		nav2d_navigator::SendCommand srv;
 		srv.request.command = NAV_COM_PAUSE;
 		if(!mNavigatorClient.call(srv))
 		{
@@ -107,7 +107,7 @@ void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)
 
 	if(msg->buttons[mButtonGetMap])
 	{
-		robot_navigator::SendCommand srv;
+		nav2d_navigator::SendCommand srv;
 		srv.request.command = NAV_COM_GETMAP;
 		if(!mGetMapClient.call(srv))
 		{
@@ -119,7 +119,7 @@ void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)
 
 	if(msg->buttons[mButtonStartExploration])
 	{
-		robot_navigator::SendCommand srv;
+		nav2d_navigator::SendCommand srv;
 		srv.request.command = NAV_COM_EXPLORE;
 		if(!mExploreClient.call(srv))
 		{

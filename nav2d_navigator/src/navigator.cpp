@@ -1,5 +1,6 @@
 #include <ros/ros.h>
-#include <robot_navigator/RobotNavigator.h>
+
+#include "RobotNavigator.h"
 
 int main(int argc, char **argv)
 {

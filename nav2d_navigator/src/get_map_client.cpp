@@ -1,19 +1,20 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
-#include <robot_navigator/GetFirstMapAction.h>
-#include <robot_navigator/SendCommand.h>
 #include <tf/transform_datatypes.h>
-#include <robot_navigator/commands.h>
+#include <nav2d_navigator/GetFirstMapAction.h>
+#include <nav2d_navigator/SendCommand.h>
 
-typedef actionlib::SimpleActionClient<robot_navigator::GetFirstMapAction> GetMapClient;
+#include "commands.h"
+
+typedef actionlib::SimpleActionClient<nav2d_navigator::GetFirstMapAction> GetMapClient;
 
 GetMapClient* gGetMapClient;
 
-bool receiveCommand(robot_navigator::SendCommand::Request &req, robot_navigator::SendCommand::Response &res)
+bool receiveCommand(nav2d_navigator::SendCommand::Request &req, nav2d_navigator::SendCommand::Response &res)
 {
 	if(req.command == NAV_COM_GETMAP)
 	{
-		robot_navigator::GetFirstMapGoal goal;
+		nav2d_navigator::GetFirstMapGoal goal;
 		gGetMapClient->sendGoal(goal);
 		return true;
 	}

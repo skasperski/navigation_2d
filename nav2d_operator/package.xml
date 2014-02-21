@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
 
-  <name>robot_operator</name>
+  <name>nav2d_operator</name>
   <version>0.0.0</version>
   <description>
     This package provides a lightweight, purely reactive obstacle-avoidance
@@ -12,7 +12,7 @@
   </description>
   <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
   <license>GPLv3</license>
-  <url type="website">http://wiki.ros.org/robot_operator</url>
+  <url type="website">http://wiki.ros.org/nav2d_operator</url>
   <author email="sebastian.kasperski@dfki.de">Sebastian Kasperski</author>
 
   <buildtool_depend>catkin</buildtool_depend>

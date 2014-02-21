@@ -1,8 +1,9 @@
-#include <robot_navigator/RobotNavigator.h>
-#include <robot_navigator/ExplorationPlanner.h>
-#include <robot_operator/cmd.h>
+#include <nav2d_operator/cmd.h>
 #include <nav_msgs/GridCells.h>
 #include <visualization_msgs/Marker.h>
+
+#include "RobotNavigator.h"
+#include "ExplorationPlanner.h"
 
 #include <set>
 #include <map>
@@ -21,7 +22,7 @@ RobotNavigator::RobotNavigator()
 	robotNode.param("map_service", serviceName, std::string("get_map"));
 	mGetMapClient = robotNode.serviceClient<nav_msgs::GetMap>(serviceName);
 
-	mCommandPublisher = robotNode.advertise<robot_operator::cmd>("cmd", 1);
+	mCommandPublisher = robotNode.advertise<nav2d_operator::cmd>("cmd", 1);
 	mCommandServer = robotNode.advertiseService(NAV_COMMAND_SERVICE, &RobotNavigator::receiveCommand, this);
 	mCurrentPlan = NULL;
 
@@ -31,7 +32,7 @@ RobotNavigator::RobotNavigator()
 	
 	// Get parameters
 	navigatorNode.param("map_inflation_radius", mInflationRadius, 1.0);
-	navigatorNode.param("robot_radius", mRobotRadius, 0.3);
+	navigatorNode.param("nav2d_radius", mRobotRadius, 0.3);
 	navigatorNode.param("exploration_strategy", mExplorationStrategy, std::string("exploration/NearestFrontier"));
 	navigatorNode.param("navigation_goal_distance", mNavigationGoalDistance, 1.0);
 	navigatorNode.param("navigation_goal_angle", mNavigationGoalAngle, 1.0);
@@ -43,8 +44,8 @@ RobotNavigator::RobotNavigator()
 	mCostLethal = (1.0 - (mRobotRadius / mInflationRadius)) * (double)mCostObstacle;
 
 	robotNode.param("map_frame", mMapFrame, std::string("map"));
-	robotNode.param("robot_frame", mRobotFrame, std::string("robot"));
-	robotNode.param("robot_id", mRobotID, 1);
+	robotNode.param("nav2d_frame", mRobotFrame, std::string("robot"));
+	robotNode.param("nav2d_id", mRobotID, 1);
 	robotNode.param("move_action_topic", mMoveActionTopic, std::string(NAV_MOVE_ACTION));
 	robotNode.param("explore_action_topic", mExploreActionTopic, std::string(NAV_EXPLORE_ACTION));
 	robotNode.param("getmap_action_topic", mGetMapActionTopic, std::string(NAV_GETMAP_ACTION));
@@ -57,7 +58,7 @@ RobotNavigator::RobotNavigator()
 
 	try
 	{
-		mPlanLoader = new PlanLoader("robot_navigator", "ExplorationLoader");
+		mPlanLoader = new PlanLoader("nav2d_navigator", "ExplorationLoader");
 		mExplorationPlanner = mPlanLoader->createInstance(mExplorationStrategy);
 		ROS_INFO("Successfully loaded exploration strategy [%s].", mExplorationStrategy.c_str());
 
@@ -134,9 +135,9 @@ bool RobotNavigator::getMap()
 	return true;
 }
 
-bool RobotNavigator::receiveCommand(robot_navigator::SendCommand::Request &req, robot_navigator::SendCommand::Response &res)
+bool RobotNavigator::receiveCommand(nav2d_navigator::SendCommand::Request &req, nav2d_navigator::SendCommand::Response &res)
 {	
-	robot_operator::cmd stopMsg;
+	nav2d_operator::cmd stopMsg;
 	stopMsg.Turn = 0;
 	stopMsg.Velocity = 0;
 	
@@ -405,7 +406,7 @@ bool RobotNavigator::correctGoalPose()
 
 void RobotNavigator::stop()
 {
-	robot_operator::cmd stopMsg;
+	nav2d_operator::cmd stopMsg;
 	stopMsg.Turn = 0;
 	stopMsg.Velocity = 0;
 	mCommandPublisher.publish(stopMsg);
@@ -465,7 +466,7 @@ bool RobotNavigator::generateCommand()
 	if(angle > PI) angle -= 2*PI;
 	
 	// Create the command message
-	robot_operator::cmd msg;
+	nav2d_operator::cmd msg;
 	msg.Turn = -2.0 * angle / PI;
 	if(msg.Turn < -1) msg.Turn = -1;
 	if(msg.Turn >  1) msg.Turn = 1;
@@ -486,7 +487,7 @@ bool RobotNavigator::generateCommand()
 	return true;
 }
 
-void RobotNavigator::receiveGetMapGoal(const robot_navigator::GetFirstMapGoal::ConstPtr &goal)
+void RobotNavigator::receiveGetMapGoal(const nav2d_navigator::GetFirstMapGoal::ConstPtr &goal)
 {
 	if(mStatus != NAV_ST_IDLE)
 	{
@@ -497,12 +498,12 @@ void RobotNavigator::receiveGetMapGoal(const robot_navigator::GetFirstMapGoal::C
 	
 	// Move the robot slowly ahead
 	mStatus = NAV_ST_RECOVERING;
-	robot_operator::cmd msg;
+	nav2d_operator::cmd msg;
 	msg.Turn = 0;
 	msg.Velocity = 1.0;
 	msg.Mode = 0;
 	
-	robot_navigator::GetFirstMapFeedback f;
+	nav2d_navigator::GetFirstMapFeedback f;
 	
 	Rate loopRate(FREQUENCY);
 	unsigned int cycles = 0;
@@ -577,7 +578,7 @@ void RobotNavigator::receiveGetMapGoal(const robot_navigator::GetFirstMapGoal::C
 	}
 }
 
-void RobotNavigator::receiveLocalizeGoal(const robot_navigator::LocalizeGoal::ConstPtr &goal)
+void RobotNavigator::receiveLocalizeGoal(const nav2d_navigator::LocalizeGoal::ConstPtr &goal)
 {
 	if(mStatus != NAV_ST_IDLE)
 	{
@@ -588,12 +589,12 @@ void RobotNavigator::receiveLocalizeGoal(const robot_navigator::LocalizeGoal::Co
 	
 	// Move the robot slowly ahead
 	mStatus = NAV_ST_RECOVERING;
-	robot_operator::cmd msg;
+	nav2d_operator::cmd msg;
 	msg.Turn = 0;
 	msg.Velocity = goal->velocity;
 	msg.Mode = 0;
 	
-	robot_navigator::LocalizeFeedback f;
+	nav2d_navigator::LocalizeFeedback f;
 	
 	mHasNewMap = false;
 	Rate loopRate(1);
@@ -631,7 +632,7 @@ void RobotNavigator::receiveLocalizeGoal(const robot_navigator::LocalizeGoal::Co
 	}
 }
 
-void RobotNavigator::receiveMoveGoal(const robot_navigator::MoveToPosition2DGoal::ConstPtr &goal)
+void RobotNavigator::receiveMoveGoal(const nav2d_navigator::MoveToPosition2DGoal::ConstPtr &goal)
 {
 	if(mStatus != NAV_ST_IDLE)
 	{
@@ -740,7 +741,7 @@ void RobotNavigator::receiveMoveGoal(const robot_navigator::MoveToPosition2DGoal
 				break;
 			}
 			
-			robot_operator::cmd msg;
+			nav2d_operator::cmd msg;
 			if(deltaTheta > 0)
 			{
 				msg.Turn = 1;
@@ -762,7 +763,7 @@ void RobotNavigator::receiveMoveGoal(const robot_navigator::MoveToPosition2DGoal
 		// Publish feedback via ActionServer
 		if(cycle%10 == 0)
 		{
-			robot_navigator::MoveToPosition2DFeedback fb;
+			nav2d_navigator::MoveToPosition2DFeedback fb;
 			fb.distance = mCurrentPlan[mStartPoint];
 			mMoveActionServer->publishFeedback(fb);
 		}
@@ -777,7 +778,7 @@ void RobotNavigator::receiveMoveGoal(const robot_navigator::MoveToPosition2DGoal
 	
 	// Set ActionServer suceeded
 	ROS_INFO("Goal reached.");
-	robot_navigator::MoveToPosition2DResult r;
+	nav2d_navigator::MoveToPosition2DResult r;
 	r.final_pose.x = mCurrentPositionX;
 	r.final_pose.y = mCurrentPositionY;
 	r.final_pose.theta = mCurrentDirection;
@@ -787,7 +788,7 @@ void RobotNavigator::receiveMoveGoal(const robot_navigator::MoveToPosition2DGoal
 
 }
 
-void RobotNavigator::receiveExploreGoal(const robot_navigator::ExploreGoal::ConstPtr &goal)
+void RobotNavigator::receiveExploreGoal(const nav2d_navigator::ExploreGoal::ConstPtr &goal)
 {
 	if(mStatus != NAV_ST_IDLE)
 	{
@@ -848,7 +849,7 @@ void RobotNavigator::receiveExploreGoal(const robot_navigator::ExploreGoal::Cons
 					break;
 				case EXPL_FINISHED:
 					{
-						robot_navigator::ExploreResult r;
+						nav2d_navigator::ExploreResult r;
 						r.final_pose.x = mCurrentPositionX;
 						r.final_pose.y = mCurrentPositionY;
 						r.final_pose.theta = mCurrentDirection;
@@ -860,7 +861,7 @@ void RobotNavigator::receiveExploreGoal(const robot_navigator::ExploreGoal::Cons
 				case EXPL_WAITING:
 					mStatus = NAV_ST_WAITING;
 					{
-						robot_operator::cmd stopMsg;
+						nav2d_operator::cmd stopMsg;
 						stopMsg.Turn = 0;
 						stopMsg.Velocity = 0;
 						mCommandPublisher.publish(stopMsg);
@@ -896,7 +897,7 @@ void RobotNavigator::receiveExploreGoal(const robot_navigator::ExploreGoal::Cons
 			// Publish feedback via ActionServer
 			if(cycle%10 == 0)
 			{
-				robot_navigator::ExploreFeedback fb;
+				nav2d_navigator::ExploreFeedback fb;
 				fb.distance = mCurrentPlan[mStartPoint];
 				fb.robot_pose.x = mCurrentPositionX;
 				fb.robot_pose.y = mCurrentPositionY;

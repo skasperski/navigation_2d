@@ -1,7 +1,7 @@
-#include <robot_operator/RobotOperator.h>
 #include <nav_msgs/GridCells.h>
-
 #include <math.h>
+
+#include "RobotOperator.h"
 
 #define PI 3.14159265
 
@@ -182,7 +182,7 @@ void RobotOperator::initTrajTable()
 	}	
 }
 
-void RobotOperator::receiveCommand(const robot_operator::cmd::ConstPtr& msg)
+void RobotOperator::receiveCommand(const nav2d_operator::cmd::ConstPtr& msg)
 {
 	if(msg->Turn < -1 || msg->Turn > 1)
 	{

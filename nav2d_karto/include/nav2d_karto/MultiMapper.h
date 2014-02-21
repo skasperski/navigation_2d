@@ -9,7 +9,7 @@
 #include <geometry_msgs/PoseArray.h>
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
 #include <nav2d_msgs/LocalizedScan.h>
-#include <self_localizer/SelfLocalizer.h>
+#include <nav2d_localizer/SelfLocalizer.h>
 
 #include <OpenKarto/OpenKarto.h>
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(slam_karto)
+project(nav2d_karto)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -7,7 +7,7 @@ project(slam_karto)
 find_package(catkin REQUIRED COMPONENTS
   nav2d_msgs
   roscpp
-  self_localizer
+  nav2d_localizer
   tf
 )
 
@@ -19,7 +19,7 @@ find_package(Eigen REQUIRED)
 catkin_package(
  INCLUDE_DIRS include
  LIBRARIES OpenKarto MultiMapper
- CATKIN_DEPENDS nav2d_msgs roscpp self_localizer tf
+ CATKIN_DEPENDS nav2d_msgs roscpp nav2d_localizer tf
  DEPENDS Eigen
 )
 

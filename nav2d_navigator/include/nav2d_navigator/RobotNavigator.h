@@ -3,11 +3,11 @@
 #include <tf/transform_listener.h>
 #include <actionlib/server/simple_action_server.h>
 #include <pluginlib/class_loader.h>
-#include <robot_navigator/SendCommand.h>
-#include <robot_navigator/MoveToPosition2DAction.h>
-#include <robot_navigator/ExploreAction.h>
-#include <robot_navigator/GetFirstMapAction.h>
-#include <robot_navigator/LocalizeAction.h>
+#include <nav2d_navigator/SendCommand.h>
+#include <nav2d_navigator/MoveToPosition2DAction.h>
+#include <nav2d_navigator/ExploreAction.h>
+#include <nav2d_navigator/GetFirstMapAction.h>
+#include <nav2d_navigator/LocalizeAction.h>
 
 #include "GridMap.h"
 #include "commands.h"
@@ -16,10 +16,10 @@
 
 #include <queue>
 
-typedef actionlib::SimpleActionServer<robot_navigator::MoveToPosition2DAction> MoveActionServer;
-typedef actionlib::SimpleActionServer<robot_navigator::ExploreAction> ExploreActionServer;
-typedef actionlib::SimpleActionServer<robot_navigator::GetFirstMapAction> GetMapActionServer;
-typedef actionlib::SimpleActionServer<robot_navigator::LocalizeAction> LocalizeActionServer;
+typedef actionlib::SimpleActionServer<nav2d_navigator::MoveToPosition2DAction> MoveActionServer;
+typedef actionlib::SimpleActionServer<nav2d_navigator::ExploreAction> ExploreActionServer;
+typedef actionlib::SimpleActionServer<nav2d_navigator::GetFirstMapAction> GetMapActionServer;
+typedef actionlib::SimpleActionServer<nav2d_navigator::LocalizeAction> LocalizeActionServer;
 typedef pluginlib::ClassLoader<ExplorationPlanner> PlanLoader;
 
 class RobotNavigator
@@ -28,11 +28,11 @@ public:
 	RobotNavigator();
 	~RobotNavigator();
 
-	bool receiveCommand(robot_navigator::SendCommand::Request &req, robot_navigator::SendCommand::Response &res);
-	void receiveMoveGoal(const robot_navigator::MoveToPosition2DGoal::ConstPtr &goal);
-	void receiveExploreGoal(const robot_navigator::ExploreGoal::ConstPtr &goal);
-	void receiveGetMapGoal(const robot_navigator::GetFirstMapGoal::ConstPtr &goal);
-	void receiveLocalizeGoal(const robot_navigator::LocalizeGoal::ConstPtr &goal);
+	bool receiveCommand(nav2d_navigator::SendCommand::Request &req, nav2d_navigator::SendCommand::Response &res);
+	void receiveMoveGoal(const nav2d_navigator::MoveToPosition2DGoal::ConstPtr &goal);
+	void receiveExploreGoal(const nav2d_navigator::ExploreGoal::ConstPtr &goal);
+	void receiveGetMapGoal(const nav2d_navigator::GetFirstMapGoal::ConstPtr &goal);
+	void receiveLocalizeGoal(const nav2d_navigator::LocalizeGoal::ConstPtr &goal);
 
 private:
 	bool setCurrentPosition();

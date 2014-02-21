@@ -1,4 +1,4 @@
-#include <robot_navigator/MapInflationTool.h>
+#include "MapInflationTool.h"
 
 CellData::CellData(double d, double i, unsigned int sx, unsigned int sy):distance(d), index(i), sx(sx), sy(sy){
 }

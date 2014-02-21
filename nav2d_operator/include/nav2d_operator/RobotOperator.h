@@ -10,10 +10,10 @@
 
 #include <ros/ros.h>
 #include <costmap_2d/costmap_2d_ros.h>
-#include <robot_operator/cmd.h>
 #include <sensor_msgs/PointCloud.h>
+#include <nav2d_operator/cmd.h>
 
-#include "string"
+#include <string>
 
 using namespace ros;
 using namespace tf;
@@ -25,7 +25,7 @@ public:
 	RobotOperator(NodeHandle* n);
 	~RobotOperator();
 	
-	void receiveCommand(const robot_operator::cmd::ConstPtr& msg);
+	void receiveCommand(const nav2d_operator::cmd::ConstPtr& msg);
 	void executeCommand();
 	
 private:

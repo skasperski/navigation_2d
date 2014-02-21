@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(robot_operator)
+project(nav2d_operator)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -42,7 +42,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include)
+include_directories(include/${PROJECT_NAME})
 
 ## Declare a cpp library
 add_library(RobotOperator src/RobotOperator.cpp)

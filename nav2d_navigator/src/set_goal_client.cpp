@@ -1,17 +1,18 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
-#include <robot_navigator/MoveToPosition2DAction.h>
+#include <nav2d_navigator/MoveToPosition2DAction.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <tf/transform_datatypes.h>
-#include <robot_navigator/commands.h>
 
-typedef actionlib::SimpleActionClient<robot_navigator::MoveToPosition2DAction> MoveClient;
+#include "commands.h"
+
+typedef actionlib::SimpleActionClient<nav2d_navigator::MoveToPosition2DAction> MoveClient;
 
 MoveClient* gMoveClient;
 
 void receiveGoal(const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
-	robot_navigator::MoveToPosition2DGoal goal;
+	nav2d_navigator::MoveToPosition2DGoal goal;
 	goal.target_pose.x = msg->pose.position.x;
 	goal.target_pose.y = msg->pose.position.y;
 	goal.target_pose.theta = tf::getYaw(msg->pose.orientation);

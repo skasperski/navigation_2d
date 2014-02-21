@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
 
-  <name>self_localizer</name>
+  <name>nav2d_localizer</name>
   <version>0.0.0</version>
   <description>
     Contains a ros-wrapper around a Particle Filter implementation.
