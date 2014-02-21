@@ -13,7 +13,11 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>robot_navigator</run_depend>
+  <run_depend>nav2d_operator</run_depend>
+  <run_depend>nav2d_navigator</run_depend>
+  <run_depend>nav2d_karto</run_depend>
+  <run_depend>nav2d_localizer</run_depend>
+  <run_depend>nav2d_remote</run_depend>
   <run_depend>stage_ros</run_depend>
   <run_depend>joy</run_depend>
   <run_depend>p2os</run_depend>
