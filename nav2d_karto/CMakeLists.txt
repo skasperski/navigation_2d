@@ -71,7 +71,7 @@ set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-DSBA_CHOLMOD")
 add_library(OpenKarto ${KARTO_SOURCE_FILES})
 
 ## Build MultiMapper library
-include_directories(include/${PROJECT_NAME} OpenKarto/source ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
+include_directories(include include/${PROJECT_NAME} OpenKarto/source ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 add_library(MultiMapper src/MultiMapper.cpp src/SpaSolver.cpp src/spa2d.cpp src/csparse.cpp)
 
 ## Build the mapper-node
