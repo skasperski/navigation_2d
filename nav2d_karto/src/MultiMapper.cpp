@@ -32,11 +32,11 @@ MultiMapper::MultiMapper()
 	mapperNode.param("min_map_size", mMinMapSize, 50);
 
 	// Apply tf_prefix to all used frame-id's
-	std::string tfPrefix = mTransformListener.getTFPrefix();
-	mLaserFrame = tf::resolve(tfPrefix, mLaserFrame);
-	mRobotFrame = tf::resolve(tfPrefix, mRobotFrame);
-	mOdometryFrame = tf::resolve(tfPrefix, mOdometryFrame);
-	mMapFrame = tf::resolve(tfPrefix, mMapFrame);
+	mLaserFrame = mTransformListener.resolve(mLaserFrame);
+	mRobotFrame = mTransformListener.resolve(mRobotFrame);
+	mOdometryFrame = mTransformListener.resolve(mOdometryFrame);
+	mOffsetFrame = mTransformListener.resolve(mOffsetFrame);
+	mMapFrame = mTransformListener.resolve(mMapFrame);
 
 	// Initialize Publisher/Subscribers
 	mScanSubscriber = robotNode.subscribe(mScanInputTopic, 100, &MultiMapper::receiveLocalizedScan, this);

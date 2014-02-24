@@ -38,9 +38,8 @@ RobotOperator::RobotOperator(NodeHandle* n)
 	robotNode.param("odometry_frame", mOdometryFrame, std::string("odometry_base"));
 
 	// Apply tf_prefix to all used frame-id's
-	std::string tfPrefix = mTfListener.getTFPrefix();
-	mRobotFrame = tf::resolve(tfPrefix, mRobotFrame);
-	mOdometryFrame = tf::resolve(tfPrefix, mOdometryFrame);
+	mRobotFrame = mTfListener.resolve(mRobotFrame);
+	mOdometryFrame = mTfListener.resolve(mOdometryFrame);
 
 	// Initialize the lookup table for the driving directions
 	ROS_INFO("Initializing LUT...");

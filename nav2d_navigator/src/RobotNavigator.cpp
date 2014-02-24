@@ -32,7 +32,7 @@ RobotNavigator::RobotNavigator()
 	
 	// Get parameters
 	navigatorNode.param("map_inflation_radius", mInflationRadius, 1.0);
-	navigatorNode.param("nav2d_radius", mRobotRadius, 0.3);
+	navigatorNode.param("robot_radius", mRobotRadius, 0.3);
 	navigatorNode.param("exploration_strategy", mExplorationStrategy, std::string("exploration/NearestFrontier"));
 	navigatorNode.param("navigation_goal_distance", mNavigationGoalDistance, 1.0);
 	navigatorNode.param("navigation_goal_angle", mNavigationGoalAngle, 1.0);
@@ -44,17 +44,16 @@ RobotNavigator::RobotNavigator()
 	mCostLethal = (1.0 - (mRobotRadius / mInflationRadius)) * (double)mCostObstacle;
 
 	robotNode.param("map_frame", mMapFrame, std::string("map"));
-	robotNode.param("nav2d_frame", mRobotFrame, std::string("robot"));
-	robotNode.param("nav2d_id", mRobotID, 1);
+	robotNode.param("robot_frame", mRobotFrame, std::string("robot"));
+	robotNode.param("robot_id", mRobotID, 1);
 	robotNode.param("move_action_topic", mMoveActionTopic, std::string(NAV_MOVE_ACTION));
 	robotNode.param("explore_action_topic", mExploreActionTopic, std::string(NAV_EXPLORE_ACTION));
 	robotNode.param("getmap_action_topic", mGetMapActionTopic, std::string(NAV_GETMAP_ACTION));
 	robotNode.param("localize_action_topic", mLocalizeActionTopic, std::string(NAV_LOCALIZE_ACTION));
 
 	// Apply tf_prefix to all used frame-id's
-	std::string tfPrefix = mTfListener.getTFPrefix();
-	mRobotFrame = resolve(tfPrefix, mRobotFrame);
-	mMapFrame = resolve(tfPrefix, mMapFrame);
+	mRobotFrame = mTfListener.resolve(mRobotFrame);
+	mMapFrame = mTfListener.resolve(mMapFrame);
 
 	try
 	{

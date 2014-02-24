@@ -133,11 +133,10 @@ SelfLocalizer::SelfLocalizer(bool publish)
 	mParticleFilter = NULL;
 	
 	// Apply tf_prefix to all used frame-id's
-	std::string tfPrefix = mTransformListener.getTFPrefix();
-	mMapFrame = tf::resolve(tfPrefix, mMapFrame);
-	mOdometryFrame = tf::resolve(tfPrefix, mOdometryFrame);
-	mRobotFrame = tf::resolve(tfPrefix, mRobotFrame);
-	mLaserFrame = tf::resolve(tfPrefix, mLaserFrame);
+	mMapFrame = mTransformListener.resolve(mMapFrame);
+	mOdometryFrame = mTransformListener.resolve(mOdometryFrame);
+	mRobotFrame = mTransformListener.resolve(mRobotFrame);
+	mLaserFrame = mTransformListener.resolve(mLaserFrame);
 	
 	// Use squared distance so we don't need sqrt() later
 	mMinTranslation *= mMinTranslation;
