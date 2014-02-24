@@ -10,30 +10,30 @@
 	</node>
 
 	<!-- Start the Operator to control the simulated robot -->
-	<node name="Operator" pkg="robot_operator" type="operator" >
+	<node name="Operator" pkg="nav2d_operator" type="operator" >
 		<remap from="scan" to="base_scan"/>
 		<rosparam file="$(find nav2d_tutorials)/param/operator.yaml"/>
 		<rosparam file="$(find nav2d_tutorials)/param/costmap.yaml" ns="local_map" />
 	</node>
 
 	<!-- Start Mapper to genreate map from laser scans -->
-	<node name="Mapper" pkg="slam_karto" type="mapper">
+	<node name="Mapper" pkg="nav2d_karto" type="mapper">
 		<remap from="scan" to="base_scan"/>
 		<rosparam file="$(find nav2d_tutorials)/param/mapper.yaml"/>
 	</node>
 
 	<!-- Start the Navigator to move the robot autonomously -->
-	<node name="Navigator" pkg="robot_navigator" type="navigator">
+	<node name="Navigator" pkg="nav2d_navigator" type="navigator">
 		<rosparam file="$(find nav2d_tutorials)/param/navigator.yaml"/>
 	</node>
 
-	<node name="GetMap" pkg="robot_navigator" type="get_map_client" />
-	<node name="Explore" pkg="robot_navigator" type="explore_client" />
-	<node name="SetGoal" pkg="robot_navigator" type="set_goal_client" />
+	<node name="GetMap" pkg="nav2d_navigator" type="get_map_client" />
+	<node name="Explore" pkg="nav2d_navigator" type="explore_client" />
+	<node name="SetGoal" pkg="nav2d_navigator" type="set_goal_client" />
 
 	<!-- Start the joystick-driver and remote-controller for operation-->
 	<node name="Joystick" pkg="joy" type="joy_node" />
-	<node name="Remote" pkg="remote_controller" type="remote_joy" />
+	<node name="Remote" pkg="nav2d_remote" type="remote_joy" />
 
 	<!-- Pioneer model for fancy visualization -->
 	<!-- Comment this out if you do not have the package 'p2os' available! -->
