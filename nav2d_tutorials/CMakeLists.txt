@@ -4,11 +4,17 @@ project(nav2d_tutorials)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-#find_package(catkin REQUIRED COMPONENTS
-#  robot_navigator
-#  stage_ros
-#)
-
+find_package(catkin REQUIRED COMPONENTS
+  nav2d_operator
+  nav2d_navigator
+  nav2d_karto
+  nav2d_localizer
+  nav2d_remote
+  nav2d_msgs
+  stage_ros
+  joy
+  p2os
+)
 
 catkin_package()
 

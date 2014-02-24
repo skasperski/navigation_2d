@@ -18,6 +18,7 @@
   <run_depend>nav2d_karto</run_depend>
   <run_depend>nav2d_localizer</run_depend>
   <run_depend>nav2d_remote</run_depend>
+  <run_depend>nav2d_msgs</run_depend>
   <run_depend>stage_ros</run_depend>
   <run_depend>joy</run_depend>
   <run_depend>p2os</run_depend>
