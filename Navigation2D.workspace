@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="Navigation2D" Database="">
+  <Project Name="nav2d" Path="nav2d/nav2d.project" Active="Yes"/>
+  <Project Name="nav2d_msgs" Path="nav2d_msgs/nav2d_msgs.project"/>
+  <Project Name="nav2d_operator" Path="nav2d_operator/nav2d_operator.project"/>
+  <Project Name="nav2d_navigator" Path="nav2d_navigator/nav2d_navigator.project"/>
+  <Project Name="nav2d_localizer" Path="nav2d_localizer/nav2d_localizer.project"/>
+  <Project Name="nav2d_karto" Path="nav2d_karto/nav2d_karto.project"/>
+  <Project Name="nav2d_remote" Path="nav2d_remote/nav2d_remote.project"/>
+  <Project Name="nav2d_tutorials" Path="nav2d_tutorials/nav2d_tutorials.project"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="nav2d" ConfigName="Debug"/>
+      <Project Name="nav2d_msgs" ConfigName="Debug"/>
+      <Project Name="nav2d_operator" ConfigName="Debug"/>
+      <Project Name="nav2d_navigator" ConfigName="Debug"/>
+      <Project Name="nav2d_localizer" ConfigName="Debug"/>
+      <Project Name="nav2d_karto" ConfigName="Debug"/>
+      <Project Name="nav2d_remote" ConfigName="Debug"/>
+      <Project Name="nav2d_tutorials" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Project Name="nav2d" ConfigName="Release"/>
+      <Project Name="nav2d_msgs" ConfigName="Release"/>
+      <Project Name="nav2d_operator" ConfigName="Release"/>
+      <Project Name="nav2d_navigator" ConfigName="Release"/>
+      <Project Name="nav2d_localizer" ConfigName="Release"/>
+      <Project Name="nav2d_karto" ConfigName="Release"/>
+      <Project Name="nav2d_remote" ConfigName="Release"/>
+      <Project Name="nav2d_tutorials" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
