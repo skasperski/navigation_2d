@@ -538,7 +538,7 @@ tf::Transform SelfLocalizer::getBestPose()
 
 	if(max_weight > 0.0)
 	{
-		ROS_INFO("Determined pose at: %.3f %.3f %.3f", pose.v[0], pose.v[1], pose.v[2]);
+		ROS_DEBUG("Determined pose at: %.3f %.3f %.3f", pose.v[0], pose.v[1], pose.v[2]);
 	}else
 	{
 		ROS_ERROR("Could not get pose from particle filter!");
