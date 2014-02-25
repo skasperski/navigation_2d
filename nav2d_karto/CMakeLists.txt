@@ -67,7 +67,8 @@ SET(KARTO_SOURCE_FILES
   OpenKarto/source/StringHelper.cpp
 )
 
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-DSBA_CHOLMOD")
+add_definitions(-DUSE_TBB)
+add_definitions(-DSBA_CHOLMOD)
 add_library(OpenKarto ${KARTO_SOURCE_FILES})
 
 ## Build MultiMapper library
@@ -83,8 +84,9 @@ add_dependencies(MultiMapper OpenKarto SelfLocalizer)
 add_dependencies(mapper MultiMapper)
 
 ## Specify libraries to link a library or executable target against
+target_link_libraries(OpenKarto tbb cholmod)
 target_link_libraries(MultiMapper OpenKarto cxsparse ${catkin_LIBRARIES})
-target_link_libraries(mapper MultiMapper tbb cholmod ${catkin_LIBRARIES})
+target_link_libraries(mapper MultiMapper ${catkin_LIBRARIES})
 
 #############
 ## Install ##
