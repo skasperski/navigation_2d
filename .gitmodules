@@ -1,3 +1,3 @@
-[submodule "slam_karto/OpenKarto"]
-	path = slam_karto/OpenKarto
+[submodule "OpenKarto"]
+	path = nav2d_karto/OpenKarto
 	url = https://github.com/skasperski/OpenKarto.git
