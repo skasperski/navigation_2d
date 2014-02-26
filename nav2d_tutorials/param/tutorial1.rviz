@@ -48,27 +48,6 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/GridCells
-      Color: 255; 0; 0
-      Enabled: true
-      Name: LCM:Obstacles
-      Topic: /Operator/local_map/obstacles
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 255; 170; 0
-      Enabled: true
-      Name: LCM:Inflation
-      Topic: /Operator/local_map/inflated_obstacles
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 170; 255; 255
-      Enabled: true
-      Name: LCM:Unknown
-      Topic: /Operator/local_map/unknown_space
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
       Color: 0; 0; 255
       Enabled: true
       Name: Desired
@@ -206,6 +185,14 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: false
       Value: true
+    - Alpha: 0.7
+      Class: rviz/Map
+      Color Scheme: costmap
+      Draw Behind: false
+      Enabled: true
+      Name: CostMap
+      Topic: /Operator/local_map/costmap
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -232,13 +219,13 @@ Visualization Manager:
       Class: rviz/XYOrbit
       Distance: 7.48912
       Focal Point:
-        X: -1.69643
-        Y: -2.19841
-        Z: -1.07884e-05
+        X: -1.94982
+        Y: -1.59356
+        Z: -1.22189e-05
       Name: Current View
       Near Clip Distance: 0.01
       Pitch: 0.755398
-      Target Frame: <Fixed Frame>
+      Target Frame: base_link
       Value: XYOrbit (rviz)
       Yaw: 3.73851
     Saved: ~
