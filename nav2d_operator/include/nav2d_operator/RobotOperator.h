@@ -22,7 +22,7 @@ using namespace costmap_2d;
 class RobotOperator
 {
 public:
-	RobotOperator(NodeHandle* n);
+	RobotOperator();
 	~RobotOperator();
 	
 	void receiveCommand(const nav2d_operator::cmd::ConstPtr& msg);

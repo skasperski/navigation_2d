@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	init(argc, argv, NODE_NAME);
 	NodeHandle n;
 
-	RobotOperator robOp(&n);
+	RobotOperator robOp;
 	
 	Rate loopRate(10);
 	while(ok())
