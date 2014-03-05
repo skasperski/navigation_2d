@@ -20,6 +20,7 @@
   <run_depend>nav2d_localizer</run_depend>
   <run_depend>nav2d_remote</run_depend>
   <run_depend>nav2d_karto</run_depend>
+  <run_depend>nav2d_exploration</run_depend>
 
   <export>
      <metapackage/>

@@ -8,6 +8,10 @@
   <Project Name="nav2d_karto" Path="nav2d_karto/nav2d_karto.project"/>
   <Project Name="nav2d_remote" Path="nav2d_remote/nav2d_remote.project"/>
   <Project Name="nav2d_tutorials" Path="nav2d_tutorials/nav2d_tutorials.project"/>
+  <Environment>
+    <![CDATA[]]>
+  </Environment>
+  <Project Name="nav2d_exploration" Path="nav2d_exploration/nav2d_exploration.project"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="nav2d" ConfigName="Debug"/>
@@ -18,6 +22,7 @@
       <Project Name="nav2d_karto" ConfigName="Debug"/>
       <Project Name="nav2d_remote" ConfigName="Debug"/>
       <Project Name="nav2d_tutorials" ConfigName="Debug"/>
+      <Project Name="nav2d_exploration" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Project Name="nav2d" ConfigName="Release"/>
@@ -28,9 +33,7 @@
       <Project Name="nav2d_karto" ConfigName="Release"/>
       <Project Name="nav2d_remote" ConfigName="Release"/>
       <Project Name="nav2d_tutorials" ConfigName="Release"/>
+      <Project Name="nav2d_exploration" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
-  <Environment>
-    <![CDATA[]]>
-  </Environment>
 </CodeLite_Workspace>

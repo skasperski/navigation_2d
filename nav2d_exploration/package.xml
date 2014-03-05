@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+  <name>nav2d_exploration</name>
+  <version>0.0.0</version>
+  <description>
+    This package holds a collection of plugins for the RobotNavigator, that provide
+    different cooperative exploration strategies for a team of mobile robots.
+  </description>
+
+  <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
+  <license>GPLv3</license>
+  <url type="website">http://wiki.ros.org/robot_operator</url>
+  <author email="sebastian.kasperski@dfki.de">Sebastian Kasperski</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>pluginlib</build_depend>
+  <build_depend>nav2d_navigator</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>pluginlib</run_depend>
+  <run_depend>nav2d_navigator</run_depend>
+
+</package>
