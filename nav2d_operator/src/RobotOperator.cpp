@@ -56,7 +56,6 @@ RobotOperator::RobotOperator()
 
 RobotOperator::~RobotOperator()
 {
-	delete mLocalMap;
 	for(int i = 0; i < LUT_RESOLUTION; i++)
 	{
 		delete mTrajTable[i];
