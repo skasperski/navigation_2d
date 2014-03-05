@@ -1,7 +1,7 @@
 #ifndef MINPOSPLANNER_H_
 #define MINPOSPLANNER_H_
 
-#include "ExplorationPlanner.h"
+#include <nav2d_navigator/ExplorationPlanner.h>
 
 class MinPosPlanner : public ExplorationPlanner
 {

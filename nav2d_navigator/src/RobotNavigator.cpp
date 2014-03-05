@@ -33,7 +33,7 @@ RobotNavigator::RobotNavigator()
 	// Get parameters
 	navigatorNode.param("map_inflation_radius", mInflationRadius, 1.0);
 	navigatorNode.param("robot_radius", mRobotRadius, 0.3);
-	navigatorNode.param("exploration_strategy", mExplorationStrategy, std::string("exploration/NearestFrontier"));
+	navigatorNode.param("exploration_strategy", mExplorationStrategy, std::string("NearestFrontierPlanner"));
 	navigatorNode.param("navigation_goal_distance", mNavigationGoalDistance, 1.0);
 	navigatorNode.param("navigation_goal_angle", mNavigationGoalAngle, 1.0);
 	navigatorNode.param("exploration_goal_distance", mExplorationGoalDistance, 3.0);
@@ -57,7 +57,7 @@ RobotNavigator::RobotNavigator()
 
 	try
 	{
-		mPlanLoader = new PlanLoader("nav2d_navigator", "ExplorationLoader");
+		mPlanLoader = new PlanLoader("nav2d_navigator", "ExplorationPlanner");
 		mExplorationPlanner = mPlanLoader->createInstance(mExplorationStrategy);
 		ROS_INFO("Successfully loaded exploration strategy [%s].", mExplorationStrategy.c_str());
 

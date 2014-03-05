@@ -1,6 +1,6 @@
-#include "exploration/MultiWavefrontPlanner.h"
-#include "geometry_msgs/Pose2D.h"
-#include "nav_msgs/GridCells.h"
+#include "MultiWavefrontPlanner.h"
+#include <geometry_msgs/Pose2D.h>
+#include <nav_msgs/GridCells.h>
 
 typedef std::multimap<double,unsigned int> Queue;
 typedef std::pair<double,unsigned int> Entry;

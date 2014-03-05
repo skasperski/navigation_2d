@@ -1,7 +1,7 @@
 #ifndef MULTIWAVEFRONTPLANNER_H_
 #define MULTIWAVEFRONTPLANNER_H_
 
-#include "ExplorationPlanner.h"
+#include <nav2d_navigator/ExplorationPlanner.h>
 
 class MultiWavefrontPlanner : public ExplorationPlanner
 {

@@ -2,8 +2,8 @@
 // Detailed description in:
 // Bautin, A., & Simonin, O. (2012). MinPos : A Novel Frontier Allocation Algorithm for Multi-robot Exploration. ICIRA, 496–508.
 
-#include "exploration/MinPosPlanner.h"
-#include "visualization_msgs/Marker.h"
+#include "MinPosPlanner.h"
+#include <visualization_msgs/Marker.h>
 
 MinPosPlanner::MinPosPlanner()
 {

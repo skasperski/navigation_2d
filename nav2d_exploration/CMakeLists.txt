@@ -14,8 +14,8 @@ find_package(catkin REQUIRED COMPONENTS
 ###################################
 ## catkin specific configuration ##
 ###################################
+
 catkin_package(
-  INCLUDE_DIRS include
   LIBRARIES ExplorationPlugins
   CATKIN_DEPENDS roscpp tf pluginlib nav2d_navigator
 )
@@ -25,10 +25,14 @@ catkin_package(
 ###########
 
 include_directories(
+  include/${PROJECT_NAME}/
   ${catkin_INCLUDE_DIRS}
 )
-
-add_library(ExplorationPlugins src/exploration_plugins.cpp)
+add_library(ExplorationPlugins
+  src/NearestFrontierPlanner.cpp
+  src/MultiWavefrontPlanner.cpp
+  src/MinPosPlanner.cpp
+  src/exploration_plugins.cpp)
 target_link_libraries(ExplorationPlugins ${catkin_LIBRARIES})
 
 
@@ -40,9 +44,9 @@ install(TARGETS ExplorationPlugins
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  FILES_MATCHING PATTERN "*.h"
+install(FILES
+  exploration.xml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 #############

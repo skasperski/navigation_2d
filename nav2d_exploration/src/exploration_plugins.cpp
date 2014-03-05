@@ -1,9 +1,10 @@
 #include <pluginlib/class_list_macros.h>
-#include <ExplorationPlanner.h>
-#include <exploration/NearestFrontierPlanner.h>
-#include <exploration/MultiWavefrontPlanner.h>
-#include <exploration/MinPosPlanner.h>
+#include <nav2d_navigator/ExplorationPlanner.h>
 
-PLUGINLIB_DECLARE_CLASS(exploration, NearestFrontier, NearestFrontierPlanner, ExplorationPlanner)
-PLUGINLIB_DECLARE_CLASS(exploration, MultiWavefront, MultiWavefrontPlanner, ExplorationPlanner)
-PLUGINLIB_DECLARE_CLASS(exploration, MinPos, MinPosPlanner, ExplorationPlanner)
+#include "NearestFrontierPlanner.h"
+#include "MultiWavefrontPlanner.h"
+#include "MinPosPlanner.h"
+
+PLUGINLIB_EXPORT_CLASS(NearestFrontierPlanner, ExplorationPlanner)
+PLUGINLIB_EXPORT_CLASS(MultiWavefrontPlanner, ExplorationPlanner)
+PLUGINLIB_EXPORT_CLASS(MinPosPlanner, ExplorationPlanner)

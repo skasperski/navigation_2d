@@ -1,7 +1,7 @@
 #ifndef NEARESTFRONTIERPLANNER_H_
 #define NEARESTFRONTIERPLANNER_H_
 
-#include "ExplorationPlanner.h"
+#include <nav2d_navigator/ExplorationPlanner.h>
 
 class NearestFrontierPlanner : public ExplorationPlanner
 {

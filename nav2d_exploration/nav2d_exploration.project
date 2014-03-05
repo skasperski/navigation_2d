@@ -103,5 +103,6 @@
   <VirtualDirectory Name="catkin">
     <File Name="CMakeLists.txt"/>
     <File Name="package.xml"/>
+    <File Name="exploration.xml"/>
   </VirtualDirectory>
 </CodeLite_Project>
