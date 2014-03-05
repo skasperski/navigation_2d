@@ -82,6 +82,9 @@ RobotNavigator::RobotNavigator()
 	{
 		mGetMapActionServer = new GetMapActionServer(mGetMapActionTopic, boost::bind(&RobotNavigator::receiveGetMapGoal, this, _1), false);
 		mGetMapActionServer->start();
+	}else
+	{
+		mGetMapActionServer = NULL;
 	}
 	
 	mHasNewMap = false;
@@ -96,7 +99,7 @@ RobotNavigator::~RobotNavigator()
 	delete[] mCurrentPlan;
 	delete mMoveActionServer;
 	delete mExploreActionServer;
-	delete mMoveActionServer;
+	delete mGetMapActionServer;
 	delete mPlanLoader;
 }
 
