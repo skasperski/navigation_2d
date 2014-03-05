@@ -420,6 +420,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 	double safety;
 	
 	// Calculate safety value
+	boost::unique_lock<boost::shared_mutex> lock(*(mCostmap->getLock()));
 	int length = transformedCloud.points.size();
 	bool gettingBetter = true;
 	for(int i = 0; i < length; i++)
