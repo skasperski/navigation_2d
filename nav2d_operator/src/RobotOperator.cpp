@@ -202,6 +202,7 @@ void RobotOperator::executeCommand()
 {
 	// 1. Get a copy of the costmap to work on.
 	mCostmap = mLocalMap->getCostmap();
+	boost::unique_lock<boost::shared_mutex> lock(*(mCostmap->getLock()));
 	double bestDirection, d;
 	
 	// 2. Set velocity and direction depending on drive mode
@@ -420,7 +421,6 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 	double safety;
 	
 	// Calculate safety value
-	boost::unique_lock<boost::shared_mutex> lock(*(mCostmap->getLock()));
 	int length = transformedCloud.points.size();
 	bool gettingBetter = true;
 	for(int i = 0; i < length; i++)
