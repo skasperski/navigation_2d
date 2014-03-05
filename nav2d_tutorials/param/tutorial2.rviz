@@ -49,38 +49,17 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/GridCells
-      Color: 255; 0; 0
-      Enabled: true
-      Name: LCM:Obstacles
-      Topic: /Operator/local_map/obstacles
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 255; 170; 0
-      Enabled: true
-      Name: LCM:Inflation
-      Topic: /Operator/local_map/inflated_obstacles
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 170; 255; 255
-      Enabled: true
-      Name: LCM:Unknown
-      Topic: /Operator/local_map/unknown_space
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
       Color: 0; 0; 255
       Enabled: true
       Name: Desired
-      Topic: /desired
+      Topic: /Operator/desired
       Value: true
     - Alpha: 1
       Class: rviz/GridCells
       Color: 25; 255; 0
       Enabled: true
       Name: Corrected
-      Topic: /route
+      Topic: /Operator/route
       Value: true
     - Alpha: 1
       Class: rviz/RobotModel
@@ -222,6 +201,13 @@ Visualization Manager:
       Name: ParticleCloud
       Topic: /SelfLocalizer/particles
       Value: true
+    - Alpha: 1
+      Class: rviz/GridCells
+      Color: 255; 85; 255
+      Enabled: true
+      Name: Plan
+      Topic: /Navigator/plan
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -238,7 +224,7 @@ Visualization Manager:
     - Class: rviz/SetInitialPose
       Topic: /initialpose
     - Class: rviz/SetGoal
-      Topic: /move_base_simple/goal
+      Topic: /goal
     - Class: rviz/PublishPoint
       Single click: true
       Topic: /clicked_point

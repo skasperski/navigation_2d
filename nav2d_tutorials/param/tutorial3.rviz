@@ -48,38 +48,17 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz/GridCells
-      Color: 255; 0; 0
-      Enabled: true
-      Name: LCM:Obstacles
-      Topic: /Operator/local_map/obstacles
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 255; 170; 0
-      Enabled: true
-      Name: LCM:Inflation
-      Topic: /Operator/local_map/inflated_obstacles
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 170; 255; 255
-      Enabled: true
-      Name: LCM:Unknown
-      Topic: /Operator/local_map/unknown_space
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
       Color: 0; 0; 255
       Enabled: true
       Name: Desired
-      Topic: /desired
+      Topic: /Operator/desired
       Value: true
     - Alpha: 1
       Class: rviz/GridCells
       Color: 25; 255; 0
       Enabled: true
       Name: Corrected
-      Topic: /route
+      Topic: /Operator/route
       Value: true
     - Alpha: 1
       Class: rviz/RobotModel
@@ -261,17 +240,17 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 18.1049
+      Distance: 20
       Focal Point:
-        X: -3.57706
-        Y: -1.64905
-        Z: -1.23978e-05
+        X: 0
+        Y: 0
+        Z: -5
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.0548
+      Pitch: 0.819491
       Target Frame: base_link
       Value: XYOrbit (rviz)
-      Yaw: 3.13667
+      Yaw: 3.14159
     Saved: ~
 Window Geometry:
   Displays:

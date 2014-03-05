@@ -3,7 +3,7 @@
   <Project Name="nav2d" Path="nav2d/nav2d.project" Active="Yes"/>
   <Project Name="nav2d_msgs" Path="nav2d_msgs/nav2d_msgs.project"/>
   <Project Name="nav2d_operator" Path="nav2d_operator/nav2d_operator.project"/>
-  <Project Name="nav2d_navigator" Path="nav2d_navigator/nav2d_navigator.project"/>
+  <Project Name="nav2d_navigator" Path="nav2d_navigator/nav2d_navigator.project" Active="No"/>
   <Project Name="nav2d_localizer" Path="nav2d_localizer/nav2d_localizer.project"/>
   <Project Name="nav2d_karto" Path="nav2d_karto/nav2d_karto.project"/>
   <Project Name="nav2d_remote" Path="nav2d_remote/nav2d_remote.project"/>
@@ -30,4 +30,7 @@
       <Project Name="nav2d_tutorials" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
+  <Environment>
+    <![CDATA[]]>
+  </Environment>
 </CodeLite_Workspace>
