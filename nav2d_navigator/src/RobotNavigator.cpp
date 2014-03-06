@@ -100,6 +100,7 @@ RobotNavigator::~RobotNavigator()
 	delete mMoveActionServer;
 	delete mExploreActionServer;
 	delete mGetMapActionServer;
+	mExplorationPlanner.reset();
 	delete mPlanLoader;
 }
 
