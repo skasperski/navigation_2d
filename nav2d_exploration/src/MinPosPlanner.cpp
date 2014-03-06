@@ -160,6 +160,7 @@ int MinPosPlanner::findExplorationTarget(GridMap* map, unsigned int start, unsig
 					marker.colors[p].r = r;
 					marker.colors[p].g = g;
 					marker.colors[p].b = b;
+					marker.colors[p].a = 0.5;
 				}else
 				{
 					ROS_ERROR("[MinPos] SecurityCheck failed! (Asked for %d / %d)", p, mFrontierCells);
