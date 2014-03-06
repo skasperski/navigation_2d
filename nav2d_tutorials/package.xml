@@ -13,4 +13,12 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <run_depend>nav2d_msgs</run_depend>
+  <run_depend>nav2d_operator</run_depend>
+  <run_depend>nav2d_navigator</run_depend>
+  <run_depend>nav2d_localizer</run_depend>
+  <run_depend>nav2d_remote</run_depend>
+  <run_depend>nav2d_karto</run_depend>
+  <run_depend>nav2d_exploration</run_depend>
+
 </package>
