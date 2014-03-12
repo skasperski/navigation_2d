@@ -8,6 +8,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   tf
   pluginlib
+  geometry_msgs
+  nav_msgs
+  visualization_msgs
   nav2d_navigator
 )
 
@@ -17,7 +20,14 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
   LIBRARIES ExplorationPlugins
-  CATKIN_DEPENDS roscpp tf pluginlib nav2d_navigator
+  CATKIN_DEPENDS
+    roscpp
+	tf
+	pluginlib
+	geometry_msgs
+	nav_msgs
+	visualization_msgs
+	nav2d_navigator
 )
 
 ###########

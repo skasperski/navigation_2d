@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 2.8.3)
 project(nav2d_remote)
 
 ## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   nav2d_navigator
   nav2d_operator
@@ -14,24 +12,23 @@ find_package(catkin REQUIRED COMPONENTS
 ###################################
 ## catkin specific configuration ##
 ###################################
-catkin_package()
+catkin_package(
+  CATKIN_DEPENDS
+    nav2d_navigator
+    nav2d_operator
+    roscpp
+    sensor_msgs
+)
 
 ###########
 ## Build ##
 ###########
 
-## Specify additional locations of header files
-## Your package locations should be listed before other locations
-# include_directories(include)
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
+include_directories(${catkin_INCLUDE_DIRS})
 
-## Declare a cpp executable
 add_executable(remote_joy src/remote_joy.cpp)
 add_executable(sim_joy src/sim_joy.cpp)
 
-## Specify libraries to link a library or executable target against
 target_link_libraries(remote_joy ${catkin_LIBRARIES})
 target_link_libraries(sim_joy ${catkin_LIBRARIES})
 

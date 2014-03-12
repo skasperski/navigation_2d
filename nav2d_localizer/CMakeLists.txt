@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 2.8.3)
 project(nav2d_localizer)
 
 ## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   tf
@@ -13,20 +11,17 @@ find_package(catkin REQUIRED COMPONENTS
 ## catkin specific configuration ##
 ###################################
 catkin_package(
- INCLUDE_DIRS include
- LIBRARIES SelfLocalizer
- CATKIN_DEPENDS roscpp tf
+  INCLUDE_DIRS include
+  LIBRARIES SelfLocalizer
+  CATKIN_DEPENDS roscpp tf
 )
 
 ###########
 ## Build ##
 ###########
 
-## Specify additional locations of header files
-## Your package locations should be listed before other locations
-# include_directories(include)
 include_directories(
-  include/${PROJECT_NAME}/
+  include/${PROJECT_NAME}
   ${catkin_INCLUDE_DIRS}
 )
 
