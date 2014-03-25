@@ -8,7 +8,7 @@
 RobotOperator::RobotOperator()
 {
 	// Create the local costmap
-	mLocalMap = new Costmap2DROS("local_map", mTfListener);
+	mLocalMap = new costmap_2d::Costmap2DROS("local_map", mTfListener);
 	mRasterSize = mLocalMap->getCostmap()->getResolution();
 	
 	// Publish / subscribe to ROS topics
@@ -20,7 +20,7 @@ RobotOperator::RobotOperator()
 	mCostPublisher = robotNode.advertise<geometry_msgs::Vector3>("costs", 1);
 	
 	// Get parameters from the parameter server
-	NodeHandle operatorNode("~/");
+	ros::NodeHandle operatorNode("~/");
 	operatorNode.param("publish_route", mPublishRoute, false);
 	if(mPublishRoute)
 	{
@@ -90,25 +90,25 @@ void RobotOperator::initTrajTable()
 		// Add the PointCloud to the LUT
 		// Circle in forward-left direction
 		sensor_msgs::PointCloud* flcloud = new sensor_msgs::PointCloud();
-		flcloud->header.stamp = Time(0);
+		flcloud->header.stamp = ros::Time(0);
 		flcloud->header.frame_id = mRobotFrame;
 		flcloud->points.resize(points.size());
 		
 		// Circle in forward-right direction
 		sensor_msgs::PointCloud* frcloud = new sensor_msgs::PointCloud();
-		frcloud->header.stamp = Time(0);
+		frcloud->header.stamp = ros::Time(0);
 		frcloud->header.frame_id = mRobotFrame;
 		frcloud->points.resize(points.size());
 		
 		// Circle in backward-left direction
 		sensor_msgs::PointCloud* blcloud = new sensor_msgs::PointCloud();
-		blcloud->header.stamp = Time(0);
+		blcloud->header.stamp = ros::Time(0);
 		blcloud->header.frame_id = mRobotFrame;
 		blcloud->points.resize(points.size());
 		
 		// Circle in backward-right direction
 		sensor_msgs::PointCloud* brcloud = new sensor_msgs::PointCloud();
-		brcloud->header.stamp = Time(0);
+		brcloud->header.stamp = ros::Time(0);
 		brcloud->header.frame_id = mRobotFrame;
 		brcloud->points.resize(points.size());
 		
@@ -137,7 +137,7 @@ void RobotOperator::initTrajTable()
 	p.z = 0;
 	
 	sensor_msgs::PointCloud* turn = new sensor_msgs::PointCloud();
-	turn->header.stamp = Time(0);
+	turn->header.stamp = ros::Time(0);
 	turn->header.frame_id = mRobotFrame;
 	turn->points.resize(1);
 	turn->points[0] = p;
@@ -145,12 +145,12 @@ void RobotOperator::initTrajTable()
 	int straight_len = 5.0 / mRasterSize;
 	
 	sensor_msgs::PointCloud* fscloud = new sensor_msgs::PointCloud();
-	fscloud->header.stamp = Time(0);
+	fscloud->header.stamp = ros::Time(0);
 	fscloud->header.frame_id = mRobotFrame;
 	fscloud->points.resize(straight_len);
 	
 	sensor_msgs::PointCloud* bscloud = new sensor_msgs::PointCloud();
-	bscloud->header.stamp = Time(0);
+	bscloud->header.stamp = ros::Time(0);
 	bscloud->header.frame_id = mRobotFrame;
 	bscloud->points.resize(straight_len);
 	
@@ -235,7 +235,7 @@ void RobotOperator::executeCommand()
 	{
 		mTfListener.transformPointCloud(mOdometryFrame,*originalCloud,transformedCloud);
 	}
-	catch(TransformException ex)
+	catch(tf::TransformException ex)
 	{
 		ROS_ERROR("%s", ex.what());
 		return;
@@ -285,7 +285,7 @@ void RobotOperator::executeCommand()
 	{
 		nav_msgs::GridCells route_msg;
 		route_msg.header.frame_id = mOdometryFrame;
-		route_msg.header.stamp = Time::now();
+		route_msg.header.stamp = ros::Time::now();
 	
 		route_msg.cell_width = mCostmap->getResolution();
 		route_msg.cell_height = mCostmap->getResolution();
@@ -307,7 +307,7 @@ void RobotOperator::executeCommand()
 		{
 			mTfListener.transformPointCloud(mOdometryFrame,*originalPlanCloud,transformedPlanCloud);
 		}
-		catch(TransformException ex)
+		catch(tf::TransformException ex)
 		{
 			ROS_ERROR("%s", ex.what());
 			return;
@@ -381,7 +381,7 @@ int RobotOperator::calculateFreeSpace(sensor_msgs::PointCloud* cloud)
 	{
 		if(mCostmap->worldToMap(cloud->points[i].x, cloud->points[i].y, mx, my))
 		{
-			if(mCostmap->getCost(mx,my) < INSCRIBED_INFLATED_OBSTACLE)
+			if(mCostmap->getCost(mx,my) < costmap_2d::INSCRIBED_INFLATED_OBSTACLE)
 			{
 				freeSpace++;
 			}else
@@ -404,7 +404,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 	{
 		mTfListener.transformPointCloud(mOdometryFrame, *originalCloud,transformedCloud);
 	}
-	catch(TransformException ex)
+	catch(tf::TransformException ex)
 	{
 		ROS_ERROR("%s", ex.what());
 		return 1;
@@ -428,7 +428,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 		if(mCostmap->worldToMap(transformedCloud.points[i].x, transformedCloud.points[i].y, mx, my))
 		{
 			cell_cost = mCostmap->getCost(mx,my);
-			if(cell_cost >= INSCRIBED_INFLATED_OBSTACLE)
+			if(cell_cost >= costmap_2d::INSCRIBED_INFLATED_OBSTACLE)
 			{
 				// Trajectory hit an obstacle
 				break;
@@ -436,7 +436,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 		}
 		freeSpace += mRasterSize;
 			
-		safety = INSCRIBED_INFLATED_OBSTACLE - (cell_cost * decay);
+		safety = costmap_2d::INSCRIBED_INFLATED_OBSTACLE - (cell_cost * decay);
 		if(gettingBetter)
 		{
 			if(safety >= valueSafety) valueSafety = safety;
@@ -450,7 +450,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 	
 	double action_value = 0.0;
 	double normFactor = 0.0;
-	valueSafety /= INSCRIBED_INFLATED_OBSTACLE;
+	valueSafety /= costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
 	
 	// Calculate distance value
 	if(freeSpace >= mMaxFreeSpace)

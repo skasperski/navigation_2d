@@ -15,10 +15,6 @@
 
 #include <string>
 
-using namespace ros;
-using namespace tf;
-using namespace costmap_2d;
-
 class RobotOperator
 {
 public:
@@ -36,17 +32,17 @@ private:
 	
 	inline sensor_msgs::PointCloud* getPointCloud(double direction, double velocity);
 
-	Costmap2DROS* mLocalMap;
-	Costmap2D* mCostmap;
+	costmap_2d::Costmap2DROS* mLocalMap;
+	costmap_2d::Costmap2D* mCostmap;
 	double mRasterSize;
 	
-	TransformListener mTfListener;
+	tf::TransformListener mTfListener;
 	
-	Subscriber mCommandSubscriber;
-	Publisher mControlPublisher;
-	Publisher mTrajectoryPublisher;
-	Publisher mPlanPublisher;
-	Publisher mCostPublisher;
+	ros::Subscriber mCommandSubscriber;
+	ros::Publisher mControlPublisher;
+	ros::Publisher mTrajectoryPublisher;
+	ros::Publisher mPlanPublisher;
+	ros::Publisher mCostPublisher;
 	
 	double mDesiredVelocity;
 	double mDesiredDirection;
