@@ -154,7 +154,7 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: R0:RobotModel
-      Robot Description: /robot_0/robot_description
+      Robot Description: /robot_description
       TF Prefix: /robot_0
       Update Interval: 0
       Value: true
@@ -250,7 +250,7 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: R1:RobotModel
-      Robot Description: /robot_1/robot_description
+      Robot Description: /robot_description
       TF Prefix: /robot_1
       Update Interval: 0
       Value: true
@@ -287,6 +287,11 @@ Visualization Manager:
     Current:
       Angle: 0
       Class: rviz/TopDownOrtho
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
       Name: Current View
       Near Clip Distance: 0.01
       Scale: 22.9653

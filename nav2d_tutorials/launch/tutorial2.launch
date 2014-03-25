@@ -39,17 +39,9 @@
 
 	<!-- Pioneer model for fancy visualization -->
 	<!-- Comment this out if you do not have the package 'p2os' available! -->
-	<param name="robot_description" command="$(find xacro)/xacro.py $(find p2os_urdf)/defs/pioneer3at.xacro" />
+	<include file="$(find p2os_urdf)/launch/pioneer3at_urdf.launch" />
 
-	<node name="PioneerState" pkg="robot_state_publisher" type="state_publisher">
-		<remap from="joint_state" to="joint_state"/>
-		<param name="publish_frequency" type="double" value="15.0"/>
-		<param name="tf_prefix" type="string" value=""/>
-	</node>
-
-	<node name="PioneerTransforms" pkg="p2os_urdf" type="publisher"/>
-
-	<!-- RVIZ to view the visulaization -->
+	<!-- RVIZ to view the visualization -->
 	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial2.rviz" />
 
 </launch>
