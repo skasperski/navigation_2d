@@ -208,7 +208,6 @@ void RobotOperator::executeCommand()
 	switch(mDriveMode)
 	{
 	case 0:
-//		mCurrentDirection = findBestDirection();
 		bestDirection = findBestDirection();
 		d = bestDirection - mCurrentDirection;
 		if(d < -0.2) d = -0.2;
@@ -261,16 +260,6 @@ void RobotOperator::executeCommand()
 	{
 		if(mDriveMode == 0)
 		{
-			// Turn in place (somewhat hacky)
-//			mCurrentVelocity = mDesiredVelocity;
-//			if(mCurrentVelocity > 0.5) mCurrentVelocity = 0.5;
-//			if(mDesiredDirection > 0)
-//			{
-//				mCurrentDirection = 1;
-//			}else
-//			{
-//				mCurrentDirection = -1;
-//			}
 			mRecoverySteps = 30; // Recover for 3 seconds
 			ROS_WARN_THROTTLE(1, "Robot is stuck! Trying to recover...");
 		}else
@@ -519,13 +508,6 @@ double RobotOperator::findBestDirection()
 		}
 		dir += step;
 	}
-/*	
-	geometry_msgs::Vector3 cost_msg;
-	cost_msg.x = evaluateAction(mDesiredDirection, mDesiredVelocity);
-	cost_msg.y = best_value;
-	cost_msg.z = diff(best_dir, mDesiredDirection);
-	mCostPublisher.publish(cost_msg); 
-*/
 	return best_dir;
 }
 
