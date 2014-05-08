@@ -16,10 +16,12 @@
   <build_depend>roscpp</build_depend>
   <build_depend>nav2d_localizer</build_depend>
   <build_depend>tf</build_depend>
+  <build_depend>suitesparse</build_depend>
 
   <run_depend>nav2d_msgs</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>nav2d_localizer</run_depend>
   <run_depend>tf</run_depend>
+  <run_depend>suitesparse</run_depend>
 
 </package>
