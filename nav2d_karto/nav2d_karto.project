@@ -190,4 +190,10 @@
     <File Name="OpenKarto/source/String.cpp"/>
     <File Name="OpenKarto/source/StringHelper.cpp"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="cmake_modules">
+    <File Name="cmake_modules/FindCSparse.cmake"/>
+    <File Name="cmake_modules/FindCholmod.cmake"/>
+    <File Name="cmake_modules/FindG2O.cmake"/>
+    <File Name="cmake_modules/FindSuiteSparse.cmake"/>
+  </VirtualDirectory>
 </CodeLite_Project>
