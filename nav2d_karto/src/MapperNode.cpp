@@ -2,6 +2,7 @@
 
 #include "MultiMapper.h"
 #include "SpaSolver.h"
+#include "G2oSolver.h"
 
 int main(int argc, char **argv)
 {
