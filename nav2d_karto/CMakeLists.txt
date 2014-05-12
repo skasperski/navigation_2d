@@ -97,8 +97,7 @@ add_dependencies(mapper MultiMapper)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(OpenKarto tbb cholmod)
-target_link_libraries(
-  MultiMapper
+target_link_libraries(MultiMapper
   OpenKarto
   ${CSPARSE_LIBRARY}
   ${G2O_CORE_LIBRARY}
