@@ -18,6 +18,8 @@ G2oSolver::G2oSolver()
 {
 	// Initialize the SparseOptimizer
 	SlamCholmodLinearSolver* linearSolver = new SlamCholmodLinearSolver();
+//	SlamCSparseLinearSolver* linearSolver = new SlamCSparseLinearSolver();
+
 	linearSolver->setBlockOrdering(false);
 	SlamBlockSolver* blockSolver = new SlamBlockSolver(linearSolver);
 	mOptimizer.setAlgorithm(new g2o::OptimizationAlgorithmGaussNewton(blockSolver));

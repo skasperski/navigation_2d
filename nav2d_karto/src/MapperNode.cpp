@@ -12,7 +12,8 @@ int main(int argc, char **argv)
 
 	// Create the mapper and scan-solver
 	MultiMapper* mapper = new MultiMapper();
-	SpaSolver* solver = new SpaSolver();
+//	SpaSolver* solver = new SpaSolver();
+	G2oSolver* solver = new G2oSolver();
 	mapper->setScanSolver(solver);
 
 	// Start main loop

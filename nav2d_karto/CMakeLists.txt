@@ -104,6 +104,7 @@ target_link_libraries(MultiMapper
   ${G2O_TYPES_SLAM2D}
   ${G2O_SOLVER_CHOLMOD}
   ${G2O_SOLVER_CSPARSE}
+  ${G2O_SOLVER_CSPARSE_EXTENSION}
   ${catkin_LIBRARIES}
 )
 target_link_libraries(mapper MultiMapper ${catkin_LIBRARIES})
