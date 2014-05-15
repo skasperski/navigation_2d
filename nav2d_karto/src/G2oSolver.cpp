@@ -4,22 +4,24 @@
 #include "g2o/core/factory.h"
 #include "g2o/core/optimization_algorithm_factory.h"
 #include "g2o/core/optimization_algorithm_gauss_newton.h"
-#include "g2o/solvers/csparse/linear_solver_csparse.h"
-#include "g2o/solvers/cholmod/linear_solver_cholmod.h"
 #include "g2o/types/slam2d/types_slam2d.h"
 
 #include <ros/console.h>
 
 typedef g2o::BlockSolver< g2o::BlockSolverTraits<-1, -1> > SlamBlockSolver;
-typedef g2o::LinearSolverCSparse<SlamBlockSolver::PoseMatrixType> SlamCSparseLinearSolver;
-typedef g2o::LinearSolverCholmod<SlamBlockSolver::PoseMatrixType> SlamCholmodLinearSolver;
+
+#ifdef SBA_CHOLMOD
+#include "g2o/solvers/cholmod/linear_solver_cholmod.h"
+typedef g2o::LinearSolverCholmod<SlamBlockSolver::PoseMatrixType> SlamLinearSolver;
+#else
+#include "g2o/solvers/csparse/linear_solver_csparse.h"
+typedef g2o::LinearSolverCSparse<SlamBlockSolver::PoseMatrixType> SlamLinearSolver;
+#endif
 
 G2oSolver::G2oSolver()
 {
 	// Initialize the SparseOptimizer
-	SlamCholmodLinearSolver* linearSolver = new SlamCholmodLinearSolver();
-//	SlamCSparseLinearSolver* linearSolver = new SlamCSparseLinearSolver();
-
+	SlamLinearSolver* linearSolver = new SlamLinearSolver();
 	linearSolver->setBlockOrdering(false);
 	SlamBlockSolver* blockSolver = new SlamBlockSolver(linearSolver);
 	mOptimizer.setAlgorithm(new g2o::OptimizationAlgorithmGaussNewton(blockSolver));
