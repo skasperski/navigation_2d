@@ -49,7 +49,7 @@ void G2oSolver::Compute()
 		ROS_ERROR("[g2o] No Node with ID 0 found!");
 		return;
 	}
-	first->fixed();
+	first->setFixed(true);
 	
 	// Do the graph optimization
 	mOptimizer.initializeOptimization();
