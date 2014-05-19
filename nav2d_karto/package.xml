@@ -2,7 +2,7 @@
 <package>
 
   <name>nav2d_karto</name>
-  <version>0.0.0</version>
+  <version>0.1.0</version>
   <description>The slam_karto package</description>
 
   <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
