@@ -1,7 +1,7 @@
 #include <nav_msgs/GridCells.h>
 #include <math.h>
 
-#include "RobotOperator.h"
+#include <nav2d_operator/RobotOperator.h>
 
 #define PI 3.14159265
 

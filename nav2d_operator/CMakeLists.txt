@@ -7,6 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   tf
   costmap_2d
+  sensor_msgs
 )
 
 ################################################
@@ -23,9 +24,9 @@ generate_messages()
 ## catkin specific configuration ##
 ###################################
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
   LIBRARIES RobotOperator
-  CATKIN_DEPENDS roscpp message_runtime tf costmap_2d
+  CATKIN_DEPENDS roscpp message_runtime tf costmap_2d sensor_msgs
 )
 
 ###########
@@ -34,7 +35,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include/${PROJECT_NAME} ${catkin_INCLUDE_DIRS} )
+include_directories(include ${catkin_INCLUDE_DIRS})
 
 ## Declare a cpp library
 add_library(RobotOperator src/RobotOperator.cpp)

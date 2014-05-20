@@ -4,7 +4,7 @@
   <name>nav2d_operator</name>
   <version>0.1.0</version>
   <description>
-    This package provides a lightweight, purely reactive obstacle-avoidance
+    The operator is a lightweight, purely reactive obstacle-avoidance
     module for mobile robots moving in a planar environment. The operator node
     works by evaluating a set of predefined motion primitives based on a local
     costmap and a desired direction. The best evaluated motion command will be
@@ -21,10 +21,12 @@
   <build_depend>message_generation</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>costmap_2d</build_depend>
+  <build_depend>sensor_msgs</build_depend>
 
   <run_depend>roscpp</run_depend>
   <run_depend>message_runtime</run_depend>
   <run_depend>tf</run_depend>
   <run_depend>costmap_2d</run_depend>
+  <run_depend>sensor_msgs</run_depend>
 
 </package>

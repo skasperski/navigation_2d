@@ -1,7 +1,7 @@
 #include <ros/ros.h>
 #include <tf/transform_listener.h>
 
-#include "RobotOperator.h"
+#include <nav2d_operator/RobotOperator.h>
 
 using namespace ros;
 
