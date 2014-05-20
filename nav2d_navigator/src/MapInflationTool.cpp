@@ -1,4 +1,4 @@
-#include "MapInflationTool.h"
+#include <nav2d_navigator/MapInflationTool.h>
 
 CellData::CellData(double d, double i, unsigned int sx, unsigned int sy):distance(d), index(i), sx(sx), sy(sy){
 }

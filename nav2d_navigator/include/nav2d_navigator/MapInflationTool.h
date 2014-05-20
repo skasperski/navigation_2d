@@ -3,8 +3,8 @@
 
 #include <queue>
 
-#include "ros/ros.h"
-#include "GridMap.h"
+#include <ros/ros.h>
+#include <nav2d_navigator/GridMap.h>
 
 class CellData
 {

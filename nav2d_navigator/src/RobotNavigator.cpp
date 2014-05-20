@@ -2,8 +2,8 @@
 #include <nav_msgs/GridCells.h>
 #include <visualization_msgs/Marker.h>
 
-#include "RobotNavigator.h"
-#include "ExplorationPlanner.h"
+#include <nav2d_navigator/RobotNavigator.h>
+#include <nav2d_navigator/ExplorationPlanner.h>
 
 #include <set>
 #include <map>

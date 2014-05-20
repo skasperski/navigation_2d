@@ -4,7 +4,7 @@
 #include <nav2d_navigator/GetFirstMapAction.h>
 #include <nav2d_navigator/SendCommand.h>
 
-#include "commands.h"
+#include <nav2d_navigator/commands.h>
 
 typedef actionlib::SimpleActionClient<nav2d_navigator::GetFirstMapAction> GetMapClient;
 

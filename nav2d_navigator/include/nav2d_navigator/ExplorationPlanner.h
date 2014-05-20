@@ -10,7 +10,7 @@
 #include <tf/transform_listener.h>
 #include <nav2d_msgs/RobotPose.h>
 
-#include "GridMap.h"
+#include <nav2d_navigator/GridMap.h>
 
 // A list of all other robots, that will subscribe to the other robots topic and update itself
 typedef std::map<unsigned int, geometry_msgs::Pose2D> PoseList;

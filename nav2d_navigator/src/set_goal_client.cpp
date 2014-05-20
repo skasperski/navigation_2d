@@ -4,7 +4,7 @@
 #include <geometry_msgs/PoseStamped.h>
 #include <tf/transform_datatypes.h>
 
-#include "commands.h"
+#include <nav2d_navigator/commands.h>
 
 typedef actionlib::SimpleActionClient<nav2d_navigator::MoveToPosition2DAction> MoveClient;
 

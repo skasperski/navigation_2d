@@ -45,13 +45,13 @@ catkin_package(
   LIBRARIES RobotNavigator MapInflationTool
   CATKIN_DEPENDS
     nav2d_operator
-	roscpp
-	message_runtime
-	tf
-	actionlib
+    roscpp
+    message_runtime
+    tf
+    actionlib
     actionlib_msgs
-	geometry_msgs
-	nav2d_msgs
+    geometry_msgs
+    nav2d_msgs
 )
 
 ###########
@@ -60,7 +60,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include/${PROJECT_NAME} ${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS})
 
 ## Declare a cpp library
 add_library(MapInflationTool src/MapInflationTool.cpp)
