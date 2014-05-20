@@ -5,13 +5,19 @@ project(nav2d_karto)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  nav2d_msgs
   roscpp
-  nav2d_localizer
   tf
+  nav_msgs
+  geometry_msgs
+  visualization_msgs
+  nav2d_msgs
+  nav2d_localizer
 )
 
 find_package(Eigen REQUIRED)
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(TBB tbb REQUIRED)
 
 ###################################
 ## catkin specific configuration ##
@@ -19,7 +25,7 @@ find_package(Eigen REQUIRED)
 catkin_package(
  INCLUDE_DIRS include
  LIBRARIES OpenKarto MultiMapper
- CATKIN_DEPENDS nav2d_msgs roscpp nav2d_localizer tf
+ CATKIN_DEPENDS roscpp tf nav_msgs geometry_msgs visualization_msgs nav2d_msgs nav2d_localizer 
  DEPENDS Eigen
 )
 
@@ -29,10 +35,14 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(OpenKarto/source)
+include_directories(
+  OpenKarto/source
+  ${Eigen_INCLUDE_DIRS}
+  ${TBB_INCLUDE_DIRS}
+)
 
 ## Build OpenKarto library
-SET(KARTO_SOURCE_FILES
+set(KARTO_SOURCE_FILES
   OpenKarto/source/Any.cpp
   OpenKarto/source/Event.cpp
   OpenKarto/source/Exception.cpp
