@@ -31,7 +31,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "map.h"
+#include "nav2d_localizer/map.h"
 
 
 ////////////////////////////////////////////////////////////////////////////

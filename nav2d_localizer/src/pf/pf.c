@@ -30,9 +30,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "pf.h"
-#include "pf_pdf.h"
-#include "pf_kdtree.h"
+#include "nav2d_localizer/pf.h"
+#include "nav2d_localizer/pf_pdf.h"
+#include "nav2d_localizer/pf_kdtree.h"
 
 
 // Compute the required number of samples, given that there are k bins

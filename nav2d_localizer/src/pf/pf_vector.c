@@ -30,8 +30,8 @@
 //#include <gsl/gsl_eigen.h>
 //#include <gsl/gsl_linalg.h>
 
-#include "pf_vector.h"
-#include "eig3.h"
+#include "nav2d_localizer/pf_vector.h"
+#include "nav2d_localizer/eig3.h"
 
 
 // Return a zero vector

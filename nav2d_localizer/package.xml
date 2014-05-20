@@ -4,7 +4,7 @@
   <name>nav2d_localizer</name>
   <version>0.1.0</version>
   <description>
-    Contains a ros-wrapper around a Particle Filter implementation.
+    Wrapper around Particle Filter implementation.
     The SelfLocalizer can be used as library or as a ros-node.
   </description>
   <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
@@ -16,8 +16,15 @@
 
   <build_depend>roscpp</build_depend>
   <build_depend>tf</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
 
   <run_depend>roscpp</run_depend>
   <run_depend>tf</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+
 
 </package>

@@ -5,6 +5,9 @@ project(nav2d_localizer)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   tf
+  nav_msgs
+  sensor_msgs
+  geometry_msgs
 )
 
 ###################################
@@ -13,7 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES SelfLocalizer
-  CATKIN_DEPENDS roscpp tf
+  CATKIN_DEPENDS roscpp tf nav_msgs sensor_msgs geometry_msgs
 )
 
 ###########
@@ -21,12 +24,12 @@ catkin_package(
 ###########
 
 include_directories(
-  include/${PROJECT_NAME}
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a cpp library
-SET(PF_SOURCE_FILES
+set(PF_SOURCE_FILES
   src/pf/pf.c 
   src/pf/pf_kdtree.c 
   src/pf/pf_pdf.c 
@@ -35,7 +38,7 @@ SET(PF_SOURCE_FILES
   src/pf/pf_draw.c
  )
 
-SET(MAP_SOURCE_FILES
+set(MAP_SOURCE_FILES
   src/map/map.c
   src/map/map_range.c
   src/map/map_store.c

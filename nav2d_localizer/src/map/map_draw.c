@@ -33,7 +33,7 @@
 #include <string.h>
 
 #include <rtk.h>
-#include "map.h"
+#include "nav2d_localizer/map.h"
 
 
 ////////////////////////////////////////////////////////////////////////////

@@ -34,9 +34,9 @@
 
 #include "rtk.h"
 
-#include "pf.h"
-#include "pf_pdf.h"
-#include "pf_kdtree.h"
+#include "nav2d_localizer/pf.h"
+#include "nav2d_localizer/pf_pdf.h"
+#include "nav2d_localizer/pf_kdtree.h"
 
 
 // Draw the statistics

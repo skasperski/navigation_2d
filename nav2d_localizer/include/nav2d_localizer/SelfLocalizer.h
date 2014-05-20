@@ -9,9 +9,9 @@
 #include <geometry_msgs/PoseArray.h>
 #include <sensor_msgs/LaserScan.h>
 
-#include "map.h"
-#include "pf.h"
-#include "pf_pdf.h"
+#include <nav2d_localizer/map.h>
+#include <nav2d_localizer/pf.h>
+#include <nav2d_localizer/pf_pdf.h>
 
 class OdometryData
 {

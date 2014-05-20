@@ -2,7 +2,7 @@
 #include "tf/transform_broadcaster.h"
 #include "nav_msgs/GetMap.h"
 
-#include "SelfLocalizer.h"
+#include "nav2d_localizer/SelfLocalizer.h"
 
 int main(int argc, char **argv)
 {

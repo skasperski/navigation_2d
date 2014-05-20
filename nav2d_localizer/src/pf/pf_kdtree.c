@@ -31,8 +31,8 @@
 #include <string.h>
 
 
-#include "pf_vector.h"
-#include "pf_kdtree.h"
+#include "nav2d_localizer/pf_vector.h"
+#include "nav2d_localizer/pf_kdtree.h"
 
 
 // Compare keys to see if they are equal

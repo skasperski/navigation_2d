@@ -1,4 +1,4 @@
-#include "SelfLocalizer.h"
+#include "nav2d_localizer/SelfLocalizer.h"
 
 #include <tf/transform_listener.h>
 #include <math.h>
