@@ -92,19 +92,21 @@ include_directories(
   include/${PROJECT_NAME}
   OpenKarto/source
   ${Eigen_INCLUDE_DIRS}
-  ${G2O_INCLUDE_DIR}
   ${CSPARSE_INCLUDE_DIR}
   ${catkin_INCLUDE_DIRS}
 )
-add_library(MultiMapper src/MultiMapper.cpp src/SpaSolver.cpp src/spa2d.cpp src/csparse.cpp)
+add_library(MultiMapper src/MultiMapper.cpp)
 
 ## Build the mapper-node executable
+set(MAPPER_INCLUDE_FILES include include/${PROJECT_NAME} OpenKarto/source)
 set(MAPPER_SOURCE_FILES src/MapperNode.cpp src/SpaSolver.cpp src/spa2d.cpp src/csparse.cpp)
 
 if(G2O_FOUND)
+  set(MAPPER_INCLUDE_FILES ${MAPPER_INCLUDE_FILES} ${G2O_INCLUDE_DIR})
   set(MAPPER_SOURCE_FILES ${MAPPER_SOURCE_FILES} src/G2oSolver.cpp)
 endif(G2O_FOUND)
 
+include_directories(${MAPPER_INCLUDE_FILES})
 add_executable(mapper ${MAPPER_SOURCE_FILES})
 
 ## Add cmake target dependencies of the executable/library
@@ -117,16 +119,24 @@ target_link_libraries(OpenKarto tbb)
 target_link_libraries(MultiMapper OpenKarto ${catkin_LIBRARIES})
 target_link_libraries(mapper
   MultiMapper
+  ${CSPARSE_LIBRARY}
+  ${catkin_LIBRARIES}
+)
+
+if(CHOLMOD_FOUND)
+target_link_libraries(mapper
+  ${CHOLMOD_LIBRARIES})
+endif(CHOLMOD_FOUND)
+
+if(G2O_FOUND)
+target_link_libraries(mapper
   ${G2O_CORE_LIBRARY}
   ${G2O_STUFF_LIBRARY}
   ${G2O_TYPES_SLAM2D}
   ${G2O_SOLVER_CHOLMOD}
   ${G2O_SOLVER_CSPARSE}
-  ${G2O_SOLVER_CSPARSE_EXTENSION}
-  ${CHOLMOD_LIBRARIES}
-  ${CSPARSE_LIBRARY}
-  ${catkin_LIBRARIES}
-)
+  ${G2O_SOLVER_CSPARSE_EXTENSION})
+endif(G2O_FOUND)
 
 
 #############
