@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SpaSolver.h"
-
 #include <ros/console.h>
+
+#include <nav2d_karto/SpaSolver.h>
 
 SpaSolver::SpaSolver()
 {

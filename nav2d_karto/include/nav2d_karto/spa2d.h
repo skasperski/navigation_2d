@@ -54,7 +54,7 @@
 #include <vector>
 
 // sparse Cholesky
-#include "csparse.h"
+#include <nav2d_karto/csparse.h>
 // block jacobian pcg
 // #include <bpcg/bpcg.h>
 

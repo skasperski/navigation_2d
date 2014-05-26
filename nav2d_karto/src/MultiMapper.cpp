@@ -1,7 +1,6 @@
-#include "MultiMapper.h"
-
 #include <visualization_msgs/Marker.h>
 #include <nav2d_msgs/RobotPose.h>
+#include <nav2d_karto/MultiMapper.h>
 
 // compute linear index for given map coords
 #define MAP_IDX(sx, i, j) ((sx) * (j) + (i))

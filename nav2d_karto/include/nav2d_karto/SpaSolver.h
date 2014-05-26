@@ -29,7 +29,7 @@
 #include <Eigen/Eigen>
 #include <ros/time.h>
 
-#include "spa2d.h"
+#include <nav2d_karto/spa2d.h>
 
 typedef std::vector<karto::Matrix3> CovarianceVector;
 

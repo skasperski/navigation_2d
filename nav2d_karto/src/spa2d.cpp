@@ -35,7 +35,7 @@
 //
 // Sparse Pose Adjustment classes and functions, 2D version
 //
-#include "spa2d.h"
+#include <nav2d_karto/spa2d.h>
 
 #include <stdio.h>
 #include <Eigen/Cholesky>

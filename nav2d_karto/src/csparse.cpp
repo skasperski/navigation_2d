@@ -35,7 +35,7 @@
 //
 // Interface to CSparse
 //
-#include "csparse.h"
+#include <nav2d_karto/csparse.h>
 
 #include <stdio.h>
 
