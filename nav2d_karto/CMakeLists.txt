@@ -17,7 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
 list(APPEND CMAKE_MODULE_PATH ${nav2d_karto_SOURCE_DIR}/cmake_modules)
 
 find_package(PkgConfig REQUIRED)
-find_package(Eigen REQUIRED)
+find_package(Eigen3 REQUIRED)
 find_package(CSparse REQUIRED)
 find_package(G2O)
 find_package(Cholmod)
