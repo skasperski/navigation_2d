@@ -14,10 +14,27 @@ find_package(catkin REQUIRED COMPONENTS
   nav2d_localizer
 )
 
-find_package(Eigen REQUIRED)
-find_package(PkgConfig REQUIRED)
+list(APPEND CMAKE_MODULE_PATH ${nav2d_karto_SOURCE_DIR}/cmake_modules)
 
-pkg_check_modules(TBB tbb REQUIRED)
+find_package(PkgConfig REQUIRED)
+find_package(Eigen REQUIRED)
+find_package(CSparse REQUIRED)
+find_package(G2O)
+find_package(Cholmod)
+
+# Use Thread-Building-Blocks [OpenKarto]
+pkg_check_modules(TBB tbb)
+if(TBB_FOUND)
+  add_definitions(-DUSE_TBB)
+endif(TBB_FOUND)
+
+if(G2O_FOUND)
+  add_definitions(-DUSE_G2O)
+endif(G2O_FOUND)
+
+if(CHOLMOD_FOUND)
+  add_definitions(-DSBA_CHOLMOD)
+endif(CHOLMOD_FOUND)
 
 ###################################
 ## catkin specific configuration ##
@@ -77,16 +94,30 @@ set(KARTO_SOURCE_FILES
   OpenKarto/source/StringHelper.cpp
 )
 
-add_definitions(-DUSE_TBB)
-add_definitions(-DSBA_CHOLMOD)
 add_library(OpenKarto ${KARTO_SOURCE_FILES})
 
 ## Build MultiMapper library
-include_directories(include OpenKarto/source ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
-add_library(MultiMapper src/MultiMapper.cpp src/SpaSolver.cpp src/spa2d.cpp src/csparse.cpp)
+include_directories(
+  include
+  include/${PROJECT_NAME}
+  OpenKarto/source
+  ${Eigen_INCLUDE_DIRS}
+  ${CSPARSE_INCLUDE_DIR}
+  ${catkin_INCLUDE_DIRS}
+)
+add_library(MultiMapper src/MultiMapper.cpp)
 
-## Build the mapper-node
-add_executable(mapper src/MapperNode.cpp)
+## Build the mapper-node executable
+set(MAPPER_INCLUDE_FILES include include/${PROJECT_NAME} OpenKarto/source)
+set(MAPPER_SOURCE_FILES src/MapperNode.cpp src/SpaSolver.cpp src/spa2d.cpp src/csparse.cpp)
+
+if(G2O_FOUND)
+  set(MAPPER_INCLUDE_FILES ${MAPPER_INCLUDE_FILES} ${G2O_INCLUDE_DIR})
+  set(MAPPER_SOURCE_FILES ${MAPPER_SOURCE_FILES} src/G2oSolver.cpp)
+endif(G2O_FOUND)
+
+include_directories(${MAPPER_INCLUDE_FILES})
+add_executable(mapper ${MAPPER_SOURCE_FILES})
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -94,9 +125,29 @@ add_dependencies(MultiMapper OpenKarto SelfLocalizer)
 add_dependencies(mapper MultiMapper)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(OpenKarto tbb cholmod)
-target_link_libraries(MultiMapper OpenKarto cxsparse ${catkin_LIBRARIES})
-target_link_libraries(mapper MultiMapper ${catkin_LIBRARIES})
+target_link_libraries(OpenKarto tbb)
+target_link_libraries(MultiMapper OpenKarto ${catkin_LIBRARIES})
+target_link_libraries(mapper
+  MultiMapper
+  ${CSPARSE_LIBRARY}
+  ${catkin_LIBRARIES}
+)
+
+if(CHOLMOD_FOUND)
+target_link_libraries(mapper
+  ${CHOLMOD_LIBRARIES})
+endif(CHOLMOD_FOUND)
+
+if(G2O_FOUND)
+target_link_libraries(mapper
+  ${G2O_CORE_LIBRARY}
+  ${G2O_STUFF_LIBRARY}
+  ${G2O_TYPES_SLAM2D}
+  ${G2O_SOLVER_CHOLMOD}
+  ${G2O_SOLVER_CSPARSE}
+  ${G2O_SOLVER_CSPARSE_EXTENSION})
+endif(G2O_FOUND)
+
 
 #############
 ## Install ##

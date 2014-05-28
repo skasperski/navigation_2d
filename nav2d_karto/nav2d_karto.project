@@ -99,12 +99,14 @@
     <File Name="src/SpaSolver.cpp"/>
     <File Name="src/csparse.cpp"/>
     <File Name="src/spa2d.cpp"/>
+    <File Name="src/G2oSolver.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/csparse.h"/>
     <File Name="include/spa2d.h"/>
     <File Name="include/nav2d_karto/MultiMapper.h"/>
     <File Name="include/nav2d_karto/SpaSolver.h"/>
+    <File Name="include/nav2d_karto/G2oSolver.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="OpenKarto">
     <VirtualDirectory Name="include">
@@ -187,5 +189,11 @@
     <File Name="OpenKarto/source/SensorRegistry.cpp"/>
     <File Name="OpenKarto/source/String.cpp"/>
     <File Name="OpenKarto/source/StringHelper.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="cmake_modules">
+    <File Name="cmake_modules/FindCSparse.cmake"/>
+    <File Name="cmake_modules/FindCholmod.cmake"/>
+    <File Name="cmake_modules/FindG2O.cmake"/>
+    <File Name="cmake_modules/FindSuiteSparse.cmake"/>
   </VirtualDirectory>
 </CodeLite_Project>
