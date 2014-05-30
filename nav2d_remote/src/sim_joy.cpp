@@ -45,7 +45,7 @@ SimOperator::SimOperator(unsigned int numOfRobots)
 		if(mNumberOfRobots > 1)
 			sprintf(topic, "/robot_%d/cmd_vel", i);
 		else
-			sprintf(topic, "/cmd_vel", i);
+			sprintf(topic, "/cmd_vel");
 		mCommandPublisher.push_back(node.advertise<geometry_msgs::Twist>(topic, 1));
 
 		geometry_msgs::Twist twist;
