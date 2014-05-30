@@ -38,6 +38,10 @@
 	<!-- Pioneer model for fancy visualization -->
 	<!-- Comment this out if you do not have the package 'p2os' available! -->
 	<include file="$(find p2os_urdf)/launch/pioneer3at_urdf.launch" />
+	<node name="front_left_wheel" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 p3at_front_left_hub p3at_front_left_wheel 100" />
+	<node name="front_right_wheel" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 p3at_front_right_hub p3at_front_right_wheel 100" />
+	<node name="back_left_wheel" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 p3at_back_left_hub p3at_back_left_wheel 100" />
+	<node name="back_right_wheel" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 p3at_back_right_hub p3at_back_right_wheel 100" />
 
 	<!-- RVIZ to view the visualization -->
 	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial3.rviz" />
