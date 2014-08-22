@@ -75,6 +75,10 @@ add_executable(get_map_client src/get_map_client.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 add_dependencies(RobotNavigator nav2d_navigator_generate_messages_cpp)
+add_dependencies(navigator nav2d_navigator_generate_messages_cpp)
+add_dependencies(set_goal_client nav2d_navigator_generate_messages_cpp)
+add_dependencies(explore_client nav2d_navigator_generate_messages_cpp)
+add_dependencies(get_map_client nav2d_navigator_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(RobotNavigator MapInflationTool ${catkin_LIBRARIES})
