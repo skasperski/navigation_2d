@@ -1,7 +1,12 @@
 #include <ros/ros.h>
 
-#include <nav2d_karto/MultiMapper.h>
-#include <nav2d_karto/SpaSolver.h>
+#include "MultiMapper.h"
+
+#ifdef USE_G2O
+#include "G2oSolver.h"
+#else
+#include "SpaSolver.h"
+#endif
 
 int main(int argc, char **argv)
 {
@@ -9,9 +14,15 @@ int main(int argc, char **argv)
 	ros::init(argc, argv, "MultiMapper");
 	ros::NodeHandle node;
 
-	// Create the mapper and scan-solver
-	MultiMapper* mapper = new MultiMapper();
+	// Create a scan-solver
+#ifdef USE_G2O
+	G2oSolver* solver = new G2oSolver();
+#else
 	SpaSolver* solver = new SpaSolver();
+#endif
+
+	// Create the MultiMapper
+	MultiMapper* mapper = new MultiMapper();
 	mapper->setScanSolver(solver);
 
 	// Start main loop
