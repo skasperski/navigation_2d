@@ -20,14 +20,17 @@ find_package(catkin REQUIRED COMPONENTS
 
 list(APPEND CMAKE_MODULE_PATH ${nav2d_karto_SOURCE_DIR}/cmake_modules)
 
-find_package(Eigen REQUIRED)
 find_package(PkgConfig REQUIRED)
-
-pkg_check_modules(TBB tbb REQUIRED)
-
+find_package(Eigen REQUIRED)
 find_package(CSparse REQUIRED)
 find_package(G2O)
 find_package(Cholmod)
+
+# Use Thread-Building-Blocks [OpenKarto]
+pkg_check_modules(TBB tbb)
+if(TBB_FOUND)
+  add_definitions(-DUSE_TBB)
+endif(TBB_FOUND)
 
 if(G2O_FOUND)
   add_definitions(-DUSE_G2O)
