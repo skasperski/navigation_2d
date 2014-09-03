@@ -43,6 +43,9 @@ add_library(ExplorationPlugins
   src/MultiWavefrontPlanner.cpp
   src/MinPosPlanner.cpp
   src/exploration_plugins.cpp)
+
+add_dependencies(ExplorationPlugins ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(ExplorationPlugins ${catkin_LIBRARIES})
 
 

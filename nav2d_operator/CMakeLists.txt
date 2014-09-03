@@ -47,7 +47,7 @@ target_link_libraries(operator RobotOperator)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-add_dependencies(RobotOperator nav2d_operator_generate_messages_cpp)
+add_dependencies(RobotOperator nav2d_operator_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 
 #############
