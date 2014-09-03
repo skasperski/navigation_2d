@@ -44,14 +44,14 @@ catkin_package(
   INCLUDE_DIRS include
   LIBRARIES RobotNavigator MapInflationTool
   CATKIN_DEPENDS
-    nav2d_operator
-	roscpp
-	message_runtime
-	tf
-	actionlib
+    roscpp
+    message_runtime
+    tf
+    actionlib
     actionlib_msgs
-	geometry_msgs
-	nav2d_msgs
+	 geometry_msgs
+	 nav2d_msgs
+    nav2d_operator
 )
 
 ###########
@@ -74,9 +74,9 @@ add_executable(get_map_client src/get_map_client.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-add_dependencies(RobotNavigator nav2d_navigator_generate_messages_cpp)
+add_dependencies(RobotNavigator nav2d_navigator_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(navigator nav2d_navigator_generate_messages_cpp)
-add_dependencies(set_goal_client nav2d_navigator_generate_messages_cpp)
+add_dependencies(set_goal_client nav2d_navigator_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(explore_client nav2d_navigator_generate_messages_cpp)
 add_dependencies(get_map_client nav2d_navigator_generate_messages_cpp)
 

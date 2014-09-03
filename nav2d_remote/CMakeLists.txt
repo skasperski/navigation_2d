@@ -29,6 +29,9 @@ include_directories(${catkin_INCLUDE_DIRS})
 add_executable(remote_joy src/remote_joy.cpp)
 add_executable(sim_joy src/sim_joy.cpp)
 
+add_dependencies(remote_joy ${catkin_EXPORTED_TARGETS})
+add_dependencies(sim_joy ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(remote_joy ${catkin_LIBRARIES})
 target_link_libraries(sim_joy ${catkin_LIBRARIES})
 
