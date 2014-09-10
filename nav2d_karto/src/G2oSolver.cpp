@@ -107,7 +107,7 @@ void G2oSolver::AddConstraint(karto::Edge<karto::LocalizedObjectPtr>* pEdge)
 		delete odometry;
 		return;
 	}
-	if(odometry->vertices()[0] == NULL)
+	if(odometry->vertices()[1] == NULL)
 	{
 		ROS_ERROR("[g2o] Target vertex with id %d does not exist!", targetID);
 		delete odometry;
