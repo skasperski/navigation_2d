@@ -2,7 +2,7 @@
 <package>
 
   <name>nav2d_remote</name>
-  <version>0.1.3</version>
+  <version>0.1.4</version>
   <description>
     This package is used to manually control a robot that uses the operator and
     navigator node from navigation_2d. Currently there is one node to control one
