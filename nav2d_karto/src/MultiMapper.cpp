@@ -222,14 +222,36 @@ void MultiMapper::setRobotPose(double x, double y, double yaw)
 
 karto::LocalizedLaserScanPtr MultiMapper::createFromRosMessage(const sensor_msgs::LaserScan& scan)
 {
+	// Implementing REP 117: Informational Distance Measurements
+	// http://www.ros.org/reps/rep-0117.html
 	karto::RangeReadingsList readings;
 	std::vector<float>::const_iterator it;
 	for(it = scan.ranges.begin(); it != scan.ranges.end(); it++)
 	{
-		if(*it == 0)
-			readings.Add(scan.range_max);
-		else	
+		if(*it >= scan.range_min && *it <= scan.range_max)
+		{
+			// This is a valid measurement.
 			readings.Add(*it);
+		}else if( !std::isfinite(*it) && *it < 0)
+		{
+			// Object too close to measure.
+			readings.Add(scan.range_max);
+		}else if( !std::isfinite(*it) && *it > 0)
+		{
+			// No objects detected in range.
+			readings.Add(scan.range_max);
+		}else if( std::isnan(*it) )
+		{
+			// This is an erroneous, invalid, or missing measurement.
+			ROS_WARN_THROTTLE(1,"Laser scan contains nan-values!");
+			readings.Add(scan.range_max);
+		}else
+		{
+			// The sensor reported these measurements as valid, but they are
+			// discarded per the limits defined by minimum_range and maximum_range.
+			ROS_WARN_THROTTLE(1, "Laser reading not between range_min and range_max!");
+			readings.Add(scan.range_max);
+		}
 	}
 	return new karto::LocalizedRangeScan(mLaser->GetIdentifier(), readings);
 }
