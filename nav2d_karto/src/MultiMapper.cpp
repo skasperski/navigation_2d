@@ -220,6 +220,20 @@ void MultiMapper::setRobotPose(double x, double y, double yaw)
 	publishTransform();
 }
 
+karto::LocalizedLaserScanPtr MultiMapper::createFromRosMessage(const sensor_msgs::LaserScan& scan)
+{
+	karto::RangeReadingsList readings;
+	std::vector<float>::const_iterator it;
+	for(it = scan.ranges.begin(); it != scan.ranges.end(); it++)
+	{
+		if(*it == 0)
+			readings.Add(scan.range_max);
+		else	
+			readings.Add(*it);
+	}
+	return new karto::LocalizedRangeScan(mLaser->GetIdentifier(), readings);
+}
+
 void MultiMapper::receiveLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan)
 {
 	// Ignore own readings until map has been received
@@ -286,20 +300,8 @@ void MultiMapper::receiveLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan)
 		}
 		karto::Pose2 kartoPose = karto::Pose2(tfPose.getOrigin().x(), tfPose.getOrigin().y(), tf::getYaw(tfPose.getRotation()));
 		
-		// create localized range scan
-		karto::RangeReadingsList readings;
-		std::vector<float>::const_iterator it;
-		for(it = scan->ranges.begin(); it != scan->ranges.end(); it++)
-		{
-			if(*it == 0)
-				readings.Add(scan->range_max);
-			else	
-				readings.Add(*it);
-		}
-
-		karto::LocalizedLaserScanPtr laserScan =
-			new karto::LocalizedRangeScan(mLaser->GetIdentifier(), readings);
-
+		// create localized laser scan
+		karto::LocalizedLaserScanPtr laserScan = createFromRosMessage(*scan);
 		laserScan->SetOdometricPose(kartoPose);
 		laserScan->SetCorrectedPose(kartoPose);
 		
@@ -529,21 +531,8 @@ void MultiMapper::receiveLocalizedScan(const nav2d_msgs::LocalizedScan::ConstPtr
 	// Get the scan pose
 	karto::Pose2 scanPose(scan->x, scan->y, scan->yaw);
 	
-	// Get the scan readings
-	karto::RangeReadingsList readings;
-	std::vector<float>::const_iterator it;
-	for(it = scan->scan.ranges.begin(); it != scan->scan.ranges.end(); it++)
-	{
-		if(*it == 0)
-			readings.Add(scan->scan.range_max);
-		else	
-			readings.Add(*it);
-	}
-	
 	// create localized laser scan
-	karto::LocalizedLaserScanPtr localizedScan =
-		new karto::LocalizedRangeScan(robot, readings);
-
+	karto::LocalizedLaserScanPtr localizedScan = createFromRosMessage(scan->scan);
 	localizedScan->SetOdometricPose(scanPose);
 	localizedScan->SetCorrectedPose(scanPose);
 	

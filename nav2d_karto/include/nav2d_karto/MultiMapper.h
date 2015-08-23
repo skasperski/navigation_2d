@@ -43,6 +43,7 @@ private:
 	bool updateMap();
 	bool sendMap();
 	void setRobotPose(double x, double y, double yaw);
+	karto::LocalizedLaserScanPtr createFromRosMessage(const sensor_msgs::LaserScan& scan);
 
 	// Particle filter to localize within received map
 	SelfLocalizer* mSelfLocalizer;
