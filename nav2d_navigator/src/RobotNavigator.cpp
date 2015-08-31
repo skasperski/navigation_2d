@@ -621,7 +621,7 @@ void RobotNavigator::receiveLocalizeGoal(const nav2d_navigator::LocalizeGoal::Co
 		}
 		
 		// Check if we are localized successfully
-		if(setCurrentPosition())
+		if(isLocalized())
 		{
 			ROS_INFO("[Localize] Action succeeded.");
 			mLocalizeActionServer->setSucceeded();
@@ -918,6 +918,11 @@ void RobotNavigator::receiveExploreGoal(const nav2d_navigator::ExploreGoal::Cons
 		if(loopRate.cycleTime() > ros::Duration(1.0 / FREQUENCY))
 			ROS_WARN("Missed desired rate of %.2fHz! Loop actually took %.4f seconds!",FREQUENCY, loopRate.cycleTime().toSec());
 	}
+}
+
+bool RobotNavigator::isLocalized()
+{
+	return mTfListener.waitForTransform(mMapFrame, mRobotFrame, Time::now(), Duration(0.1));
 }
 
 bool RobotNavigator::setCurrentPosition()

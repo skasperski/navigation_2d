@@ -35,6 +35,7 @@ public:
 	void receiveLocalizeGoal(const nav2d_navigator::LocalizeGoal::ConstPtr &goal);
 
 private:
+	bool isLocalized();
 	bool setCurrentPosition();
 	bool getMap();
 	void stop();
