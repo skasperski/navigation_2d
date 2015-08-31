@@ -220,7 +220,7 @@ void MultiMapper::setRobotPose(double x, double y, double yaw)
 	publishTransform();
 }
 
-karto::LocalizedLaserScanPtr MultiMapper::createFromRosMessage(const sensor_msgs::LaserScan& scan)
+karto::LocalizedLaserScanPtr MultiMapper::createFromRosMessage(const sensor_msgs::LaserScan& scan, const karto::Identifier& robot)
 {
 	// Implementing REP 117: Informational Distance Measurements
 	// http://www.ros.org/reps/rep-0117.html
@@ -253,7 +253,7 @@ karto::LocalizedLaserScanPtr MultiMapper::createFromRosMessage(const sensor_msgs
 			readings.Add(scan.range_max);
 		}
 	}
-	return new karto::LocalizedRangeScan(mLaser->GetIdentifier(), readings);
+	return new karto::LocalizedRangeScan(robot, readings);
 }
 
 void MultiMapper::receiveLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan)
@@ -323,7 +323,7 @@ void MultiMapper::receiveLaserScan(const sensor_msgs::LaserScan::ConstPtr& scan)
 		karto::Pose2 kartoPose = karto::Pose2(tfPose.getOrigin().x(), tfPose.getOrigin().y(), tf::getYaw(tfPose.getRotation()));
 		
 		// create localized laser scan
-		karto::LocalizedLaserScanPtr laserScan = createFromRosMessage(*scan);
+		karto::LocalizedLaserScanPtr laserScan = createFromRosMessage(*scan, mLaser->GetIdentifier());
 		laserScan->SetOdometricPose(kartoPose);
 		laserScan->SetCorrectedPose(kartoPose);
 		
@@ -554,7 +554,7 @@ void MultiMapper::receiveLocalizedScan(const nav2d_msgs::LocalizedScan::ConstPtr
 	karto::Pose2 scanPose(scan->x, scan->y, scan->yaw);
 	
 	// create localized laser scan
-	karto::LocalizedLaserScanPtr localizedScan = createFromRosMessage(scan->scan);
+	karto::LocalizedLaserScanPtr localizedScan = createFromRosMessage(scan->scan, robot);
 	localizedScan->SetOdometricPose(scanPose);
 	localizedScan->SetCorrectedPose(scanPose);
 	
