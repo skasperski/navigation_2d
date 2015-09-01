@@ -24,6 +24,7 @@
   <build_depend>actionlib</build_depend>
   <build_depend>actionlib_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
   <build_depend>nav2d_msgs</build_depend>
   <build_depend>nav2d_operator</build_depend>
 
@@ -34,6 +35,7 @@
   <run_depend>actionlib</run_depend>
   <run_depend>actionlib_msgs</run_depend>
   <run_depend>geometry_msgs</run_depend>
+  <run_depend>std_srvs</run_depend>
   <run_depend>nav2d_msgs</run_depend>
   <run_depend>nav2d_operator</run_depend>
 

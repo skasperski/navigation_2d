@@ -1,7 +1,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
+#include <std_srvs/Trigger.h>
 #include <nav2d_operator/cmd.h>
-#include <nav2d_navigator/SendCommand.h>
 #include <nav2d_navigator/commands.h>
 
 /******************************************************
@@ -31,7 +31,8 @@ private:
 	ros::NodeHandle mNode;
 	ros::Publisher mCommandPublisher;
 	ros::Subscriber mJoySubscriber;
-	ros::ServiceClient mNavigatorClient;
+	ros::ServiceClient mStopClient;
+	ros::ServiceClient mPauseClient;
 	ros::ServiceClient mExploreClient;
 	ros::ServiceClient mGetMapClient;
 	
@@ -60,9 +61,10 @@ Teleoperator::Teleoperator()
 	
 	mCommandPublisher = mNode.advertise<nav2d_operator::cmd>("cmd", 1);
 	mJoySubscriber = mNode.subscribe<sensor_msgs::Joy>("joy", 10, &Teleoperator::joyCB, this);
-	mNavigatorClient = mNode.serviceClient<nav2d_navigator::SendCommand>(NAV_COMMAND_SERVICE);
-	mExploreClient = mNode.serviceClient<nav2d_navigator::SendCommand>(NAV_EXPLORE_SERVICE);
-	mGetMapClient = mNode.serviceClient<nav2d_navigator::SendCommand>(NAV_GETMAP_SERVICE);
+	mStopClient = mNode.serviceClient<std_srvs::Trigger>(NAV_STOP_SERVICE);
+	mPauseClient = mNode.serviceClient<std_srvs::Trigger>(NAV_PAUSE_SERVICE);
+	mExploreClient = mNode.serviceClient<std_srvs::Trigger>(NAV_EXPLORE_SERVICE);
+	mGetMapClient = mNode.serviceClient<std_srvs::Trigger>(NAV_GETMAP_SERVICE);
 	
 	mButtonPressed = false;
 }
@@ -85,9 +87,8 @@ void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)
 
 	if(msg->buttons[mButtonStop])
 	{
-		nav2d_navigator::SendCommand srv;
-		srv.request.command = NAV_COM_STOP;
-		if(!mNavigatorClient.call(srv))
+		std_srvs::Trigger srv;
+		if(!mStopClient.call(srv))
 		{
 			ROS_ERROR("Failed to send STOP_COMMAND to Navigator.");
 		}
@@ -96,9 +97,8 @@ void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)
 
 	if(msg->buttons[mButtonPauseNavigator])
 	{
-		nav2d_navigator::SendCommand srv;
-		srv.request.command = NAV_COM_PAUSE;
-		if(!mNavigatorClient.call(srv))
+		std_srvs::Trigger srv;
+		if(!mPauseClient.call(srv))
 		{
 			ROS_ERROR("Failed to send PAUSE_COMMAND to Navigator.");
 		}
@@ -107,8 +107,7 @@ void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)
 
 	if(msg->buttons[mButtonGetMap])
 	{
-		nav2d_navigator::SendCommand srv;
-		srv.request.command = NAV_COM_GETMAP;
+		std_srvs::Trigger srv;
 		if(!mGetMapClient.call(srv))
 		{
 			ROS_ERROR("Failed to send GETMAP_COMMAND to GetMap-Client.");
@@ -119,8 +118,7 @@ void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)
 
 	if(msg->buttons[mButtonStartExploration])
 	{
-		nav2d_navigator::SendCommand srv;
-		srv.request.command = NAV_COM_EXPLORE;
+		std_srvs::Trigger srv;
 		if(!mExploreClient.call(srv))
 		{
 			ROS_ERROR("Failed to send EXPLORE_COMMAND to Explore-Client.");

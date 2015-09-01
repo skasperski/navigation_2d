@@ -2,7 +2,8 @@
 #ifndef NAVIGATOR_COMMANDS_H
 #define NAVIGATOR_COMMANDS_H
 
-#define NAV_COMMAND_SERVICE "SendCommand"
+#define NAV_STOP_SERVICE "Stop"
+#define NAV_PAUSE_SERVICE "Pause"
 #define NAV_EXPLORE_SERVICE "StartExploration"
 #define NAV_GETMAP_SERVICE  "StartMapping"
 #define NAV_GOAL_TOPIC      "goal"
@@ -11,16 +12,6 @@
 #define NAV_EXPLORE_ACTION  "Explore"
 #define NAV_GETMAP_ACTION   "GetFirstMap"
 #define NAV_LOCALIZE_ACTION "Localize"
-
-#define NAV_COM_STOP      0
-#define NAV_COM_PAUSE     1
-#define NAV_COM_EXPLORE   2
-#define NAV_COM_GETMAP    3
-
-#define NAV_RES_OK        0
-#define NAV_RES_IGNORED   1
-#define NAV_RES_FAILED    2
-#define NAV_RES_INVALID   3
 
 #define NAV_ST_IDLE	      0
 #define NAV_ST_NAVIGATING 1

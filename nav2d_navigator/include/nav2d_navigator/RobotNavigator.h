@@ -1,9 +1,9 @@
 #include <ros/ros.h>
 #include <nav_msgs/GetMap.h>
+#include <std_srvs/Trigger.h>
 #include <tf/transform_listener.h>
 #include <actionlib/server/simple_action_server.h>
 #include <pluginlib/class_loader.h>
-#include <nav2d_navigator/SendCommand.h>
 #include <nav2d_navigator/MoveToPosition2DAction.h>
 #include <nav2d_navigator/ExploreAction.h>
 #include <nav2d_navigator/GetFirstMapAction.h>
@@ -28,7 +28,8 @@ public:
 	RobotNavigator();
 	~RobotNavigator();
 
-	bool receiveCommand(nav2d_navigator::SendCommand::Request &req, nav2d_navigator::SendCommand::Response &res);
+	bool receiveStop(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res);
+	bool receivePause(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res);
 	void receiveMoveGoal(const nav2d_navigator::MoveToPosition2DGoal::ConstPtr &goal);
 	void receiveExploreGoal(const nav2d_navigator::ExploreGoal::ConstPtr &goal);
 	void receiveGetMapGoal(const nav2d_navigator::GetFirstMapGoal::ConstPtr &goal);
@@ -52,7 +53,8 @@ private:
 	ros::Publisher mPlanPublisher;
 	ros::Publisher mCommandPublisher;
 	ros::Publisher mMarkerPublisher;
-	ros::ServiceServer mCommandServer;
+	ros::ServiceServer mStopServer;
+	ros::ServiceServer mPauseServer;
 
 	std::string mMapFrame;
 	std::string mRobotFrame;

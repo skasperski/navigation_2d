@@ -1,8 +1,7 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
-#include <tf/transform_datatypes.h>
 #include <nav2d_navigator/ExploreAction.h>
-#include <nav2d_navigator/SendCommand.h>
+#include <std_srvs/Trigger.h>
 
 #include <nav2d_navigator/commands.h>
 
@@ -10,15 +9,13 @@ typedef actionlib::SimpleActionClient<nav2d_navigator::ExploreAction> ExploreCli
 
 ExploreClient* gExploreClient;
 
-bool receiveCommand(nav2d_navigator::SendCommand::Request &req, nav2d_navigator::SendCommand::Response &res)
+bool receiveCommand(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res)
 {
-	if(req.command == NAV_COM_EXPLORE)
-	{
-		nav2d_navigator::ExploreGoal goal;
-		gExploreClient->sendGoal(goal);
-		return true;
-	}
-	return false;
+	nav2d_navigator::ExploreGoal goal;
+	gExploreClient->sendGoal(goal);
+	res.success = true;
+	res.message = "Send ExploreGoal to Navigator.";
+	return true;
 }
 
 int main(int argc, char **argv)

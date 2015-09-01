@@ -23,7 +23,8 @@ RobotNavigator::RobotNavigator()
 	mGetMapClient = robotNode.serviceClient<nav_msgs::GetMap>(serviceName);
 
 	mCommandPublisher = robotNode.advertise<nav2d_operator::cmd>("cmd", 1);
-	mCommandServer = robotNode.advertiseService(NAV_COMMAND_SERVICE, &RobotNavigator::receiveCommand, this);
+	mStopServer = robotNode.advertiseService(NAV_STOP_SERVICE, &RobotNavigator::receiveStop, this);
+	mPauseServer = robotNode.advertiseService(NAV_PAUSE_SERVICE, &RobotNavigator::receivePause, this);
 	mCurrentPlan = NULL;
 
 	NodeHandle navigatorNode("~/");
@@ -138,34 +139,30 @@ bool RobotNavigator::getMap()
 	return true;
 }
 
-bool RobotNavigator::receiveCommand(nav2d_navigator::SendCommand::Request &req, nav2d_navigator::SendCommand::Response &res)
+bool RobotNavigator::receiveStop(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res)
+{
+	mIsStopped = true;
+	res.success = true;
+	res.message = "Navigator received stop signal.";
+	return true;
+}
+
+bool RobotNavigator::receivePause(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res)
 {	
-	nav2d_operator::cmd stopMsg;
-	stopMsg.Turn = 0;
-	stopMsg.Velocity = 0;
-	
-	switch(req.command)
+	if(mIsPaused)
 	{
-	case NAV_COM_STOP:
-		mIsStopped = true;
-		break;
-		
-	case NAV_COM_PAUSE:
-		if(mIsPaused)
-		{
-			mIsPaused = false;
-			res.response = NAV_RES_OK;
-		}else
-		{
-			mIsPaused = true;
-			mCommandPublisher.publish(stopMsg);
-			res.response = NAV_RES_OK;
-		}
-		break;
-		
-	default:
-		ROS_ERROR("Invalid command!");
-		res.response = NAV_RES_INVALID;
+		mIsPaused = false;
+		res.success = false;
+		res.message = "Navigator continues.";
+	}else
+	{
+		mIsPaused = true;
+		nav2d_operator::cmd stopMsg;
+		stopMsg.Turn = 0;
+		stopMsg.Velocity = 0;
+		mCommandPublisher.publish(stopMsg);
+		res.success = true;
+		res.message = "Navigator pauses.";
 	}
 	return true;
 }

@@ -27,8 +27,6 @@ add_action_files(
   MoveToPosition2D.action
 )
 
-add_service_files(FILES SendCommand.srv)
-
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
