@@ -15,10 +15,6 @@
 	<node name="R0_MapAlign" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /map /robot_0/map 100"/>
 	<node name="R1_MapAlign" pkg="tf" type="static_transform_publisher" args="40 0 0 0 0 0 /map /robot_1/map 100"/>
 
-	<!-- Pioneer model for fancy visualization -->
-	<!-- Comment this out if you do not have the package 'p2os' available! -->
-	<include file="$(find p2os_urdf)/launch/upload_pioneer3at.xml"/>
-
 	<group ns="robot_0">
 		<param name="robot_id" value="1" />
 		<param name="tf_prefix" type="string" value="robot_0"/>
@@ -31,18 +27,27 @@
 			<rosparam file="$(find nav2d_tutorials)/param/mapper.yaml"/>
 		</node>
 
-		<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher">
-			<param name="publish_frequency" type="double" value="30.0"/>
-		</node>
-
-		<node pkg="p2os_urdf" type="publisher" name="publisher"/>
-
 	</group>
 
 	<group ns="robot_1">
 		<param name="robot_id" value="2" />
 		<param name="tf_prefix" type="string" value="robot_1"/>
 		<rosparam file="$(find nav2d_tutorials)/param/ros.yaml"/>
+
+		<!-- Start the Operator to control the simulated robot -->
+		<node name="Operator" pkg="nav2d_operator" type="operator" >
+			<remap from="scan" to="base_scan"/>
+			<rosparam file="$(find nav2d_tutorials)/param/operator.yaml"/>
+			<rosparam file="$(find nav2d_tutorials)/param/costmap.yaml" ns="local_map" />
+		</node>
+
+		<!-- Start the Navigator to move the robot autonomously -->
+		<node name="Navigator" pkg="nav2d_navigator" type="navigator">
+			<rosparam file="$(find nav2d_tutorials)/param/navigator.yaml"/>
+		</node>
+
+		<node name="Localize" pkg="nav2d_navigator" type="localize_client" />
+		<node name="Explore" pkg="nav2d_navigator" type="explore_client" />
 
 		<node name="Mapper" pkg="nav2d_karto" type="mapper">
 			<remap from="scan" to="base_scan"/>
@@ -54,9 +59,7 @@
 		<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher">
 			<param name="publish_frequency" type="double" value="30.0"/>
 		</node>
-
-		<node pkg="p2os_urdf" type="publisher" name="publisher"/>
-
+-
 	</group>
 
 	<!-- RVIZ to view the visualization -->
