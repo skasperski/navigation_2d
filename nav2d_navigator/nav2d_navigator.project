@@ -107,5 +107,12 @@
     <File Name="src/get_map_client.cpp"/>
     <File Name="src/navigator.cpp"/>
     <File Name="src/set_goal_client.cpp"/>
+    <File Name="src/localize_client.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="action">
+    <File Name="action/Explore.action"/>
+    <File Name="action/GetFirstMap.action"/>
+    <File Name="action/Localize.action"/>
+    <File Name="action/MoveToPosition2D.action"/>
   </VirtualDirectory>
 </CodeLite_Project>

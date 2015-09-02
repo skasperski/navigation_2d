@@ -69,14 +69,16 @@ add_executable(navigator src/navigator.cpp src/RobotNavigator.cpp)
 add_executable(set_goal_client src/set_goal_client.cpp)
 add_executable(explore_client src/explore_client.cpp)
 add_executable(get_map_client src/get_map_client.cpp)
+add_executable(localize_client src/localize_client.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 add_dependencies(RobotNavigator nav2d_navigator_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-add_dependencies(navigator nav2d_navigator_generate_messages_cpp)
+add_dependencies(navigator nav2d_navigator_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(set_goal_client nav2d_navigator_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-add_dependencies(explore_client nav2d_navigator_generate_messages_cpp)
-add_dependencies(get_map_client nav2d_navigator_generate_messages_cpp)
+add_dependencies(explore_client nav2d_navigator_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(get_map_client nav2d_navigator_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(localize_client nav2d_navigator_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(RobotNavigator MapInflationTool ${catkin_LIBRARIES})
@@ -84,6 +86,7 @@ target_link_libraries(navigator RobotNavigator ${catkin_LIBRARIES})
 target_link_libraries(set_goal_client ${catkin_LIBRARIES})
 target_link_libraries(explore_client ${catkin_LIBRARIES})
 target_link_libraries(get_map_client ${catkin_LIBRARIES})
+target_link_libraries(localize_client ${catkin_LIBRARIES})
 
 #############
 ## Install ##
@@ -93,7 +96,15 @@ target_link_libraries(get_map_client ${catkin_LIBRARIES})
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
 ## Mark executables and/or libraries for installation
-install(TARGETS RobotNavigator MapInflationTool navigator set_goal_client explore_client get_map_client
+install(
+  TARGETS
+    RobotNavigator
+    MapInflationTool
+    navigator
+    set_goal_client
+    explore_client
+    get_map_client
+    localize_client
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

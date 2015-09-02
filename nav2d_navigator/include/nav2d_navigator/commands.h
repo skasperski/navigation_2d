@@ -6,6 +6,7 @@
 #define NAV_PAUSE_SERVICE "Pause"
 #define NAV_EXPLORE_SERVICE "StartExploration"
 #define NAV_GETMAP_SERVICE  "StartMapping"
+#define NAV_LOCALIZE_SERVICE  "StartLocalization"
 #define NAV_GOAL_TOPIC      "goal"
 #define NAV_STATUS_TOPIC    "nav_status"
 #define NAV_MOVE_ACTION     "MoveTo"
