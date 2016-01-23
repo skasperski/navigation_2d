@@ -56,10 +56,6 @@
 			<rosparam file="$(find nav2d_tutorials)/param/mapper.yaml"/>
 		</node>
 
-		<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher">
-			<param name="publish_frequency" type="double" value="30.0"/>
-		</node>
--
 	</group>
 
 	<!-- RVIZ to view the visualization -->
