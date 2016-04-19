@@ -2,7 +2,7 @@
 <package>
 
   <name>nav2d</name>
-  <version>0.1.4</version>
+  <version>0.2.0</version>
   <description>Meta-Package containing modules for 2D-Navigation</description>
   <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
   <license>GPLv3</license>

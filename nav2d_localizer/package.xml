@@ -2,7 +2,7 @@
 <package>
 
   <name>nav2d_localizer</name>
-  <version>0.1.4</version>
+  <version>0.2.0</version>
   <description>
     Wrapper around Particle Filter implementation.
     The SelfLocalizer can be used as library or as a ros-node.

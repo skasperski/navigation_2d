@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>nav2d_exploration</name>
-  <version>0.1.4</version>
+  <version>0.2.0</version>
   <description>
     This package holds a collection of plugins for the RobotNavigator, that provide
     different cooperative exploration strategies for a team of mobile robots.
