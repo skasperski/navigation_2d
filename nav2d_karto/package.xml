@@ -2,7 +2,7 @@
 <package>
 
   <name>nav2d_karto</name>
-  <version>0.2.0</version>
+  <version>0.3.0</version>
   <description>
     Graph-based Simultaneous Localization and Mapping module.
     Includes OpenKarto GraphSLAM library by "SRI International".
