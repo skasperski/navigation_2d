@@ -220,7 +220,7 @@ void MultiMapper::setRobotPose(double x, double y, double yaw)
 	publishTransform();
 }
 
-karto::LocalizedLaserScanPtr MultiMapper::createFromRosMessage(const sensor_msgs::LaserScan& scan, const karto::Identifier& robot)
+karto::LocalizedRangeScan* MultiMapper::createFromRosMessage(const sensor_msgs::LaserScan& scan, const karto::Identifier& robot)
 {
 	// Implementing REP 117: Informational Distance Measurements
 	// http://www.ros.org/reps/rep-0117.html
