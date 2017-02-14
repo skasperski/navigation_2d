@@ -99,14 +99,12 @@
     <File Name="src/SpaSolver.cpp"/>
     <File Name="src/csparse.cpp"/>
     <File Name="src/spa2d.cpp"/>
-    <File Name="src/G2oSolver.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="include/csparse.h"/>
-    <File Name="include/spa2d.h"/>
     <File Name="include/nav2d_karto/MultiMapper.h"/>
     <File Name="include/nav2d_karto/SpaSolver.h"/>
-    <File Name="include/nav2d_karto/G2oSolver.h"/>
+    <File Name="include/nav2d_karto/csparse.h"/>
+    <File Name="include/nav2d_karto/spa2d.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="OpenKarto">
     <VirtualDirectory Name="include">
