@@ -183,7 +183,7 @@ namespace karto
         }
 
         // destroy last element by calling its destructor
-        m_pElements[m_Size - 1].~T();
+        m_pElements[m_Size - 1] = T();
 
         m_Size--;
       }
@@ -235,7 +235,7 @@ namespace karto
         // call destructor on each element 
         for (kt_size_t i = 0; i < m_Size; i++)
         {
-          m_pElements[i].~T();
+          m_pElements[i] = T();
         }
       }
       
