@@ -2,7 +2,7 @@
 <package>
 
   <name>nav2d_tutorials</name>
-  <version>0.3.0</version>
+  <version>0.3.1</version>
   <description>
     Contains a set of tutorials that run 2D-Navigation within Stage-Simulator.
   </description>

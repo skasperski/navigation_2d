@@ -2,7 +2,7 @@
 <package>
 
   <name>nav2d_msgs</name>
-  <version>0.3.0</version>
+  <version>0.3.1</version>
   <description>Messages used for 2D-Navigation.</description>
   <maintainer email="sebastian.kasperski@dfki.de">Sebastian Kasperski</maintainer>
   <license>GPLv3</license>
