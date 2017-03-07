@@ -9,6 +9,9 @@ FIND_PATH(G2O_INCLUDE_DIR g2o/core/base_vertex.h
   /opt/local/include
   /sw/local/include
   /sw/include
+  /opt/ros/indigo/include
+  /opt/ros/jade/include
+  /opt/ros/kinetic/include
   NO_DEFAULT_PATH
   )
 
@@ -40,6 +43,9 @@ MACRO(FIND_G2O_LIBRARY MYLIBRARY MYLIBRARYNAME)
     /opt/local/lib
     /sw/local/lib
     /sw/lib
+    /opt/ros/indigo/lib
+    /opt/ros/jade/lib
+    /opt/ros/kinetic/lib
     )
   
   FIND_LIBRARY(${MYLIBRARY}
@@ -64,6 +70,9 @@ MACRO(FIND_G2O_LIBRARY MYLIBRARY MYLIBRARYNAME)
     /opt/local/lib
     /sw/local/lib
     /sw/lib
+    /opt/ros/indigo/lib
+    /opt/ros/jade/lib
+    /opt/ros/kinetic/lib
     )
   
   IF(NOT ${MYLIBRARY}_DEBUG)
