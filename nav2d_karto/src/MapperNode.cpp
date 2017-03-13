@@ -23,20 +23,18 @@ int main(int argc, char **argv)
 #endif
 
 	// Create the MultiMapper
-	MultiMapper* mapper = new MultiMapper();
-	mapper->setScanSolver(solver);
+	MultiMapper mapper;
+	mapper.setScanSolver(solver);
 
 	// Start main loop
 	ros::Rate publishRate(10);
 	while(ros::ok())
 	{
-		mapper->publishTransform();
+		mapper.publishTransform();
 		ros::spinOnce();
 		publishRate.sleep();
 	}
 
 	// Quit
-	delete mapper;
-	delete solver;
 	return 0;
 }
