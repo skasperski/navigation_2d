@@ -94,8 +94,8 @@ private:
 	unsigned int mCellInflationRadius;
 	unsigned int mCellRobotRadius;
 
-	char mCostObstacle;
-	char mCostLethal;
+	signed char mCostObstacle;
+	signed char mCostLethal;
 
 	double mNavigationGoalDistance;
 	double mNavigationGoalAngle;
