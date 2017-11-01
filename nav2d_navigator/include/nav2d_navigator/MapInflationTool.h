@@ -33,18 +33,18 @@ public:
 private:
 	void enqueueObstacle(unsigned int index, unsigned int sx, unsigned int sy);
 	inline double distanceLookup(int mx, int my, int src_x, int src_y);
-	inline char costLookup(int mx, int my, int src_x, int src_y);
+	inline signed char costLookup(int mx, int my, int src_x, int src_y);
 	
 	GridMap* mGridMap;
 	
 	unsigned int mCellInflationRadius;
-	char** mCachedCosts;
+	signed char** mCachedCosts;
 	double ** mCachedDistances;
 	
 	std::priority_queue<CellData> mInflationQueue;
 	unsigned char* mInflationMarkers;
 	
-	char mCostObstacle;
+	signed char mCostObstacle;
 //	char mCostLethal;
 };
 
