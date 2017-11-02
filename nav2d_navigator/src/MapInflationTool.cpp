@@ -25,12 +25,12 @@ void MapInflationTool::computeCaches(unsigned int radius)
 {
 	mCellInflationRadius = radius;
 	
-	mCachedCosts = new char*[mCellInflationRadius + 2];
+	mCachedCosts = new signed char*[mCellInflationRadius + 2];
 	mCachedDistances = new double*[mCellInflationRadius + 2];
 	
 	for(unsigned int i = 0; i < mCellInflationRadius + 2; i++)
 	{
-		mCachedCosts[i] = new char[mCellInflationRadius + 2];
+		mCachedCosts[i] = new signed char[mCellInflationRadius + 2];
 		mCachedDistances[i] = new double[mCellInflationRadius + 2];
 		for(unsigned int j = 0; j < mCellInflationRadius + 2; j++)
 		{
@@ -57,7 +57,7 @@ inline double MapInflationTool::distanceLookup(int mx, int my, int src_x, int sr
 }
 
 // Method used to query the cache for the cell cost.
-inline char MapInflationTool::costLookup(int mx, int my, int src_x, int src_y)
+inline signed char MapInflationTool::costLookup(int mx, int my, int src_x, int src_y)
 {
 	unsigned int dx = abs(mx - src_x);
 	unsigned int dy = abs(my - src_y);
@@ -138,7 +138,7 @@ void MapInflationTool::enqueueObstacle(unsigned int index, unsigned int sx, unsi
 	CellData cell(distance, index, sx, sy);
 	mInflationQueue.push(cell);
 	mInflationMarkers[index] = 1;
-	char value = costLookup(mx, my, sx, sy);
+	signed char value = costLookup(mx, my, sx, sy);
 	mGridMap->setData(index, value);
 //	ROS_DEBUG("Set cell %d cost to %d", index, value);
 }

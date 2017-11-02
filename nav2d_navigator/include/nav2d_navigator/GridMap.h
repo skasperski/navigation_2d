@@ -22,8 +22,8 @@ public:
 	double getOriginX() {return mOccupancyGrid.info.origin.position.x;}
 	double getOriginY() {return mOccupancyGrid.info.origin.position.y;}
 	
-	char getLethalCost(){return mLethalCost;}
-	void setLethalCost(char c){mLethalCost = c;}
+	signed char getLethalCost(){return mLethalCost;}
+	void setLethalCost(signed char c){mLethalCost = c;}
 	
 	const nav_msgs::OccupancyGrid& getMap() const {return mOccupancyGrid;}
 	
@@ -52,7 +52,7 @@ public:
 	}
 	
 	// Index based methods
-	char getData(unsigned int index)
+	signed char getData(unsigned int index)
 	{
 		if(index < mMapWidth * mMapHeight)
 			return mOccupancyGrid.data[index];
@@ -60,7 +60,7 @@ public:
 			return -1;
 	}
 	
-	bool setData(unsigned int index, char value)
+	bool setData(unsigned int index, signed char value)
 	{
 		if(index >= mMapWidth * mMapHeight)
 		{
@@ -72,7 +72,7 @@ public:
 
 	bool isFree(unsigned int index)
 	{
-		char value = getData(index);
+		signed char value = getData(index);
 		if(value >= 0 && value < mLethalCost) return true;
 		return false;
 	}
@@ -135,7 +135,7 @@ public:
 	}
 
 	// Coordinate based methods
-	char getData(int x, int y)
+	signed char getData(int x, int y)
 	{
 		if(x < 0 ||x >= (int)mMapWidth || y < 0 || y >= (int)mMapHeight)
 			return -1;
@@ -143,7 +143,7 @@ public:
 			return mOccupancyGrid.data[y*mMapWidth + x];
 	}
 	
-	bool setData(int x, int y, char value)
+	bool setData(int x, int y, signed char value)
 	{
 		if(x < 0 ||x >= (int)mMapWidth || y < 0 || y >= (int)mMapHeight)
 		{
@@ -155,7 +155,7 @@ public:
 	
 	bool isFree(int x, int y)
 	{
-		char value = getData(x, y);
+		signed char value = getData(x, y);
 		if(value >= 0 && value < mLethalCost) return true;
 		return false;
 	}
@@ -164,7 +164,7 @@ private:
 	nav_msgs::OccupancyGrid mOccupancyGrid;
 	unsigned int mMapWidth;
 	unsigned int mMapHeight;
-	char mLethalCost;
+	signed char mLethalCost;
 };
 
 #endif
