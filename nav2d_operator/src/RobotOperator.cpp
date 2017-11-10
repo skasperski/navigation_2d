@@ -496,7 +496,7 @@ double RobotOperator::findBestDirection()
 	double best_dir = -1.0;
 	double best_value = 0.0;
 	double step = 0.01;
-	double dir = -1.0;
+	double dir = 0.0;
 	
 	while(dir <= 1.0)
 	{
@@ -505,6 +505,17 @@ double RobotOperator::findBestDirection()
 		{
 			best_dir = dir;
 			best_value = value;
+		}
+ 
+		// for the left side direction
+		if (dir > 1e-5)
+		{
+			value = evaluateAction(-dir, mDesiredVelocity);
+			if(value > best_value)
+			{
+				best_dir = -dir;
+				best_value = value;
+			}
 		}
 		dir += step;
 	}
