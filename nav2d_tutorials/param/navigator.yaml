@@ -2,6 +2,9 @@
 map_inflation_radius: 1.0
 robot_radius: 0.5
 
+# Distance to set the command target in front of the robot
+command_target_distance: 1.0
+
 # Tolerance in target position for MoveToPosition2D (meter)
 navigation_goal_distance: 2.0
 

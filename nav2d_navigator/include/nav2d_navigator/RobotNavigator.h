@@ -97,6 +97,7 @@ private:
 	signed char mCostObstacle;
 	signed char mCostLethal;
 
+	double mCommandTargetDistance;
 	double mNavigationGoalDistance;
 	double mNavigationGoalAngle;
 	double mNavigationHomingDistance;

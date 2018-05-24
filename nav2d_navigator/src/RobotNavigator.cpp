@@ -41,6 +41,7 @@ RobotNavigator::RobotNavigator()
 	navigatorNode.param("navigation_homing_distance", mNavigationHomingDistance, 3.0);
 	navigatorNode.param("min_replanning_period", mMinReplanningPeriod, 3.0);
 	navigatorNode.param("max_replanning_period", mMaxReplanningPeriod, 1.0);
+	navigatorNode.param("command_target_distance", mCommandTargetDistance, 1.0);
 	mCostObstacle = 100;
 	mCostLethal = (1.0 - (mRobotRadius / mInflationRadius)) * (double)mCostObstacle;
 
@@ -439,7 +440,7 @@ bool RobotNavigator::generateCommand()
 	}
 
 	unsigned int target = mStartPoint;
-	int steps = 1.0 / mCurrentMap.getResolution();
+	int steps = mCommandTargetDistance / mCurrentMap.getResolution();
 	for(int i = 0; i < steps; i++)
 	{
 		unsigned int bestPoint = target;	
