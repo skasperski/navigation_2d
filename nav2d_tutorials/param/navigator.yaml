@@ -1,12 +1,12 @@
 # Frequency (Hz) in which to generate new commands
-frequency: 20.0
+frequency: 10.0
 
 # Inflation params used for path planning
 map_inflation_radius: 1.0
 robot_radius: 0.5
 
 # Distance to set the command target in front of the robot
-command_target_distance: 0.2
+command_target_distance: 1.0
 
 # Tolerance in target position for MoveToPosition2D (meter)
 navigation_goal_distance: 2.0
@@ -21,7 +21,7 @@ navigation_homing_distance: 4.0
 exploration_goal_distance: 3.0
 
 # Replanning period (set any to 0 to ignore)
-min_replanning_period: 3.0
+min_replanning_period: 5.0
 max_replanning_period: 1.0
 
 # Strategy MinPos

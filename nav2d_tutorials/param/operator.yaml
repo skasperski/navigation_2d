@@ -1,3 +1,6 @@
+# Frequency in which to generate velocity commands to the robot platform
+frequency: 10
+
 # Maximum velocity command the operator will send to the robot (in m/s)
 max_velocity: 1.0
 
