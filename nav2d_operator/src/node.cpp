@@ -19,8 +19,8 @@ int main(int argc, char **argv)
 	Rate loopRate(frequency);
 	while(ok())
 	{
-		robOp.executeCommand();
 		spinOnce();
+		robOp.executeCommand();
 		loopRate.sleep();
 		if(loopRate.cycleTime() > ros::Duration(1.0 / frequency))
 			ROS_WARN("Missed desired rate of %.2f Hz! Loop actually took %.4f seconds!",frequency, loopRate.cycleTime().toSec());
