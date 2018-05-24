@@ -1,3 +1,6 @@
+# Frequency (Hz) in which to generate new commands
+frequency: 10.0
+
 # Inflation params used for path planning
 map_inflation_radius: 1.0
 robot_radius: 0.5

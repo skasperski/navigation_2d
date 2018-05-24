@@ -89,6 +89,7 @@ private:
 	GridMap mCurrentMap;
 	double* mCurrentPlan;
 
+	double mFrequency;
 	double mInflationRadius;
 	double mRobotRadius;
 	unsigned int mCellInflationRadius;

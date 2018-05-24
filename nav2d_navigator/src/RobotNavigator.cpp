@@ -9,7 +9,6 @@
 #include <map>
 
 #define PI 3.14159265
-#define FREQUENCY 5.0
 
 using namespace ros;
 using namespace tf;
@@ -42,6 +41,7 @@ RobotNavigator::RobotNavigator()
 	navigatorNode.param("min_replanning_period", mMinReplanningPeriod, 3.0);
 	navigatorNode.param("max_replanning_period", mMaxReplanningPeriod, 1.0);
 	navigatorNode.param("command_target_distance", mCommandTargetDistance, 1.0);
+	navigatorNode.param("frequency", mFrequency, 10.0);
 	mCostObstacle = 100;
 	mCostLethal = (1.0 - (mRobotRadius / mInflationRadius)) * (double)mCostObstacle;
 
@@ -506,7 +506,7 @@ void RobotNavigator::receiveGetMapGoal(const nav2d_navigator::GetFirstMapGoal::C
 	
 	nav2d_navigator::GetFirstMapFeedback f;
 	
-	Rate loopRate(FREQUENCY);
+	Rate loopRate(mFrequency);
 	unsigned int cycles = 0;
 	while(true)
 	{
@@ -518,7 +518,7 @@ void RobotNavigator::receiveGetMapGoal(const nav2d_navigator::GetFirstMapGoal::C
 			return;
 		}
 		
-		if(cycles >= 4*FREQUENCY) break;
+		if(cycles >= 4*mFrequency) break;
 		cycles++;
 		
 		mGetMapActionServer->publishFeedback(f);
@@ -645,10 +645,10 @@ void RobotNavigator::receiveMoveGoal(const nav2d_navigator::MoveToPosition2DGoal
 	ROS_DEBUG("Received Goal: %.2f, %.2f (in frame '%s')", goal->target_pose.x, goal->target_pose.y, goal->header.frame_id.c_str());
 
 	// Start navigating according to the generated plan
-	Rate loopRate(FREQUENCY);
+	Rate loopRate(mFrequency);
 	unsigned int cycle = 0;
 	bool reached = false;
-	int recheckCycles = mMinReplanningPeriod * FREQUENCY;
+	int recheckCycles = mMinReplanningPeriod * mFrequency;
 	
 	double targetDistance = (goal->target_distance > 0) ? goal->target_distance : mNavigationGoalDistance;
 	double targetAngle = (goal->target_angle > 0) ? goal->target_angle : mNavigationGoalAngle;
@@ -773,8 +773,8 @@ void RobotNavigator::receiveMoveGoal(const nav2d_navigator::MoveToPosition2DGoal
 		cycle++;
 		spinOnce();
 		loopRate.sleep();
-		if(loopRate.cycleTime() > ros::Duration(1.0 / FREQUENCY))
-			ROS_WARN("Missed desired rate of %.2fHz! Loop actually took %.4f seconds!",FREQUENCY, loopRate.cycleTime().toSec());
+		if(loopRate.cycleTime() > ros::Duration(1.0 / mFrequency))
+			ROS_WARN("Missed desired rate of %.2fHz! Loop actually took %.4f seconds!",mFrequency, loopRate.cycleTime().toSec());
 	}
 	
 	// Set ActionServer suceeded
@@ -801,11 +801,11 @@ void RobotNavigator::receiveExploreGoal(const nav2d_navigator::ExploreGoal::Cons
 	mStatus = NAV_ST_EXPLORING;
 	unsigned int cycle = 0;
 	unsigned int lastCheck = 0;
-	unsigned int recheckCycles = mMinReplanningPeriod * FREQUENCY;
-	unsigned int recheckThrottle = mMaxReplanningPeriod * FREQUENCY;
+	unsigned int recheckCycles = mMinReplanningPeriod * mFrequency;
+	unsigned int recheckThrottle = mMaxReplanningPeriod * mFrequency;
 	
 	// Move to exploration target
-	Rate loopRate(FREQUENCY);
+	Rate loopRate(mFrequency);
 	while(true)
 	{
 		// Check if we are asked to preempt
@@ -913,8 +913,8 @@ void RobotNavigator::receiveExploreGoal(const nav2d_navigator::ExploreGoal::Cons
 		// Sleep remaining time
 		spinOnce();
 		loopRate.sleep();
-		if(loopRate.cycleTime() > ros::Duration(1.0 / FREQUENCY))
-			ROS_WARN("Missed desired rate of %.2fHz! Loop actually took %.4f seconds!",FREQUENCY, loopRate.cycleTime().toSec());
+		if(loopRate.cycleTime() > ros::Duration(1.0 / mFrequency))
+			ROS_WARN("Missed desired rate of %.2fHz! Loop actually took %.4f seconds!",mFrequency, loopRate.cycleTime().toSec());
 	}
 }
 
