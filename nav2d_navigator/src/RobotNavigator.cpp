@@ -665,7 +665,7 @@ void RobotNavigator::receiveMoveGoal(const nav2d_navigator::MoveToPosition2DGoal
 		}
 		
 		// Constantly replan every 3 seconds
-		if(cycle % recheckCycles == 0)
+		if(cycle == 0 || (recheckCycles && cycle % recheckCycles == 0))
 		{
 			WallTime startTime = WallTime::now();
 			mStatus = NAV_ST_NAVIGATING;
@@ -828,8 +828,7 @@ void RobotNavigator::receiveExploreGoal(const nav2d_navigator::ExploreGoal::Cons
 		}
 		
 		// Regularly recheck for exploration target
-		cycle++;
-		bool reCheck = lastCheck == 0 || cycle - lastCheck > recheckCycles;
+		bool reCheck = lastCheck == 0 || (recheckCycles && (cycle - lastCheck > recheckCycles));
 		bool planOk = mCurrentPlan && mCurrentPlan[mStartPoint] >= 0;
 		bool nearGoal = planOk && ((cycle - lastCheck) > recheckThrottle && mCurrentPlan[mStartPoint] <= mExplorationGoalDistance);
 		
@@ -911,6 +910,7 @@ void RobotNavigator::receiveExploreGoal(const nav2d_navigator::ExploreGoal::Cons
 		}
 		
 		// Sleep remaining time
+		cycle++;
 		spinOnce();
 		loopRate.sleep();
 		if(loopRate.cycleTime() > ros::Duration(1.0 / mFrequency))

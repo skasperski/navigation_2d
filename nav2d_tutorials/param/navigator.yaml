@@ -20,7 +20,7 @@ navigation_homing_distance: 4.0
 # Find new exploartion target when in range of current one (meter)
 exploration_goal_distance: 3.0
 
-# Replanning period
+# Replanning period (set any to 0 to ignore)
 min_replanning_period: 3.0
 max_replanning_period: 1.0
 
