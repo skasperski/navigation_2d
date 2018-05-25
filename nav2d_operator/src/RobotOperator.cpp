@@ -405,7 +405,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 	
 	double freeSpace = 0.0;
 	double decay = 1.0;
-	double maxSafety = 0.0;
+	double maxCost = 0.0;
 	unsigned char cell_cost;
 	
 	// Calculate safety value
@@ -424,16 +424,17 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 		}
 		freeSpace += mRasterSize;
 		
-		valueSafety += costmap_2d::INSCRIBED_INFLATED_OBSTACLE - (cell_cost * decay);
-		maxSafety += costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
+		double cost = cell_cost * decay;
+		if(cost > maxCost)
+			maxCost = cost;
 
 		decay *= mSafetyDecay;
 	}
 	
 	double action_value = 0.0;
 	double normFactor = 0.0;
-	if(maxSafety > 0)
-		valueSafety /= maxSafety;
+	
+	valueSafety = (costmap_2d::INSCRIBED_INFLATED_OBSTACLE - maxCost) / costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
 	
 	// Calculate distance value
 	if(freeSpace >= mMaxFreeSpace)
