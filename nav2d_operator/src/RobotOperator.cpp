@@ -34,6 +34,7 @@ RobotOperator::RobotOperator()
 	operatorNode.param("safety_weight", mSafetyWeight, 1);
 	operatorNode.param("conformance_weight", mConformanceWeight, 1);
 	operatorNode.param("continue_weight", mContinueWeight, 1);
+	operatorNode.param("escape_weight", mEscapeWeight, 1);
 	operatorNode.param("max_velocity", mMaxVelocity, 1.0);
 
 	// Apply tf_prefix to all used frame-id's
@@ -402,10 +403,12 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 	double valueDistance = 0.0;    // How far can the robot move in this direction?
 	double valueSafety = 0.0;      // How safe is it to move in that direction?
 	double valueConformance = 0.0; // How conform is it with the desired direction?
+	double valueEscape;
 	
 	double freeSpace = 0.0;
 	double decay = 1.0;
 	double maxCost = 0.0;
+	double minCost = costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
 	unsigned char cell_cost;
 	
 	// Calculate safety value
@@ -428,6 +431,16 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 		if(cost > maxCost)
 			maxCost = cost;
 
+		if(i == 0)
+			minCost = cell_cost;
+
+		if(cell_cost < minCost)
+		{
+			double escape = (minCost - cell_cost) / minCost * decay;
+			if(escape > valueEscape)
+				valueEscape = escape;
+		}
+
 		decay *= mSafetyDecay;
 	}
 	
@@ -442,7 +455,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 		freeSpace = mMaxFreeSpace;
 	}
 	valueDistance = freeSpace / std::min(mMaxFreeSpace, length*mRasterSize);
-	normFactor = mDistanceWeight + mSafetyWeight;
+	normFactor = mDistanceWeight + mSafetyWeight + mSafetyWeight;
 
 	if(mRecoverySteps == 0)
 	{
@@ -463,6 +476,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 	
 	action_value += valueDistance * mDistanceWeight;
 	action_value += valueSafety * mSafetyWeight;
+	action_value += valueEscape * mEscapeWeight;
 	action_value /=  normFactor;
 	
 	if(debug)
@@ -471,7 +485,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 		cost_msg.x = valueDistance;
 		cost_msg.y = valueSafety;
 //		cost_msg.y = valueContinue;
-		cost_msg.z = valueConformance;
+		cost_msg.z = valueEscape;
 		mCostPublisher.publish(cost_msg); 
 	}
 	

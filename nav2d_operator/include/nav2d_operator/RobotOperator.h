@@ -124,6 +124,7 @@ private:
 	int mSafetyWeight;
 	int mConformanceWeight;
 	int mContinueWeight;
+	int mEscapeWeight;
 
 	std::string mOdometryFrame;
 	std::string mRobotFrame;
