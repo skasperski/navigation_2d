@@ -404,12 +404,11 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 	
 	double freeSpace = 0.0;
 	double decay = 1.0;
+	double maxSafety = 0.0;
 	unsigned char cell_cost;
-	double safety;
 	
 	// Calculate safety value
 	int length = transformedCloud.points.size();
-	bool gettingBetter = true;
 	for(int i = 0; i < length; i++)
 	{
 		unsigned int mx, my;
@@ -423,22 +422,17 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 			}
 		}
 		freeSpace += mRasterSize;
-			
-		safety = costmap_2d::INSCRIBED_INFLATED_OBSTACLE - (cell_cost * decay);
-		if(gettingBetter)
-		{
-			if(safety >= valueSafety) valueSafety = safety;
-			else gettingBetter = false;
-		}else
-		{
-			if(safety < valueSafety) valueSafety = safety;
-		}
+		
+		valueSafety += costmap_2d::INSCRIBED_INFLATED_OBSTACLE - (cell_cost * decay);
+		maxSafety += costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
+
 		decay *= mSafetyDecay;
 	}
 	
 	double action_value = 0.0;
 	double normFactor = 0.0;
-	valueSafety /= costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
+	if(maxSafety > 0)
+		valueSafety /= maxSafety;
 	
 	// Calculate distance value
 	if(freeSpace >= mMaxFreeSpace)
