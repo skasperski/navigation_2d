@@ -120,7 +120,6 @@ private:
 	bool mPublishRoute;
 	double mMaxFreeSpace;
 	double mSafetyDecay;
-	int mDistanceWeight;
 	int mSafetyWeight;
 	int mConformanceWeight;
 	int mContinueWeight;

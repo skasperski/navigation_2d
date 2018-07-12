@@ -30,7 +30,6 @@ RobotOperator::RobotOperator()
 	}
 	operatorNode.param("max_free_space", mMaxFreeSpace, 5.0);
 	operatorNode.param("safety_decay", mSafetyDecay, 0.95);
-	operatorNode.param("distance_weight", mDistanceWeight, 1);
 	operatorNode.param("safety_weight", mSafetyWeight, 1);
 	operatorNode.param("conformance_weight", mConformanceWeight, 1);
 	operatorNode.param("continue_weight", mContinueWeight, 1);
@@ -400,92 +399,78 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 		return 1;
 	}
 	
-	double valueDistance = 0.0;    // How far can the robot move in this direction?
 	double valueSafety = 0.0;      // How safe is it to move in that direction?
+	double valueEscape = 0.0;      // How much does the safety improve?
 	double valueConformance = 0.0; // How conform is it with the desired direction?
-	double valueEscape;
+	double valueContinue = 0.0;    // How conform is it with the previous command?
 	
-	double freeSpace = 0.0;
 	double decay = 1.0;
-	double maxCost = 0.0;
-	double minCost = costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
-	unsigned char cell_cost;
+	double safe_max = 0.0;
+	double cost_max = 0.0;
+	double cost_start = 1.0;
 	
-	// Calculate safety value
+	// Calculate safety and escape value
 	int length = transformedCloud.points.size();
 	for(int i = 0; i < length; i++)
 	{
 		unsigned int mx, my;
+		double cell_cost;
 		if(mCostmap->worldToMap(transformedCloud.points[i].x, transformedCloud.points[i].y, mx, my))
 		{
-			cell_cost = mCostmap->getCost(mx,my);
-			if(cell_cost >= costmap_2d::INSCRIBED_INFLATED_OBSTACLE)
+			cell_cost = (double)mCostmap->getCost(mx,my) / costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
+			if(cell_cost >= 1.0)
 			{
 				// Trajectory hit an obstacle
 				break;
 			}
 		}
-		freeSpace += mRasterSize;
-		
-		double cost = cell_cost * decay;
-		if(cost > maxCost)
-			maxCost = cost;
-
 		if(i == 0)
-			minCost = cell_cost;
-
-		if(cell_cost < minCost)
-		{
-			double escape = (minCost - cell_cost) / minCost * decay;
-			if(escape > valueEscape)
-				valueEscape = escape;
-		}
-
+			cost_start = cell_cost;
+		double cost = cell_cost * decay;
+		double safe = (cost_start - cell_cost) * decay * 2.0;
+		
+		if(cost > cost_max) cost_max = cost;
+		if(safe > safe_max) safe_max = safe;
+		
 		decay *= mSafetyDecay;
 	}
 	
 	double action_value = 0.0;
 	double normFactor = 0.0;
 	
-	valueSafety = (costmap_2d::INSCRIBED_INFLATED_OBSTACLE - maxCost) / costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
+	// Add safety value
+	valueSafety = 1.0 - cost_max;
+	action_value += valueSafety * mSafetyWeight;
+	normFactor += mSafetyWeight;
 	
-	// Calculate distance value
-	if(freeSpace >= mMaxFreeSpace)
-	{
-		freeSpace = mMaxFreeSpace;
-	}
-	valueDistance = freeSpace / std::min(mMaxFreeSpace, length*mRasterSize);
-	normFactor = mDistanceWeight + mSafetyWeight + mSafetyWeight;
+	// Add escape value
+	valueEscape = safe_max;
+	action_value += valueEscape * mEscapeWeight;
+	normFactor += mEscapeWeight;
 
 	if(mRecoverySteps == 0)
 	{
 		// Calculate continuety value
-		double valueContinue = mCurrentDirection - direction;
+		valueContinue = mCurrentDirection - direction;
 		if(valueContinue < 0) valueContinue *= -1;
 		valueContinue = 1.0 / (1.0 + exp(pow(valueContinue-0.5,15)));
 		
-		// Calculate conformance value
-		double desired_sq = (mDesiredDirection > 0) ? mDesiredDirection * mDesiredDirection : mDesiredDirection * -mDesiredDirection;
-		double evaluated_sq = (direction > 0) ? direction * direction : direction * -direction;
-		valueConformance = cos(PI / 2.0 * (desired_sq - evaluated_sq)); // cos(-PI/2 ... +PI/2) --> [0 .. 1 .. 0]
+		double corr = (mDesiredDirection - direction) * PI;
+		valueConformance = 0.5 * cos(corr) + 0.5;
 		
 		action_value += valueConformance * mConformanceWeight;
 		action_value += valueContinue * mContinueWeight;
 		normFactor += mConformanceWeight + mContinueWeight;
 	}
 	
-	action_value += valueDistance * mDistanceWeight;
-	action_value += valueSafety * mSafetyWeight;
-	action_value += valueEscape * mEscapeWeight;
 	action_value /=  normFactor;
 	
 	if(debug)
 	{
 		geometry_msgs::Vector3 cost_msg;
-		cost_msg.x = valueDistance;
-		cost_msg.y = valueSafety;
-//		cost_msg.y = valueContinue;
-		cost_msg.z = valueEscape;
+		cost_msg.x = valueSafety;
+		cost_msg.y = valueEscape;
+		cost_msg.z = valueConformance;
 		mCostPublisher.publish(cost_msg); 
 	}
 	
