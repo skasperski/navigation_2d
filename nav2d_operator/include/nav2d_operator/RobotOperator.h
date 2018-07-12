@@ -122,7 +122,6 @@ private:
 	double mSafetyDecay;
 	int mSafetyWeight;
 	int mConformanceWeight;
-	int mContinueWeight;
 	int mEscapeWeight;
 
 	std::string mOdometryFrame;
