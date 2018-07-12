@@ -32,6 +32,7 @@ RobotOperator::RobotOperator()
 	operatorNode.param("safety_decay", mSafetyDecay, 0.95);
 	operatorNode.param("safety_weight", mSafetyWeight, 1);
 	operatorNode.param("conformance_weight", mConformanceWeight, 1);
+	operatorNode.param("continue_weight", mContinueWeight, 1);
 	operatorNode.param("escape_weight", mEscapeWeight, 1);
 	operatorNode.param("max_velocity", mMaxVelocity, 1.0);
 
@@ -401,6 +402,7 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 	double valueSafety = 0.0;      // How safe is it to move in that direction?
 	double valueEscape = 0.0;      // How much does the safety improve?
 	double valueConformance = 0.0; // How conform is it with the desired direction?
+	double valueContinue = 0.0;    // How conform is it with the previous command?
 	
 	double decay = 1.0;
 	double safe_max = 0.0;
@@ -448,15 +450,21 @@ double RobotOperator::evaluateAction(double direction, double velocity, bool deb
 
 	if(mRecoverySteps == 0)
 	{
-		// Calculate conformace value		
+		// Calculate continuety value
+		valueContinue = (mCurrentDirection - direction) * 0.5;
+		valueContinue = 1.0 - (valueContinue * valueContinue);
+		
+		// Calculate conformance value
 		double corr = (mDesiredDirection - direction) * PI;
 		valueConformance = 0.5 * cos(corr) + 0.5;
 		
+		// Add both to action value
 		action_value += valueConformance * mConformanceWeight;
-		normFactor += mConformanceWeight;
+		action_value += valueContinue * mContinueWeight;
+		normFactor += mConformanceWeight + mContinueWeight;
 	}
 	
-	action_value /=  normFactor;
+	action_value /= normFactor;
 	
 	if(debug)
 	{
