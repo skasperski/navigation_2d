@@ -1,3 +1,0 @@
-[submodule "OpenKarto"]
-	path = nav2d_karto/OpenKarto
-	url = https://github.com/skasperski/OpenKarto.git
