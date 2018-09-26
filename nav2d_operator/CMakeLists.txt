@@ -6,6 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   message_generation
   tf
+  tf2_ros
   costmap_2d
   sensor_msgs
 )

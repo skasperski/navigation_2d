@@ -5,10 +5,10 @@
 
 #define PI 3.14159265
 
-RobotOperator::RobotOperator()
+RobotOperator::RobotOperator() : mTf2Buffer(), mTf2Listener(mTf2Buffer)
 {
 	// Create the local costmap
-	mLocalMap = new costmap_2d::Costmap2DROS("local_map", mTfListener);
+	mLocalMap = new costmap_2d::Costmap2DROS("local_map", mTf2Buffer);
 	mRasterSize = mLocalMap->getCostmap()->getResolution();
 	
 	// Publish / subscribe to ROS topics
