@@ -2,7 +2,7 @@
 <package>
 
   <name>nav2d_operator</name>
-  <version>0.4.1</version>
+  <version>0.4.2</version>
   <description>
     The operator is a lightweight, purely reactive obstacle-avoidance
     module for mobile robots moving in a planar environment. The operator node
