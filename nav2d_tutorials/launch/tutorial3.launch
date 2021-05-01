@@ -34,7 +34,7 @@
 	<!-- Start the joystick-driver and remote-controller for operation-->
 	<node name="Joystick" pkg="joy" type="joy_node" />
 	<node name="Remote" pkg="nav2d_remote" type="remote_joy" >
-		<rosparam file="$(find priyanka_bot)/param/remote.yaml"/>
+		<rosparam file="$(find nav2d_tutorials)/param/remote.yaml"/>
 	</node>
 
 	<!-- RVIZ to view the visualization -->
