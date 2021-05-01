@@ -4,21 +4,6 @@
 #include <nav2d_operator/cmd.h>
 #include <nav2d_navigator/commands.h>
 
-/******************************************************
-Buttons:
- 0: A
- 1: B
- 2: X
- 3: Y
- 4: LB
- 5: RB
- 6: BACK
- 7: START
- 8: Logitech*
- 9: Left Stick
-10: Right Stick
-
- ******************************************************/
 
 class Teleoperator
 {
@@ -49,24 +34,18 @@ private:
 
 Teleoperator::Teleoperator()
 {
-	// Button and Axis configuration
-	mAxisVelocity = 4;
-	mAxisDirection = 0;
+			// parameters for Button and Axis 
+	ros::NodeHandle remoteNode("~/");
+	remoteNode.param("button_pressed", mButtonPressed, false);
+	
+	remoteNode.param("axis_velocity", mAxisVelocity, 4);
+	remoteNode.param("axis_direction", mAxisDirection, 0);
+	remoteNode.param("drive_mode", mButtonDriveMode, 5);
+	remoteNode.param("pause_nav", mButtonPauseNavigator, 6);
+	remoteNode.param("start_exploration", mButtonStartExploration, 0);
+	remoteNode.param("button_getmap", mButtonGetMap, 3);
+	remoteNode.param("stop_button", mButtonStop, 1);
 
-	mButtonDriveMode = 5;
-	mButtonPauseNavigator = 6;
-	mButtonStartExploration = 0;
-	mButtonGetMap = 3;
-	mButtonStop = 1;
-	
-	mCommandPublisher = mNode.advertise<nav2d_operator::cmd>("cmd", 1);
-	mJoySubscriber = mNode.subscribe<sensor_msgs::Joy>("joy", 10, &Teleoperator::joyCB, this);
-	mStopClient = mNode.serviceClient<std_srvs::Trigger>(NAV_STOP_SERVICE);
-	mPauseClient = mNode.serviceClient<std_srvs::Trigger>(NAV_PAUSE_SERVICE);
-	mExploreClient = mNode.serviceClient<std_srvs::Trigger>(NAV_EXPLORE_SERVICE);
-	mGetMapClient = mNode.serviceClient<std_srvs::Trigger>(NAV_GETMAP_SERVICE);
-	
-	mButtonPressed = false;
 }
 
 void Teleoperator::joyCB(const sensor_msgs::Joy::ConstPtr& msg)

@@ -1,0 +1,17 @@
+button_pressed: true
+
+
+
+axis_velocity: 1.0
+
+axis_direction:  0
+
+drive_mode:  5
+
+pause_nav :  6
+
+start_exploration:  0
+
+button_getmap:  3
+
+stop_button: 1
