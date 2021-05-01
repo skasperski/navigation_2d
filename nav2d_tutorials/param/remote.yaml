@@ -1,8 +1,6 @@
-button_pressed: true
 
 
-
-axis_velocity: 1.0
+axis_velocity: 1
 
 axis_direction:  0
 
