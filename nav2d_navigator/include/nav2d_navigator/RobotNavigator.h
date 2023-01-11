@@ -58,10 +58,6 @@ private:
 
 	std::string mMapFrame;
 	std::string mRobotFrame;
-	std::string mMoveActionTopic;
-	std::string mExploreActionTopic;
-	std::string mGetMapActionTopic;
-	std::string mLocalizeActionTopic;
 
 	MoveActionServer* mMoveActionServer;
 	ExploreActionServer* mExploreActionServer;

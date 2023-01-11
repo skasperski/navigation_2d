@@ -85,17 +85,12 @@ private:
 	int mMinMapSize;            // Minimum map size (# of nodes) needed for localization.
 	ros::WallTime mLastMapUpdate;
 
-	// Frames and Topics
+	// Frames
 	std::string mLaserFrame;
 	std::string mRobotFrame;
 	std::string mOdometryFrame;
 	std::string mOffsetFrame;
 	std::string mMapFrame;
-	std::string mLaserTopic;
-	std::string mMapTopic;
-	std::string mMapService;
-	std::string mScanInputTopic;
-	std::string mScanOutputTopic;
 };
 
 #endif

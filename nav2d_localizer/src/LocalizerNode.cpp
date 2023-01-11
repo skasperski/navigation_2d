@@ -14,14 +14,10 @@ int main(int argc, char **argv)
 	tf::TransformBroadcaster tfBC;
 	
 	// Subscribe to laser scans
-	std::string laserTopic;
-	n.param("laser_topic", laserTopic, std::string("scan"));
-	ros::Subscriber laserSubscriber = n.subscribe(laserTopic, 100, &SelfLocalizer::process, &selfLocalizer);
+	ros::Subscriber laserSubscriber = n.subscribe("scan", 100, &SelfLocalizer::process, &selfLocalizer);
 
 	// Get the map via service call
-	std::string mapService;
-	n.param("map_service", mapService, std::string("get_map"));
-	ros::ServiceClient mapClient = n.serviceClient<nav_msgs::GetMap>(mapService);
+	ros::ServiceClient mapClient = n.serviceClient<nav_msgs::GetMap>("get_map");
 	
 	nav_msgs::GetMap srv;
 	mapClient.waitForExistence();

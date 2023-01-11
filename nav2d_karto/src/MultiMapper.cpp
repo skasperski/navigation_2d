@@ -11,17 +11,12 @@ MultiMapper::MultiMapper()
 	// Get parameters from the ROS parameter server
 	ros::NodeHandle robotNode;
 	robotNode.param("robot_id", mRobotID, 1);
-	robotNode.param("scan_input_topic", mScanInputTopic, std::string("karto_in"));
-	robotNode.param("scan_output_topic", mScanOutputTopic, std::string("karto_out"));
 	robotNode.param("laser_frame", mLaserFrame, std::string("laser"));
 	robotNode.param("robot_frame", mRobotFrame, std::string("robot"));
 	robotNode.param("odometry_frame", mOdometryFrame, std::string("odometry_base"));
 	robotNode.param("offset_frame", mOffsetFrame, std::string("odometry_offset"));
 	robotNode.param("map_frame", mMapFrame, std::string("map"));
-	robotNode.param("map_service", mMapService, std::string("get_map"));
-	robotNode.param("laser_topic", mLaserTopic, std::string("scan"));
-	robotNode.param("map_topic", mMapTopic, std::string("map"));
-	
+
 	ros::NodeHandle mapperNode("~/");
 	mapperNode.param("grid_resolution", mMapResolution, 0.05);
 	mapperNode.param("range_threshold", mRangeThreshold, 30.0);
@@ -38,11 +33,11 @@ MultiMapper::MultiMapper()
 	mMapFrame = mTransformListener.resolve(mMapFrame);
 
 	// Initialize Publisher/Subscribers
-	mScanSubscriber = robotNode.subscribe(mScanInputTopic, 100, &MultiMapper::receiveLocalizedScan, this);
-	mScanPublisher = robotNode.advertise<nav2d_msgs::LocalizedScan>(mScanOutputTopic, 100, true);
-	mMapServer = robotNode.advertiseService(mMapService, &MultiMapper::getMap, this);
-	mMapPublisher = robotNode.advertise<nav_msgs::OccupancyGrid>(mMapTopic, 1, true);
-	mLaserSubscriber = robotNode.subscribe(mLaserTopic, 100, &MultiMapper::receiveLaserScan, this);
+	mScanSubscriber = robotNode.subscribe("karto_in", 100, &MultiMapper::receiveLocalizedScan, this);
+	mScanPublisher = robotNode.advertise<nav2d_msgs::LocalizedScan>("karto_out", 100, true);
+	mMapServer = robotNode.advertiseService("get_map", &MultiMapper::getMap, this);
+	mMapPublisher = robotNode.advertise<nav_msgs::OccupancyGrid>("map", 1, true);
+	mLaserSubscriber = robotNode.subscribe("scan", 100, &MultiMapper::receiveLaserScan, this);
 	mInitialPoseSubscriber = robotNode.subscribe("initialpose", 1, &MultiMapper::receiveInitialPose, this);
 	mOtherRobotsPublisher = robotNode.advertise<nav2d_msgs::RobotPose>("others", 10, true);
 

@@ -17,9 +17,7 @@ RobotNavigator::RobotNavigator()
 {	
 	NodeHandle robotNode;
 
-	std::string serviceName;
-	robotNode.param("map_service", serviceName, std::string("get_map"));
-	mGetMapClient = robotNode.serviceClient<nav_msgs::GetMap>(serviceName);
+	mGetMapClient = robotNode.serviceClient<nav_msgs::GetMap>("get_map");
 
 	mCommandPublisher = robotNode.advertise<nav2d_operator::cmd>("cmd", 1);
 	mStopServer = robotNode.advertiseService(NAV_STOP_SERVICE, &RobotNavigator::receiveStop, this);
@@ -48,10 +46,6 @@ RobotNavigator::RobotNavigator()
 	robotNode.param("map_frame", mMapFrame, std::string("map"));
 	robotNode.param("robot_frame", mRobotFrame, std::string("robot"));
 	robotNode.param("robot_id", mRobotID, 1);
-	robotNode.param("move_action_topic", mMoveActionTopic, std::string(NAV_MOVE_ACTION));
-	robotNode.param("explore_action_topic", mExploreActionTopic, std::string(NAV_EXPLORE_ACTION));
-	robotNode.param("getmap_action_topic", mGetMapActionTopic, std::string(NAV_GETMAP_ACTION));
-	robotNode.param("localize_action_topic", mLocalizeActionTopic, std::string(NAV_LOCALIZE_ACTION));
 
 	// Apply tf_prefix to all used frame-id's
 	mRobotFrame = mTfListener.resolve(mRobotFrame);
@@ -63,7 +57,7 @@ RobotNavigator::RobotNavigator()
 		mExplorationPlanner = mPlanLoader->createInstance(mExplorationStrategy);
 		ROS_INFO("Successfully loaded exploration strategy [%s].", mExplorationStrategy.c_str());
 
-		mExploreActionServer = new ExploreActionServer(mExploreActionTopic, boost::bind(&RobotNavigator::receiveExploreGoal, this, _1), false);
+		mExploreActionServer = new ExploreActionServer(NAV_EXPLORE_ACTION, boost::bind(&RobotNavigator::receiveExploreGoal, this, _1), false);
 		mExploreActionServer->start();
 	}
 	catch(pluginlib::PluginlibException& ex)
@@ -74,15 +68,15 @@ RobotNavigator::RobotNavigator()
 	}
 
 	// Create action servers
-	mMoveActionServer = new MoveActionServer(mMoveActionTopic, boost::bind(&RobotNavigator::receiveMoveGoal, this, _1), false);
+	mMoveActionServer = new MoveActionServer(NAV_MOVE_ACTION, boost::bind(&RobotNavigator::receiveMoveGoal, this, _1), false);
 	mMoveActionServer->start();
 	
-	mLocalizeActionServer = new LocalizeActionServer(mLocalizeActionTopic, boost::bind(&RobotNavigator::receiveLocalizeGoal, this, _1), false);
+	mLocalizeActionServer = new LocalizeActionServer(NAV_LOCALIZE_ACTION, boost::bind(&RobotNavigator::receiveLocalizeGoal, this, _1), false);
 	mLocalizeActionServer->start();
 	
 	if(mRobotID == 1)
 	{
-		mGetMapActionServer = new GetMapActionServer(mGetMapActionTopic, boost::bind(&RobotNavigator::receiveGetMapGoal, this, _1), false);
+		mGetMapActionServer = new GetMapActionServer(NAV_GETMAP_ACTION, boost::bind(&RobotNavigator::receiveGetMapGoal, this, _1), false);
 		mGetMapActionServer->start();
 	}else
 	{
